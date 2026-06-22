@@ -11,8 +11,18 @@ body{
 }
 
 .hero{
-    height:100vh;
+    height:92vh;
     overflow:hidden;
+}
+
+@media(max-width:768px){
+    .hero{
+        height:82vh;
+    }
+
+    .hero img{
+        object-position: 72% center;
+    }
 }
 
 .hero img{
