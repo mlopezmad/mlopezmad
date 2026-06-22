@@ -29,13 +29,13 @@ body{
 
 .intro{
     text-align:center;
-    padding:90px 20px 70px;
+    padding:80px 20px 55px;
 }
 
 .intro h1{
     font-size:5rem;
     font-weight:400;
-    margin-bottom:22px;
+    margin-bottom:20px;
     line-height:1;
 }
 
@@ -74,7 +74,7 @@ body{
 @media(max-width:768px){
 
     .hero{
-        height:58vh;
+        height:54vh;
     }
 
     .hero img{
@@ -82,28 +82,30 @@ body{
     }
 
     .intro{
-        padding:70px 20px 55px;
+        padding:55px 20px 38px;
     }
 
     .intro h1{
-        font-size:3.8rem;
+        font-size:3.2rem;
+        margin-bottom:16px;
     }
 
     .intro p{
-        font-size:1rem;
+        font-size:0.98rem;
     }
 
     .location{
-        font-size:0.95rem;
+        font-size:0.9rem;
+        margin-top:5px;
     }
 
     .menu{
-        gap:24px;
-        margin-bottom:90px;
+        gap:22px;
+        margin-bottom:80px;
     }
 
     .menu a{
-        font-size:1.25rem;
+        font-size:1.2rem;
     }
 
 }
