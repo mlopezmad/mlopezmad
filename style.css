@@ -85,4 +85,11 @@ body{
         font-size:1.2rem;
     }
 
+.location{
+    margin-top:12px;
+    font-size:0.95rem;
+    color:#999;
+    letter-spacing:2px;
+    text-transform:uppercase;
+
 }
