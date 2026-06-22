@@ -11,13 +11,13 @@ body{
 }
 
 .hero{
-    height:92vh;
+    height:75vh;
     overflow:hidden;
 }
 
 @media(max-width:768px){
     .hero{
-        height:82vh;
+        height:65vh;
     }
 
     .hero img{
