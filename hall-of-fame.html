@@ -1,1 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hall of Fame - mlopezmad</title>
 
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#fafafa;
+    font-family:Georgia,serif;
+    color:#111;
+}
+
+header{
+    text-align:center;
+    padding:60px 20px;
+}
+
+header h1{
+    font-size:3rem;
+    font-weight:400;
+}
+
+header p{
+    color:#777;
+    margin-top:10px;
+}
+
+.galeria{
+    max-width:1400px;
+    margin:0 auto 80px;
+    padding:0 20px;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:20px;
+}
+
+.galeria img{
+    width:100%;
+    display:block;
+    transition:.3s;
+}
+
+.galeria img:hover{
+    transform:scale(1.01);
+}
+
+.volver{
+    display:block;
+    text-align:center;
+    margin:50px 0;
+    text-decoration:none;
+    color:#111;
+    font-size:1.1rem;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+    <h1>Hall of Fame</h1>
+    <p>Una selección personal</p>
+</header>
+
+<div class="galeria">
+
+<img src="images/hall-of-fame/novia-mercedes.jpg">
+<img src="images/hall-of-fame/rebajas.jpg">
+<img src="images/hall-of-fame/puerta-alcala.jpg">
+<img src="images/hall-of-fame/silueta-calle.jpg">
+<img src="images/hall-of-fame/baile-madrid.jpg">
+
+</div>
+
+<a class="volver" href="index.html">← Volver</a>
+
+</body>
+</html>
