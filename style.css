@@ -4,6 +4,10 @@
     box-sizing:border-box;
 }
 
+html{
+    scroll-behavior:smooth;
+}
+
 body{
     font-family: Georgia, serif;
     background:#fafafa;
@@ -11,7 +15,7 @@ body{
 }
 
 .hero{
-    height:75vh;
+    height:68vh;
     overflow:hidden;
     border-bottom:1px solid #e5e5e5;
 }
@@ -25,18 +29,26 @@ body{
 
 .intro{
     text-align:center;
-    padding:120px 20px 80px;
+    padding:90px 20px 70px;
 }
 
 .intro h1{
     font-size:5rem;
     font-weight:400;
-    margin-bottom:20px;
+    margin-bottom:22px;
+    line-height:1;
 }
 
 .intro p{
-    font-size:1.1rem;
+    font-size:1.15rem;
     color:#666;
+    line-height:1.5;
+}
+
+.location{
+    margin-top:8px;
+    font-size:1rem;
+    color:#777;
 }
 
 .menu{
@@ -44,14 +56,14 @@ body{
     margin:0 auto 120px;
     display:flex;
     flex-direction:column;
-    gap:25px;
+    gap:28px;
     text-align:center;
 }
 
 .menu a{
     text-decoration:none;
     color:#111;
-    font-size:1.4rem;
+    font-size:1.45rem;
     transition:0.3s;
 }
 
@@ -62,7 +74,7 @@ body{
 @media(max-width:768px){
 
     .hero{
-        height:65vh;
+        height:58vh;
     }
 
     .hero img{
@@ -70,26 +82,28 @@ body{
     }
 
     .intro{
-        padding:90px 20px 60px;
+        padding:70px 20px 55px;
     }
 
     .intro h1{
-        font-size:3.5rem;
+        font-size:3.8rem;
     }
 
     .intro p{
         font-size:1rem;
     }
 
-    .menu a{
-        font-size:1.2rem;
+    .location{
+        font-size:0.95rem;
     }
 
-.location{
-    margin-top:12px;
-    font-size:0.95rem;
-    color:#999;
-    letter-spacing:2px;
-    text-transform:uppercase;
+    .menu{
+        gap:24px;
+        margin-bottom:90px;
+    }
+
+    .menu a{
+        font-size:1.25rem;
+    }
 
 }
