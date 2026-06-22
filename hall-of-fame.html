@@ -66,7 +66,7 @@ header p{
     position:fixed;
     inset:0;
     z-index:999;
-    background:rgba(0,0,0,.96);
+    background:rgba(0,0,0,.97);
     align-items:center;
     justify-content:center;
     padding:20px;
@@ -81,11 +81,18 @@ header p{
     max-height:88vh;
     object-fit:contain;
     opacity:1;
-    transition:opacity .25s ease;
+    transform:translateX(0);
+    transition:opacity .25s ease, transform .25s ease;
 }
 
-.lightbox img.fade{
+.lightbox img.fade-left{
     opacity:0;
+    transform:translateX(-18px);
+}
+
+.lightbox img.fade-right{
+    opacity:0;
+    transform:translateX(18px);
 }
 
 .cerrar{
@@ -97,35 +104,50 @@ header p{
     cursor:pointer;
     font-family:Arial,sans-serif;
     z-index:1001;
+    opacity:0;
+    transition:opacity .4s ease;
 }
 
 .nav-btn{
     position:fixed;
     top:50%;
     transform:translateY(-50%);
-    color:#fff;
-    background:rgba(255,255,255,.12);
+    color:rgba(255,255,255,.75);
+    background:none;
     border:none;
-    width:48px;
-    height:64px;
-    font-size:3rem;
+    font-size:4rem;
+    line-height:1;
     cursor:pointer;
     z-index:1001;
+    opacity:0;
+    transition:opacity .4s ease, color .3s ease;
 }
 
-.prev{left:16px;}
-.next{right:16px;}
+.nav-btn:hover{
+    color:#fff;
+}
+
+.prev{left:22px;}
+.next{right:22px;}
 
 .contador{
     position:fixed;
     bottom:24px;
     left:50%;
     transform:translateX(-50%);
-    color:#fff;
+    color:rgba(255,255,255,.8);
     font-family:Arial,sans-serif;
     font-size:.9rem;
     letter-spacing:1px;
     z-index:1001;
+    opacity:0;
+    transition:opacity .4s ease;
+}
+
+.lightbox.show-controls .nav-btn,
+.lightbox.show-controls .contador,
+.lightbox.show-controls .cerrar{
+    opacity:1;
 }
 
 @media(max-width:768px){
@@ -138,14 +160,11 @@ header p{
     }
 
     .nav-btn{
-        width:42px;
-        height:58px;
-        font-size:2.4rem;
-        background:rgba(255,255,255,.08);
+        font-size:3.2rem;
     }
 
-    .prev{left:6px;}
-    .next{right:6px;}
+    .prev{left:10px;}
+    .next{right:10px;}
 }
 </style>
 </head>
@@ -192,37 +211,50 @@ const contador = document.getElementById("contador");
 let indiceActual = 0;
 let touchStartX = 0;
 let touchEndX = 0;
+let controlsTimer;
+
+function mostrarControles(){
+    lightbox.classList.add("show-controls");
+    clearTimeout(controlsTimer);
+
+    controlsTimer = setTimeout(() => {
+        lightbox.classList.remove("show-controls");
+    }, 2000);
+}
 
 function abrirLightbox(indice){
     indiceActual = indice;
     lightboxImg.src = imagenes[indiceActual].src;
     contador.textContent = (indiceActual + 1) + " / " + imagenes.length;
     lightbox.classList.add("active");
+    mostrarControles();
 }
 
 function cerrarLightbox(){
     lightbox.classList.remove("active");
+    lightbox.classList.remove("show-controls");
 }
 
-function cambiarImagen(nuevoIndice){
-    lightboxImg.classList.add("fade");
+function cambiarImagen(nuevoIndice, direccion){
+    lightboxImg.classList.add(direccion === "next" ? "fade-left" : "fade-right");
 
     setTimeout(() => {
         indiceActual = nuevoIndice;
         lightboxImg.src = imagenes[indiceActual].src;
         contador.textContent = (indiceActual + 1) + " / " + imagenes.length;
-        lightboxImg.classList.remove("fade");
-    }, 180);
+        lightboxImg.classList.remove("fade-left", "fade-right");
+        mostrarControles();
+    }, 200);
 }
 
 function imagenAnterior(){
     const nuevoIndice = (indiceActual - 1 + imagenes.length) % imagenes.length;
-    cambiarImagen(nuevoIndice);
+    cambiarImagen(nuevoIndice, "prev");
 }
 
 function imagenSiguiente(){
     const nuevoIndice = (indiceActual + 1) % imagenes.length;
-    cambiarImagen(nuevoIndice);
+    cambiarImagen(nuevoIndice, "next");
 }
 
 imagenes.forEach((img, index) => {
@@ -234,25 +266,30 @@ prev.addEventListener("click", imagenAnterior);
 next.addEventListener("click", imagenSiguiente);
 
 lightbox.addEventListener("click", e => {
+    mostrarControles();
     if(e.target === lightbox) cerrarLightbox();
 });
 
-document.addEventListener("keydown", e => {
-    if(!lightbox.classList.contains("active")) return;
-    if(e.key === "ArrowLeft") imagenAnterior();
-    if(e.key === "ArrowRight") imagenSiguiente();
-    if(e.key === "Escape") cerrarLightbox();
-});
-
+lightbox.addEventListener("mousemove", mostrarControles);
 lightbox.addEventListener("touchstart", e => {
+    mostrarControles();
     touchStartX = e.changedTouches[0].screenX;
 });
 
 lightbox.addEventListener("touchend", e => {
     touchEndX = e.changedTouches[0].screenX;
     const diferencia = touchEndX - touchStartX;
+
     if(diferencia > 50) imagenAnterior();
     if(diferencia < -50) imagenSiguiente();
+});
+
+document.addEventListener("keydown", e => {
+    if(!lightbox.classList.contains("active")) return;
+    mostrarControles();
+    if(e.key === "ArrowLeft") imagenAnterior();
+    if(e.key === "ArrowRight") imagenSiguiente();
+    if(e.key === "Escape") cerrarLightbox();
 });
 </script>
 
