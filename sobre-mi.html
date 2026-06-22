@@ -4,19 +4,114 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sobre mí - mlopezmad</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#fafafa;
+    color:#111;
+    font-family:Georgia,serif;
+}
+
+.contenido{
+    max-width:820px;
+    margin:0 auto;
+    padding:80px 30px;
+}
+
+h1{
+    font-size:3.2rem;
+    font-weight:400;
+    margin-bottom:45px;
+}
+
+p{
+    font-size:1.15rem;
+    line-height:1.9;
+    color:#444;
+    margin-bottom:26px;
+}
+
+.equipo{
+    margin-top:55px;
+}
+
+.equipo h2{
+    font-size:1.8rem;
+    font-weight:400;
+    margin-bottom:20px;
+}
+
+ul{
+    margin-left:24px;
+    line-height:2;
+    color:#444;
+    font-size:1.05rem;
+}
+
+.volver{
+    display:block;
+    text-align:center;
+    margin-top:75px;
+    text-decoration:none;
+    color:#111;
+    font-size:1.1rem;
+}
+
+@media(max-width:768px){
+    .contenido{
+        padding:60px 26px;
+    }
+
+    h1{
+        font-size:2.8rem;
+    }
+
+    p{
+        font-size:1.05rem;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<section class="intro">
-    <h1>Sobre mí</h1>
-    <p>Próximamente</p>
-</section>
+<div class="contenido">
 
-<nav class="menu">
-    <a href="index.html">← Volver</a>
-</nav>
+<h1>Sobre mí</h1>
+
+<p>
+Soy Miguel Ángel López, fotógrafo aficionado de Madrid.
+</p>
+
+<p>
+Me interesa la fotografía de calle y viajes: escenas cotidianas, luces, sombras y momentos espontáneos que normalmente pasan desapercibidos.
+</p>
+
+<p>
+Trabajo principalmente en blanco y negro, aunque también exploro el color y pequeños proyectos personales con cámaras poco habituales.
+</p>
+
+<div class="equipo">
+<h2>Equipo habitual</h2>
+
+<ul>
+<li>Ricoh GR Monochrome</li>
+<li>Ricoh GR IV</li>
+<li>Fujifilm X100V</li>
+<li>iPhone 17 Pro</li>
+<li>iPhone 4s</li>
+</ul>
+</div>
+
+<a class="volver" href="index.html">← Volver</a>
+
+</div>
 
 </body>
 </html>
