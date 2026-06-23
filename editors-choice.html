@@ -44,6 +44,12 @@ header p{
     cursor:pointer;
 }
 
+img{
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    user-select:none;
+}
+
 .volver{
     display:block;
     text-align:center;
@@ -291,6 +297,14 @@ document.addEventListener("keydown", e => {
     if(e.key === "ArrowLeft") imagenAnterior();
     if(e.key === "ArrowRight") imagenSiguiente();
     if(e.key === "Escape") cerrarLightbox();
+});
+
+document.addEventListener("contextmenu", e => {
+    e.preventDefault();
+});
+
+document.querySelectorAll("img").forEach(img => {
+    img.setAttribute("draggable","false");
 });
 </script>
 
