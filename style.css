@@ -225,5 +225,9 @@ margin-top:60px;
 .subscribe-page h1{
     font-size:3rem;
 }
+.subscribe-success{
+    color:#2f7d32;
+    font-weight:500;
+}
 
 }
