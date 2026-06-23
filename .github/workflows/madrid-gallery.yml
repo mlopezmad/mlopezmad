@@ -5,7 +5,10 @@ on:
     paths:
       - 'images/madrid/*.jpg'
       - 'images/madrid/*.jpeg'
+      - 'images/madrid/*.JPG'
+      - 'images/madrid/*.JPEG'
       - 'images/madrid/*.png'
+      - 'images/madrid/*.PNG'
 
 jobs:
   update-gallery:
@@ -13,6 +16,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Generar galeria.json
         run: |
@@ -22,14 +27,18 @@ jobs:
 
           first=true
 
-          for file in $(ls -t *.jpg *.jpeg *.png 2>/dev/null); do
-            if [ "$first" = true ]; then
-              first=false
-            else
-              echo ',' >> galeria.json
-            fi
+          for file in $(git log --name-only --pretty=format: -- . | grep -Ei '\.(jpg|jpeg|png)$' | awk '!seen[$0]++'); do
+            file=$(basename "$file")
 
-            echo "{\"archivo\":\"$file\",\"tipo\":\"bn\"}" >> galeria.json
+            if [ -f "$file" ]; then
+              if [ "$first" = true ]; then
+                first=false
+              else
+                echo ',' >> galeria.json
+              fi
+
+              echo "{\"archivo\":\"$file\",\"tipo\":\"bn\"}" >> galeria.json
+            fi
           done
 
           echo ']}' >> galeria.json
