@@ -1,24 +1,11 @@
-{
-  "imagenes": [
-    {
-      "archivo": "madrid-005.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "madrid-004.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "madrid-003.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "madrid-002.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "madrid-001.jpg",
-      "tipo": "bn"
-    }
-  ]
-}
+{"imagenes":[
+{"archivo":"madrid-005.jpg","tipo":"bn"}
+,
+{"archivo":"madrid-004.jpg","tipo":"bn"}
+,
+{"archivo":"madrid-003.jpg","tipo":"bn"}
+,
+{"archivo":"madrid-002.jpg","tipo":"bn"}
+,
+{"archivo":"madrid-001.jpg","tipo":"bn"}
+]}
