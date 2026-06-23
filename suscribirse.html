@@ -51,7 +51,13 @@
 <script>
 function mostrarConfirmacion(){
     const mensaje = document.getElementById("mensaje-suscripcion");
-    mensaje.textContent = "Revisa tu correo para confirmar la suscripción.";
+    const boton = document.querySelector('.subscribe-form input[type="submit"]');
+
+    mensaje.textContent = "✓ Solicitud enviada. Revisa tu correo para confirmar la suscripción.";
+    mensaje.classList.add("subscribe-success");
+
+    boton.value = "Enviado";
+    boton.disabled = true;
 }
 </script>
 
