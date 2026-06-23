@@ -1,0 +1,48 @@
+name: Actualizar galeria Madrid
+
+on:
+  push:
+    paths:
+      - 'images/madrid/*.jpg'
+      - 'images/madrid/*.jpeg'
+      - 'images/madrid/*.png'
+
+jobs:
+  update-gallery:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generar galeria.json
+        run: |
+          cd images/madrid
+
+          echo '{"imagenes":[' > galeria.json
+
+          first=true
+
+          for file in $(ls *.jpg *.jpeg *.png 2>/dev/null | sort -r); do
+            if [ "$first" = true ]; then
+              first=false
+            else
+              echo ',' >> galeria.json
+            fi
+
+            echo "{\"archivo\":\"$file\",\"tipo\":\"bn\"}" >> galeria.json
+          done
+
+          echo ']}' >> galeria.json
+
+      - name: Commit cambios
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add images/madrid/galeria.json
+
+          git diff --cached --quiet || git commit -m "Actualizar galeria Madrid"
+
+      - name: Push
+        run: |
+          git push
