@@ -82,24 +82,47 @@ transition:0.3s;
 opacity:.5;
 }
 
+/* SOLO ORDENADOR */
+@media(min-width:769px){
+
+.hero{
+    height:62vh;
+}
+
+.hero img{
+    object-position:58% center;
+}
+
+.intro{
+    padding:65px 20px 50px;
+}
+
+}
+
+/* MÓVIL */
 @media(max-width:768px){
 
 .hero{
     height:54vh;
 }
+
 .hero img{
     object-position:60% center;
 }
+
 .intro{
     padding:40px 20px 30px;
 }
+
 .intro h1{
     font-size:2.9rem;
     margin-bottom:16px;
 }
+
 .intro p{
     font-size:0.98rem;
 }
+
 .location{
 font-size:0.9rem;
 margin-top:5px;
@@ -111,10 +134,12 @@ margin-top:0;
 font-size:0.74rem;
 line-height:1.7;
 }
+
 .menu{
     gap:22px;
     margin-bottom:80px;
 }
+
 .menu a{
     font-size:1.2rem;
 }
