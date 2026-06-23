@@ -82,6 +82,56 @@ transition:0.3s;
 opacity:.5;
 }
 
+/* SUSCRIPCIÓN */
+
+.subscribe-text{
+max-width:520px;
+margin:0 auto 2rem;
+padding:0 25px;
+color:#666;
+line-height:1.8;
+text-align:center;
+}
+
+.subscribe-form{
+max-width:500px;
+margin:0 auto;
+padding:0 25px;
+}
+
+.subscribe-form input[type="email"]{
+width:100%;
+padding:14px 18px;
+margin-bottom:14px;
+border:1px solid #ddd;
+background:white;
+font-family:Georgia, serif;
+font-size:1rem;
+}
+
+.subscribe-form input[type="submit"]{
+width:100%;
+padding:14px;
+border:none;
+background:#111;
+color:white;
+cursor:pointer;
+font-family:Georgia, serif;
+font-size:1rem;
+transition:.3s;
+}
+
+.subscribe-form input[type="submit"]:hover{
+opacity:.85;
+}
+
+.subscribe-note{
+margin-top:20px;
+text-align:center;
+font-size:.9rem;
+color:#999;
+}
+
 /* SOLO ORDENADOR */
 @media(min-width:769px){
 
@@ -142,6 +192,10 @@ line-height:1.7;
 
 .menu a{
     font-size:1.2rem;
+}
+
+.subscribe-text{
+    font-size:.95rem;
 }
 
 }
