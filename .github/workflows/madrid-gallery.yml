@@ -19,6 +19,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Detectar fotos nuevas
+        id: fotos
+        run: |
+          NEW_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -Ei '^images/madrid/.*\.(jpg|jpeg|png)$' || true)
+          COUNT=$(echo "$NEW_FILES" | sed '/^\s*$/d' | wc -l)
+
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+
+          if [ "$COUNT" -eq 1 ]; then
+            echo "subject=Nueva fotografía en Madrid" >> $GITHUB_OUTPUT
+            echo "message=He publicado una nueva fotografía en la galería de Madrid." >> $GITHUB_OUTPUT
+          else
+            echo "subject=Nuevas fotografías en Madrid" >> $GITHUB_OUTPUT
+            echo "message=He publicado $COUNT nuevas fotografías en la galería de Madrid." >> $GITHUB_OUTPUT
+          fi
+
       - name: Generar galeria.json
         run: |
           cd images/madrid
@@ -55,3 +71,20 @@ jobs:
       - name: Push
         run: |
           git push
+
+      - name: Enviar newsletter
+        if: steps.fotos.outputs.count != '0'
+        env:
+          BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
+          SUBJECT: ${{ steps.fotos.outputs.subject }}
+          MESSAGE: ${{ steps.fotos.outputs.message }}
+        run: |
+          curl -s -X POST "https://api.buttondown.email/v1/emails" \
+            -H "Authorization: Token $BUTTONDOWN_API_KEY" \
+            -H "Content-Type: application/json" \
+            -d @- <<EOF
+          {
+            "subject": "$SUBJECT",
+            "body": "Hola,\n\n$MESSAGE\n\nPuedes verla aquí:\n\nhttps://mlopezmad.es/madrid.html\n\nMiguel López"
+          }
+          EOF
