@@ -22,7 +22,7 @@ jobs:
 
           first=true
 
-          for file in $(ls *.jpg *.jpeg *.png 2>/dev/null | sort -r); do
+          for file in $(ls -t *.jpg *.jpeg *.png 2>/dev/null); do
             if [ "$first" = true ]; then
               first=false
             else
