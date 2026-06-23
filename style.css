@@ -196,6 +196,34 @@ line-height:1.7;
 
 .subscribe-text{
     font-size:.95rem;
+.subscribe-page{
+max-width:700px;
+margin:0 auto;
+padding:90px 20px 40px;
+}
+
+.subscribe-page h1{
+font-size:3.4rem;
+margin-bottom:28px;
+}
+
+.subscribe-page .subscribe-text{
+font-size:1.1rem;
+margin-bottom:34px;
+}
+
+.subscribe-page .menu{
+margin-top:60px;
+}
+
+@media(max-width:768px){
+
+.subscribe-page{
+    padding:80px 20px 35px;
+}
+
+.subscribe-page h1{
+    font-size:3rem;
 }
 
 }
