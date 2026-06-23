@@ -84,13 +84,25 @@ opacity:.5;
 
 /* SUSCRIPCIÓN */
 
+.subscribe-page{
+max-width:700px;
+margin:0 auto;
+padding:90px 20px 40px;
+}
+
+.subscribe-page h1{
+font-size:3.4rem;
+margin-bottom:28px;
+}
+
 .subscribe-text{
 max-width:520px;
-margin:0 auto 2rem;
+margin:0 auto 34px;
 padding:0 25px;
 color:#666;
 line-height:1.8;
 text-align:center;
+font-size:1.1rem;
 }
 
 .subscribe-form{
@@ -125,11 +137,21 @@ transition:.3s;
 opacity:.85;
 }
 
+.subscribe-form input[type="submit"]:disabled{
+opacity:.55;
+cursor:default;
+}
+
 .subscribe-note{
 margin-top:30px;
 text-align:center;
 font-size:.9rem;
 color:#999;
+}
+
+.subscribe-success{
+color:#2f7d32;
+font-weight:500;
 }
 
 /* SOLO ORDENADOR */
@@ -194,30 +216,6 @@ line-height:1.7;
     font-size:1.2rem;
 }
 
-.subscribe-text{
-    font-size:.95rem;
-.subscribe-page{
-max-width:700px;
-margin:0 auto;
-padding:90px 20px 40px;
-}
-
-.subscribe-page h1{
-font-size:3.4rem;
-margin-bottom:28px;
-}
-
-.subscribe-page .subscribe-text{
-font-size:1.1rem;
-margin-bottom:34px;
-}
-
-.subscribe-page .menu{
-margin-top:60px;
-}
-
-@media(max-width:768px){
-
 .subscribe-page{
     padding:80px 20px 35px;
 }
@@ -225,9 +223,9 @@ margin-top:60px;
 .subscribe-page h1{
     font-size:3rem;
 }
-.subscribe-success{
-    color:#2f7d32;
-    font-weight:500;
+
+.subscribe-text{
+    font-size:.95rem;
 }
 
 }
