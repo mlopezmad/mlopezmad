@@ -72,7 +72,7 @@ jobs:
         run: |
           git push
 
-            - name: Enviar newsletter
+      - name: Enviar newsletter
         if: steps.fotos.outputs.count != '0'
         env:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
