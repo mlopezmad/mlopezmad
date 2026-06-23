@@ -20,6 +20,8 @@
         action="https://buttondown.com/api/emails/embed-subscribe/mlopezmad"
         method="post"
         class="subscribe-form"
+        target="hidden_iframe"
+        onsubmit="mostrarConfirmacion()"
     >
         <input
             type="email"
@@ -34,7 +36,9 @@
         >
     </form>
 
-    <p class="subscribe-note">
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+    <p class="subscribe-note" id="mensaje-suscripcion">
         Sin publicidad. Solo nuevas publicaciones.
     </p>
 
@@ -43,6 +47,13 @@
 <nav class="menu">
     <a href="index.html">← Volver</a>
 </nav>
+
+<script>
+function mostrarConfirmacion(){
+    const mensaje = document.getElementById("mensaje-suscripcion");
+    mensaje.textContent = "Revisa tu correo para confirmar la suscripción.";
+}
+</script>
 
 </body>
 </html>
