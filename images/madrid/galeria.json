@@ -1,1 +1,20 @@
-
+{
+  "imagenes": [
+    {
+      "archivo": "madrid-004.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "madrid-003.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "madrid-002.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "madrid-001.jpg",
+      "tipo": "bn"
+    }
+  ]
+}
