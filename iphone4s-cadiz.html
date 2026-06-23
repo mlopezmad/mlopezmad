@@ -248,5 +248,15 @@ lightbox.addEventListener("touchend", e => {
 });
 </script>
 
+<script>
+document.addEventListener("contextmenu", e => {
+  e.preventDefault();
+});
+
+document.querySelectorAll("img").forEach(img => {
+  img.setAttribute("draggable","false");
+});
+</script>
+
 </body>
 </html>
