@@ -52,13 +52,13 @@ color:#777;
 }
 
 .tagline{
-max-width:650px;
-margin:28px auto 0;
-padding:0 20px;
-font-size:1rem;
-color:#777;
-line-height:1.8;
-font-style:italic;
+    max-width:520px;
+    margin:24px auto 0;
+    padding:0 20px;
+    font-size:.88rem;
+    color:#8a8a8a;
+    line-height:1.9;
+    font-style:italic;
 }
 
 .menu{
