@@ -2,7 +2,7 @@
   "imagenes": [
     {
       "archivo": "madrid-004.jpg",
-      "tipo": "color"
+      "tipo": "bn"
     },
     {
       "archivo": "madrid-003.jpg",
@@ -10,7 +10,7 @@
     },
     {
       "archivo": "madrid-002.jpg",
-      "tipo": "color"
+      "tipo": "bn"
     },
     {
       "archivo": "madrid-001.jpg",
