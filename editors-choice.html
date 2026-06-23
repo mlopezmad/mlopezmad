@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hall of Fame - mlopezmad</title>
+<title>Editor's Choice - mlopezmad</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -172,16 +172,16 @@ header p{
 <body>
 
 <header>
-    <h1>Hall of Fame</h1>
-    <p>Una selección personal</p>
+    <h1>Editor's Choice</h1>
+    <p>Selección del autor</p>
 </header>
 
 <div class="galeria">
-<img src="images/hall-of-fame/novia-mercedes.jpg">
-<img src="images/hall-of-fame/rebajas.jpg">
-<img src="images/hall-of-fame/puerta-alcala.jpg">
-<img src="images/hall-of-fame/silueta-calle.jpg">
-<img src="images/hall-of-fame/baile-madrid.jpg">
+<img src="images/hall-of-fame/novia-mercedes.jpg" alt="Novia y Mercedes">
+<img src="images/hall-of-fame/rebajas.jpg" alt="Rebajas">
+<img src="images/hall-of-fame/puerta-alcala.jpg" alt="Puerta de Alcalá">
+<img src="images/hall-of-fame/silueta-calle.jpg" alt="Silueta en la calle">
+<img src="images/hall-of-fame/baile-madrid.jpg" alt="Baile Madrid">
 </div>
 
 <a class="volver" href="index.html">← Volver</a>
@@ -271,6 +271,7 @@ lightbox.addEventListener("click", e => {
 });
 
 lightbox.addEventListener("mousemove", mostrarControles);
+
 lightbox.addEventListener("touchstart", e => {
     mostrarControles();
     touchStartX = e.changedTouches[0].screenX;
