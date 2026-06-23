@@ -52,12 +52,12 @@ color:#777;
 }
 
 .tagline{
-    max-width:520px;
-    margin:24px auto 0;
-    padding:0 20px;
-    font-size:.88rem;
-    color:#8a8a8a;
-    line-height:1.9;
+    max-width:500px;
+    margin:22px auto 0;
+    padding:0 28px;
+    font-size:.82rem;
+    color:#9a9a9a;
+    line-height:1.8;
     font-style:italic;
 }
 
@@ -104,9 +104,9 @@ opacity:.5;
     margin-top:5px;
 }
 .tagline{
-    margin-top:22px;
-    font-size:0.9rem;
-    line-height:1.7;
+    margin-top:20px;
+    font-size:0.8rem;
+    line-height:1.75;
 }
 .menu{
     gap:22px;
