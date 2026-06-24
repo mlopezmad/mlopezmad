@@ -24,14 +24,16 @@ jobs:
         run: |
           NEW_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -Ei '^images/madrid/.*\.(jpg|jpeg|png)$' || true)
           COUNT=$(echo "$NEW_FILES" | sed '/^\s*$/d' | wc -l)
+          DATE=$(date +"%d/%m/%Y %H:%M")
 
           echo "count=$COUNT" >> $GITHUB_OUTPUT
+          echo "date=$DATE" >> $GITHUB_OUTPUT
 
           if [ "$COUNT" -eq 1 ]; then
-            echo "subject=Nueva fotografía en Madrid" >> $GITHUB_OUTPUT
+            echo "subject=Nueva fotografía en Madrid · $DATE" >> $GITHUB_OUTPUT
             echo "message=He publicado una nueva fotografía en la galería de Madrid." >> $GITHUB_OUTPUT
           else
-            echo "subject=Nuevas fotografías en Madrid" >> $GITHUB_OUTPUT
+            echo "subject=Nuevas fotografías en Madrid · $DATE" >> $GITHUB_OUTPUT
             echo "message=He publicado $COUNT nuevas fotografías en la galería de Madrid." >> $GITHUB_OUTPUT
           fi
 
@@ -78,6 +80,7 @@ jobs:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
           SUBJECT: ${{ steps.fotos.outputs.subject }}
           MESSAGE: ${{ steps.fotos.outputs.message }}
+          DATE: ${{ steps.fotos.outputs.date }}
         run: |
           RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "https://api.buttondown.email/v1/emails" \
             -H "Authorization: Token $BUTTONDOWN_API_KEY" \
@@ -86,7 +89,7 @@ jobs:
             -d @- <<EOF
           {
             "subject": "$SUBJECT",
-            "body": "Hola,\n\n$MESSAGE\n\nPuedes verla aquí:\n\nhttps://mlopezmad.es/madrid.html\n\nMiguel López",
+            "body": "Hola,\n\n$MESSAGE\n\nPublicado el $DATE.\n\nPuedes verla aquí:\n\nhttps://mlopezmad.es/madrid.html\n\nMiguel López",
             "status": "about_to_send"
           }
           EOF
