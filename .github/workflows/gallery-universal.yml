@@ -19,40 +19,81 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Detectar foto nueva
+      - name: Detectar fotos nuevas
         id: foto
         run: |
-          NEW_FILE=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} \
-            | grep -Ei '^images/.+\.(jpg|jpeg|png)$' \
-            | head -n 1)
+          NEW_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -Ei '^images/.+\.(jpg|jpeg|png)$' || true)
+          FIRST_FILE=$(echo "$NEW_FILES" | head -n 1)
+          COUNT=$(echo "$NEW_FILES" | sed '/^\s*$/d' | wc -l)
 
-          if [ -z "$NEW_FILE" ]; then
+          if [ -z "$FIRST_FILE" ]; then
             echo "count=0" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          FOLDER=$(echo "$NEW_FILE" | cut -d'/' -f2)
+          GALLERY_DIR=$(dirname "$FIRST_FILE")
+          COLLECTION=$(basename "$GALLERY_DIR")
+          DISPLAY_NAME=$(echo "$COLLECTION" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)} print}')
 
-          # soporte iphone4s/cadiz
-          if [ "$FOLDER" = "iphone4s" ]; then
-            SUBFOLDER=$(echo "$NEW_FILE" | cut -d'/' -f3)
-            COLLECTION="$SUBFOLDER"
-            GALLERY_URL="https://mlopezmad.es/${SUBFOLDER}.html"
-          else
-            COLLECTION="$FOLDER"
-            GALLERY_URL="https://mlopezmad.es/${FOLDER}.html"
-          fi
+          IMAGE_URL="https://raw.githubusercontent.com/mlopezmad/mlopezmad/main/$FIRST_FILE"
+          GALLERY_URL="https://mlopezmad.es/${COLLECTION}.html"
 
-          FILE_NAME=$(basename "$NEW_FILE")
-
-          IMAGE_URL="https://raw.githubusercontent.com/mlopezmad/mlopezmad/main/$NEW_FILE"
-
-          echo "count=1" >> $GITHUB_OUTPUT
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          echo "gallery_dir=$GALLERY_DIR" >> $GITHUB_OUTPUT
           echo "collection=$COLLECTION" >> $GITHUB_OUTPUT
+          echo "display_name=$DISPLAY_NAME" >> $GITHUB_OUTPUT
           echo "image_url=$IMAGE_URL" >> $GITHUB_OUTPUT
           echo "gallery_url=$GALLERY_URL" >> $GITHUB_OUTPUT
 
-          echo "message=He añadido una nueva fotografía a la colección ${COLLECTION}." >> $GITHUB_OUTPUT
+          if [ "$COUNT" -eq 1 ]; then
+            echo "message=He añadido una nueva fotografía a la colección $DISPLAY_NAME." >> $GITHUB_OUTPUT
+          else
+            echo "message=He añadido $COUNT nuevas fotografías a la colección $DISPLAY_NAME." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generar galeria.json
+        if: steps.foto.outputs.count != '0'
+        env:
+          GALLERY_DIR: ${{ steps.foto.outputs.gallery_dir }}
+        run: |
+          cd "$GALLERY_DIR"
+
+          echo '{"imagenes":[' > galeria.json
+
+          first=true
+
+          for file in $(git log --name-only --pretty=format: -- . | grep -Ei '\.(jpg|jpeg|png)$' | awk '!seen[$0]++'); do
+            file=$(basename "$file")
+
+            if [ -f "$file" ]; then
+              if [ "$first" = true ]; then
+                first=false
+              else
+                echo ',' >> galeria.json
+              fi
+
+              echo "{\"archivo\":\"$file\",\"tipo\":\"bn\"}" >> galeria.json
+            fi
+          done
+
+          echo ']}' >> galeria.json
+
+      - name: Commit cambios
+        if: steps.foto.outputs.count != '0'
+        env:
+          GALLERY_DIR: ${{ steps.foto.outputs.gallery_dir }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add "$GALLERY_DIR/galeria.json"
+
+          git diff --cached --quiet || git commit -m "Actualizar galeria $GALLERY_DIR"
+
+      - name: Push
+        if: steps.foto.outputs.count != '0'
+        run: |
+          git push
 
       - name: Esperar antes de enviar newsletter
         if: steps.foto.outputs.count != '0'
@@ -63,25 +104,30 @@ jobs:
         if: steps.foto.outputs.count != '0'
         env:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
-          COLLECTION: ${{ steps.foto.outputs.collection }}
           MESSAGE: ${{ steps.foto.outputs.message }}
           IMAGE_URL: ${{ steps.foto.outputs.image_url }}
           GALLERY_URL: ${{ steps.foto.outputs.gallery_url }}
+          DISPLAY_NAME: ${{ steps.foto.outputs.display_name }}
           UNIQUE_ID: ${{ github.sha }}
-
         run: |
-          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" \
-          -X POST "https://api.buttondown.email/v1/emails" \
-          -H "Authorization: Token $BUTTONDOWN_API_KEY" \
-          -H "Content-Type: application/json" \
-          -H "X-Buttondown-Live-Dangerously: true" \
-          -d @- <<EOF
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "https://api.buttondown.email/v1/emails" \
+            -H "Authorization: Token $BUTTONDOWN_API_KEY" \
+            -H "Content-Type: application/json" \
+            -H "X-Buttondown-Live-Dangerously: true" \
+            -d @- <<EOF
           {
-            "subject": "Nueva fotografía en ${COLLECTION}",
-            "body": "<div style=\"display:none;font-size:1px;color:#ffffff;max-height:0;max-width:0;opacity:0;overflow:hidden;\">$UNIQUE_ID</div><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#ffffff;color:#111;font-family:Georgia,serif;\"><tr><td align=\"center\" style=\"padding:38px 22px;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:640px;\"><tr><td align=\"center\" style=\"padding-bottom:24px;\"><h1 style=\"font-size:34px;line-height:1.15;font-weight:400;margin:0;color:#111;\">Nueva fotografía en ${COLLECTION}</h1><p style=\"font-family:Arial,sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin:18px 0 0;\">Miguel López — Fotografía</p></td></tr><tr><td align=\"center\" style=\"padding:10px 0 34px;\"><img src=\"$IMAGE_URL\" alt=\"Fotografía\" width=\"430\" style=\"width:100%;max-width:430px;height:auto;display:block;border:0;\"></td></tr><tr><td align=\"left\" style=\"padding:0 24px 28px;\"><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0 0 14px;\">$MESSAGE</p><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0;\">Espero que la disfrutes.</p></td></tr><tr><td align=\"center\" style=\"padding:8px 24px 42px;\"><a href=\"$GALLERY_URL\" style=\"font-family:Georgia,serif;font-size:20px;color:#111111;text-decoration:underline;\">Ver fotografía →</a></td></tr><tr><td align=\"center\" style=\"border-top:1px solid #e5e5e5;padding-top:26px;\"><p style=\"font-size:16px;color:#888;margin:0 0 6px;\">Miguel López · Fotografía</p><p style=\"font-size:15px;margin:0;\"><a href=\"https://mlopezmad.es\" style=\"color:#111;text-decoration:underline;\">mlopezmad.es</a></p></td></tr></table></td></tr></table>",
+            "subject": "Nueva fotografía en $DISPLAY_NAME",
+            "body": "<div style=\"display:none;font-size:1px;color:#ffffff;max-height:0;max-width:0;opacity:0;overflow:hidden;\">$UNIQUE_ID</div><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#ffffff;color:#111;font-family:Georgia,serif;\"><tr><td align=\"center\" style=\"padding:38px 22px;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:640px;\"><tr><td align=\"center\" style=\"padding-bottom:24px;\"><h1 style=\"font-size:34px;line-height:1.15;font-weight:400;margin:0;color:#111;\">Nueva fotografía en $DISPLAY_NAME</h1><p style=\"font-family:Arial,sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin:18px 0 0;\">Miguel López — Fotografía</p></td></tr><tr><td align=\"center\" style=\"padding:10px 0 34px;\"><img src=\"$IMAGE_URL\" alt=\"Fotografía\" width=\"430\" style=\"width:100%;max-width:430px;height:auto;display:block;border:0;\"></td></tr><tr><td align=\"left\" style=\"padding:0 24px 28px;\"><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0 0 14px;\">$MESSAGE</p><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0;\">Espero que la disfrutes.</p></td></tr><tr><td align=\"center\" style=\"padding:8px 24px 42px;\"><a href=\"$GALLERY_URL\" style=\"font-family:Georgia,serif;font-size:20px;color:#111111;text-decoration:underline;\">Ver fotografía →</a></td></tr><tr><td align=\"center\" style=\"border-top:1px solid #e5e5e5;padding-top:26px;\"><p style=\"font-size:16px;color:#888;margin:0 0 6px;\">Miguel López · Fotografía</p><p style=\"font-size:15px;margin:0;\"><a href=\"https://mlopezmad.es\" style=\"color:#111;text-decoration:underline;\">mlopezmad.es</a></p></td></tr></table></td></tr></table>",
             "status": "about_to_send"
           }
           EOF
           )
 
           echo "$RESPONSE"
+
+          HTTP_STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS" | cut -d: -f2)
+
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "Error enviando newsletter"
+            exit 1
+          fi
