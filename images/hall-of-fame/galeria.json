@@ -1,0 +1,24 @@
+{
+  "imagenes": [
+    {
+      "archivo": "novia-mercedes.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "rebajas.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "puerta-alcala.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "silueta-calle.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "baile-madrid.jpg",
+      "tipo": "bn"
+    }
+  ]
+}
