@@ -76,6 +76,30 @@ jobs:
         run: |
           git push
 
+      - name: Esperar a que la foto esté publicada
+        if: steps.fotos.outputs.count != '0'
+        env:
+          IMAGE_URL: ${{ steps.fotos.outputs.image_url }}
+        run: |
+          echo "Esperando a que esté disponible: $IMAGE_URL"
+
+          for i in {1..60}; do
+            STATUS=$(curl -L -s -o /dev/null -w "%{http_code}" "$IMAGE_URL")
+
+            if [ "$STATUS" = "200" ]; then
+              echo "Imagen publicada correctamente."
+              echo "Esperando 2 minutos extra para asegurar propagación..."
+              sleep 120
+              exit 0
+            fi
+
+            echo "Intento $i: todavía no disponible. Código HTTP: $STATUS"
+            sleep 10
+          done
+
+          echo "La imagen no está disponible después de esperar 10 minutos."
+          exit 1
+
       - name: Enviar newsletter
         if: steps.fotos.outputs.count != '0'
         env:
@@ -92,7 +116,7 @@ jobs:
             -d @- <<EOF
           {
             "subject": "Nueva fotografía en Madrid",
-            "body": "<div style=\"display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;\">$UNIQUE_ID</div><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#ffffff;color:#111;font-family:Georgia,serif;\"><tr><td align=\"center\" style=\"padding:38px 22px;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:640px;\"><tr><td align=\"center\" style=\"padding-bottom:28px;\"><h1 style=\"font-size:34px;line-height:1.15;font-weight:400;margin:0;color:#111;\">Nueva fotografía en Madrid</h1><p style=\"font-family:Arial,sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin:18px 0 0;\">Miguel López — Fotografía</p></td></tr><tr><td align=\"center\" style=\"padding:10px 0 34px;\"><img src=\"$IMAGE_URL\" alt=\"Nueva fotografía en Madrid\" width=\"460\" style=\"width:100%;max-width:460px;height:auto;display:block;border:0;\"></td></tr><tr><td align=\"left\" style=\"padding:0 24px 28px;\"><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0 0 14px;\">$MESSAGE</p><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0;\">Espero que la disfrutes.</p></td></tr><tr><td align=\"center\" style=\"padding:8px 24px 42px;\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td bgcolor=\"#111111\" align=\"center\" style=\"padding:15px 32px;\"><a href=\"$GALLERY_URL\" style=\"font-family:Arial,sans-serif;font-size:15px;font-weight:bold;color:#ffffff;text-decoration:none;display:block;\">Ver fotografía →</a></td></tr></table></td></tr><tr><td align=\"center\" style=\"border-top:1px solid #e5e5e5;padding-top:26px;\"><p style=\"font-size:16px;color:#888;margin:0 0 6px;\">Miguel López · Fotografía</p><p style=\"font-size:15px;margin:0;\"><a href=\"https://mlopezmad.es\" style=\"color:#111;text-decoration:underline;\">mlopezmad.es</a></p></td></tr></table></td></tr></table>",
+            "body": "<div style=\"display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;\">$UNIQUE_ID</div><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#ffffff;color:#111;font-family:Georgia,serif;\"><tr><td align=\"center\" style=\"padding:38px 22px;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:640px;\"><tr><td align=\"center\" style=\"padding-bottom:24px;\"><h1 style=\"font-size:34px;line-height:1.15;font-weight:400;margin:0;color:#111;\">Nueva fotografía en Madrid</h1><p style=\"font-family:Arial,sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin:18px 0 0;\">Miguel López — Fotografía</p></td></tr><tr><td align=\"center\" style=\"padding:10px 0 34px;\"><img src=\"$IMAGE_URL\" alt=\"Fotografía de Madrid\" width=\"430\" style=\"width:100%;max-width:430px;height:auto;display:block;border:0;\"></td></tr><tr><td align=\"left\" style=\"padding:0 24px 28px;\"><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0 0 14px;\">$MESSAGE</p><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0;\">Espero que la disfrutes.</p></td></tr><tr><td align=\"center\" style=\"padding:8px 24px 42px;\"><a href=\"$GALLERY_URL\" style=\"background:#111111;color:#ffffff;text-decoration:none;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;padding:15px 32px;display:inline-block;\">Ver fotografía →</a></td></tr><tr><td align=\"center\" style=\"border-top:1px solid #e5e5e5;padding-top:26px;\"><p style=\"font-size:16px;color:#888;margin:0 0 6px;\">Miguel López · Fotografía</p><p style=\"font-size:15px;margin:0;\"><a href=\"https://mlopezmad.es\" style=\"color:#111;text-decoration:underline;\">mlopezmad.es</a></p></td></tr></table></td></tr></table>",
             "status": "about_to_send"
           }
           EOF
