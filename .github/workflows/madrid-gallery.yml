@@ -72,14 +72,14 @@ jobs:
         run: |
           git push
 
-      - name: Enviar newsletter
+            - name: Enviar newsletter
         if: steps.fotos.outputs.count != '0'
         env:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
           SUBJECT: ${{ steps.fotos.outputs.subject }}
           MESSAGE: ${{ steps.fotos.outputs.message }}
         run: |
-          curl -s -X POST "https://api.buttondown.email/v1/emails" \
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "https://api.buttondown.email/v1/emails" \
             -H "Authorization: Token $BUTTONDOWN_API_KEY" \
             -H "Content-Type: application/json" \
             -H "X-Buttondown-Live-Dangerously: true" \
@@ -90,3 +90,13 @@ jobs:
             "status": "about_to_send"
           }
           EOF
+          )
+
+          echo "$RESPONSE"
+
+          HTTP_STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS" | cut -d: -f2)
+
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "Error enviando newsletter"
+            exit 1
+          fi
