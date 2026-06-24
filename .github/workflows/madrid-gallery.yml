@@ -24,23 +24,18 @@ jobs:
         run: |
           NEW_FILES=$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep -Ei '^images/madrid/.*\.(jpg|jpeg|png)$' || true)
           COUNT=$(echo "$NEW_FILES" | sed '/^\s*$/d' | wc -l)
-          DATE=$(date +"%d/%m/%Y %H:%M")
-          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
           FIRST_FILE=$(echo "$NEW_FILES" | head -n 1 | xargs -n 1 basename)
 
           IMAGE_URL="https://mlopezmad.es/images/madrid/$FIRST_FILE"
           GALLERY_URL="https://mlopezmad.es/madrid.html"
 
           echo "count=$COUNT" >> $GITHUB_OUTPUT
-          echo "date=$DATE" >> $GITHUB_OUTPUT
           echo "image_url=$IMAGE_URL" >> $GITHUB_OUTPUT
           echo "gallery_url=$GALLERY_URL" >> $GITHUB_OUTPUT
 
           if [ "$COUNT" -eq 1 ]; then
-            echo "subject=Nueva fotografía en Madrid · $SHORT_SHA" >> $GITHUB_OUTPUT
-            echo "message=Una nueva imagen ha sido añadida a la colección Madrid." >> $GITHUB_OUTPUT
+            echo "message=He añadido una nueva fotografía a la colección Madrid." >> $GITHUB_OUTPUT
           else
-            echo "subject=Nuevas fotografías en Madrid · $SHORT_SHA" >> $GITHUB_OUTPUT
             echo "message=He añadido $COUNT nuevas fotografías a la colección Madrid." >> $GITHUB_OUTPUT
           fi
 
@@ -85,10 +80,10 @@ jobs:
         if: steps.fotos.outputs.count != '0'
         env:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
-          SUBJECT: ${{ steps.fotos.outputs.subject }}
           MESSAGE: ${{ steps.fotos.outputs.message }}
           IMAGE_URL: ${{ steps.fotos.outputs.image_url }}
           GALLERY_URL: ${{ steps.fotos.outputs.gallery_url }}
+          UNIQUE_ID: ${{ github.sha }}
         run: |
           RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "https://api.buttondown.email/v1/emails" \
             -H "Authorization: Token $BUTTONDOWN_API_KEY" \
@@ -96,8 +91,8 @@ jobs:
             -H "X-Buttondown-Live-Dangerously: true" \
             -d @- <<EOF
           {
-            "subject": "$SUBJECT",
-            "body": "<div style=\"max-width:640px;margin:0 auto;font-family:Georgia,serif;color:#111;line-height:1.6;\"><img src=\"$IMAGE_URL\" alt=\"Nueva fotografía en Madrid\" style=\"width:100%;height:auto;display:block;margin-bottom:28px;\"><h1 style=\"font-size:28px;font-weight:400;margin:0 0 16px;\">Nueva fotografía en Madrid</h1><p style=\"font-size:16px;color:#555;margin:0 0 28px;\">$MESSAGE</p><p style=\"margin:34px 0;\"><a href=\"$GALLERY_URL\" style=\"display:inline-block;background:#111;color:#fff;text-decoration:none;padding:14px 24px;font-size:15px;\">Ver fotografía →</a></p><p style=\"font-size:13px;color:#999;margin-top:40px;\">Miguel López · Fotografía<br>mlopezmad.es</p></div>",
+            "subject": "Nueva fotografía en Madrid",
+            "body": "<div style=\"display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;\">$UNIQUE_ID</div><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"background:#ffffff;color:#111;font-family:Georgia,serif;\"><tr><td align=\"center\" style=\"padding:38px 22px;\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:640px;\"><tr><td align=\"center\" style=\"padding-bottom:28px;\"><h1 style=\"font-size:34px;line-height:1.15;font-weight:400;margin:0;color:#111;\">Nueva fotografía en Madrid</h1><p style=\"font-family:Arial,sans-serif;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin:18px 0 0;\">Miguel López — Fotografía</p></td></tr><tr><td align=\"center\" style=\"padding:10px 0 34px;\"><img src=\"$IMAGE_URL\" alt=\"Nueva fotografía en Madrid\" width=\"460\" style=\"width:100%;max-width:460px;height:auto;display:block;border:0;\"></td></tr><tr><td align=\"left\" style=\"padding:0 24px 28px;\"><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0 0 14px;\">$MESSAGE</p><p style=\"font-size:18px;line-height:1.7;color:#333;margin:0;\">Espero que la disfrutes.</p></td></tr><tr><td align=\"center\" style=\"padding:8px 24px 42px;\"><table cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td bgcolor=\"#111111\" align=\"center\" style=\"padding:15px 32px;\"><a href=\"$GALLERY_URL\" style=\"font-family:Arial,sans-serif;font-size:15px;font-weight:bold;color:#ffffff;text-decoration:none;display:block;\">Ver fotografía →</a></td></tr></table></td></tr><tr><td align=\"center\" style=\"border-top:1px solid #e5e5e5;padding-top:26px;\"><p style=\"font-size:16px;color:#888;margin:0 0 6px;\">Miguel López · Fotografía</p><p style=\"font-size:15px;margin:0;\"><a href=\"https://mlopezmad.es\" style=\"color:#111;text-decoration:underline;\">mlopezmad.es</a></p></td></tr></table></td></tr></table>",
             "status": "about_to_send"
           }
           EOF
