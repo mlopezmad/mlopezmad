@@ -1,7 +1,16 @@
-{"imagenes":[
-{"archivo":"IMG_6755.jpeg","tipo":"bn"}
-,
-{"archivo":"IMG_6756.jpeg","tipo":"bn"}
-,
-{"archivo":"IMG_6757.jpeg","tipo":"bn"}
-]}
+{
+  "imagenes": [
+    {
+      "archivo": "IMG_6755.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_6756.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_6757.jpeg",
+      "tipo": "bn"
+    }
+  ]
+}
