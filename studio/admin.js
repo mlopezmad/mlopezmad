@@ -3,14 +3,18 @@ const WORKER_URL = "https://mlopezmad-estudio.mlopezmad.workers.dev";
 const login = document.getElementById("login");
 const dashboard = document.getElementById("dashboard");
 const panel = document.getElementById("panel");
+const collectionPanel = document.getElementById("collectionPanel");
 const success = document.getElementById("success");
+const collectionSuccess = document.getElementById("collectionSuccess");
 
 const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
 const loginStatus = document.getElementById("loginStatus");
 
 const newPostBtn = document.getElementById("newPostBtn");
+const newCollectionBtn = document.getElementById("newCollectionBtn");
 const backBtn = document.getElementById("backBtn");
+const backFromCollectionBtn = document.getElementById("backFromCollectionBtn");
 
 const collectionSelect = document.getElementById("collection");
 const filesInput = document.getElementById("files");
@@ -19,15 +23,27 @@ const fileStatus = document.getElementById("fileStatus");
 const publishBtn = document.getElementById("publishBtn");
 const publishStatus = document.getElementById("publishStatus");
 
+const collectionTitle = document.getElementById("collectionTitle");
+const collectionType = document.getElementById("collectionType");
+const collectionDescription = document.getElementById("collectionDescription");
+const collectionYear = document.getElementById("collectionYear");
+const createCollectionBtn = document.getElementById("createCollectionBtn");
+const createCollectionStatus = document.getElementById("createCollectionStatus");
+
 const collectionStats = document.getElementById("collectionStats");
 
 const successText = document.getElementById("successText");
 const viewGalleryBtn = document.getElementById("viewGalleryBtn");
 const newUploadBtn = document.getElementById("newUploadBtn");
 
+const collectionSuccessText = document.getElementById("collectionSuccessText");
+const uploadToNewCollectionBtn = document.getElementById("uploadToNewCollectionBtn");
+const backToDashboardBtn = document.getElementById("backToDashboardBtn");
+
 let password = "";
 let selectedFiles = [];
 let lastGalleryUrl = "";
+let lastCreatedCollectionPath = "";
 let collections = [];
 
 loginBtn.addEventListener("click", async () => {
@@ -41,9 +57,7 @@ loginBtn.addEventListener("click", async () => {
     login.classList.add("hidden");
     dashboard.classList.remove("hidden");
 
-    await loadCollections();
-    populateCollectionSelect();
-    await loadStats();
+    await refreshCollections();
 });
 
 newPostBtn.addEventListener("click", () => {
@@ -51,9 +65,20 @@ newPostBtn.addEventListener("click", () => {
     panel.classList.remove("hidden");
 });
 
+newCollectionBtn.addEventListener("click", () => {
+    dashboard.classList.add("hidden");
+    collectionPanel.classList.remove("hidden");
+});
+
 backBtn.addEventListener("click", () => {
     resetUpload();
     panel.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+});
+
+backFromCollectionBtn.addEventListener("click", () => {
+    resetCollectionForm();
+    collectionPanel.classList.add("hidden");
     dashboard.classList.remove("hidden");
 });
 
@@ -91,7 +116,6 @@ publishBtn.addEventListener("click", async () => {
 
         for (const file of selectedFiles) {
             const content = await fileToBase64(file);
-
             files.push({
                 name: file.name,
                 content
@@ -128,11 +152,64 @@ publishBtn.addEventListener("click", async () => {
         successText.textContent = `${data.uploaded} fotografía${data.uploaded === 1 ? "" : "s"} publicada${data.uploaded === 1 ? "" : "s"} correctamente.`;
 
         resetUpload();
-        await loadStats();
+        await refreshCollections();
 
     } catch (error) {
         publishStatus.textContent = "Error: " + error.message;
         publishBtn.disabled = false;
+    }
+});
+
+createCollectionBtn.addEventListener("click", async () => {
+    const title = collectionTitle.value.trim();
+    const type = collectionType.value;
+    const description = collectionDescription.value.trim();
+    const year = collectionYear.value.trim() || new Date().getFullYear();
+
+    if (!title) {
+        createCollectionStatus.textContent = "Introduce el nombre de la colección.";
+        return;
+    }
+
+    createCollectionBtn.disabled = true;
+    createCollectionStatus.textContent = "Creando colección...";
+
+    try {
+        const response = await fetch(WORKER_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "create_collection",
+                password,
+                title,
+                type,
+                description,
+                year
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.ok) {
+            throw new Error(data.error || "No se pudo crear la colección.");
+        }
+
+        lastGalleryUrl = "../" + data.url;
+        lastCreatedCollectionPath = data.path;
+
+        collectionPanel.classList.add("hidden");
+        collectionSuccess.classList.remove("hidden");
+
+        collectionSuccessText.textContent = `La colección "${data.title}" se ha creado correctamente.`;
+
+        resetCollectionForm();
+        await refreshCollections();
+
+    } catch (error) {
+        createCollectionStatus.textContent = "Error: " + error.message;
+        createCollectionBtn.disabled = false;
     }
 });
 
@@ -146,6 +223,28 @@ newUploadBtn.addEventListener("click", () => {
     success.classList.add("hidden");
     panel.classList.remove("hidden");
 });
+
+uploadToNewCollectionBtn.addEventListener("click", async () => {
+    collectionSuccess.classList.add("hidden");
+    panel.classList.remove("hidden");
+
+    await refreshCollections();
+
+    if (lastCreatedCollectionPath) {
+        collectionSelect.value = lastCreatedCollectionPath;
+    }
+});
+
+backToDashboardBtn.addEventListener("click", () => {
+    collectionSuccess.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+});
+
+async function refreshCollections() {
+    await loadCollections();
+    populateCollectionSelect();
+    await loadStats();
+}
 
 async function loadCollections() {
     const response = await fetch("../collections.json?t=" + Date.now());
@@ -219,6 +318,15 @@ function resetUpload() {
     publishBtn.disabled = true;
 }
 
+function resetCollectionForm() {
+    collectionTitle.value = "";
+    collectionDescription.value = "";
+    collectionYear.value = "2026";
+    collectionType.value = "portfolio";
+    createCollectionStatus.textContent = "";
+    createCollectionBtn.disabled = false;
+}
+
 function fileToBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -230,7 +338,6 @@ function fileToBase64(file) {
         };
 
         reader.onerror = reject;
-
         reader.readAsDataURL(file);
     });
 }
