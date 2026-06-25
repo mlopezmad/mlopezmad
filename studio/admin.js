@@ -193,6 +193,49 @@ window.deleteCollection = async (id, name) => {
 };
 
 window.openCollectionManager = async (id) => {
+    await openCollectionManager(id);
+};
+
+window.previewPhoto = (url) => {
+    window.open(url, "_blank");
+};
+
+window.deletePhoto = async (filename) => {
+    if (!state.currentCollection) return;
+
+    const firstConfirm = confirm(`¿Seguro que quieres eliminar esta fotografía?\n\n${filename}`);
+
+    if (!firstConfirm) return;
+
+    const typed = prompt(`Esta acción eliminará la imagen de GitHub y de la galería.\n\nEscribe ELIMINAR para confirmar.`);
+
+    if (typed !== "ELIMINAR") {
+        alert("Eliminación cancelada.");
+        return;
+    }
+
+    dom.managerMeta.textContent = "Eliminando fotografía...";
+
+    try {
+        const data = await workerRequest({
+            action: "delete_photo",
+            password: state.password,
+            collectionId: state.currentCollection.id,
+            filename
+        });
+
+        alert(`Fotografía "${data.deleted}" eliminada correctamente.`);
+
+        await openCollectionManager(state.currentCollection.id);
+        await refreshCollections();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await openCollectionManager(state.currentCollection.id);
+    }
+};
+
+async function openCollectionManager(id) {
     const collection = state.collections.find(item => item.id === id);
 
     if (!collection) return;
@@ -219,7 +262,7 @@ window.openCollectionManager = async (id) => {
 
         const basePath = "../" + collection.path + "/";
 
-        dom.managerPhotos.innerHTML = imagenes.map((imagen, index) => {
+        dom.managerPhotos.innerHTML = imagenes.map((imagen) => {
             const archivo = imagen.archivo || imagen.file || "";
             const tipo = imagen.tipo || imagen.type || "bn";
 
@@ -233,6 +276,14 @@ window.openCollectionManager = async (id) => {
                         <button type="button" class="secondary" onclick="previewPhoto('${basePath + archivo}')">
                             Ver
                         </button>
+
+                        <button
+                            type="button"
+                            onclick="deletePhoto('${archivo}')"
+                            style="background:#fff;color:#a33;border-color:#e5caca;"
+                        >
+                            Eliminar
+                        </button>
                     </div>
                 </div>
             `;
@@ -242,11 +293,7 @@ window.openCollectionManager = async (id) => {
         dom.managerMeta.textContent = "No se pudo cargar la colección.";
         dom.managerPhotos.innerHTML = `<p class="status">${error.message}</p>`;
     }
-};
-
-window.previewPhoto = (url) => {
-    window.open(url, "_blank");
-};
+}
 
 function resetUpload() {
     dom.filesInput.value = "";
