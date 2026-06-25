@@ -72,40 +72,46 @@ jobs:
         run: |
           cd "$GALLERY_DIR"
 
-          {
-            echo '{"imagenes":['
+          python3 <<'PY'
+          import json
+          from pathlib import Path
 
-            first=true
-            TMP_LIST=$(mktemp)
+          gallery = Path("galeria.json")
 
-            echo "$NEW_FILES" | while read file; do
-              [ -z "$file" ] && continue
+          old = {"imagenes": []}
+          if gallery.exists():
+              try:
+                  old = json.loads(gallery.read_text(encoding="utf-8"))
+              except Exception:
+                  old = {"imagenes": []}
 
-              if [ "$(dirname "$file")" = "$GALLERY_DIR" ]; then
-                basename "$file" >> "$TMP_LIST"
-              fi
-            done
+          tipos = {}
+          for img in old.get("imagenes", []):
+              archivo = img.get("archivo") or img.get("file")
+              tipo = img.get("tipo", "bn")
+              if archivo:
+                  tipos[archivo] = tipo
 
-            find . -maxdepth 1 -type f \( \
-              -iname "*.jpg" -o \
-              -iname "*.jpeg" -o \
-              -iname "*.png" \
-            \) | sed 's#^\./##' | sort >> "$TMP_LIST"
+          archivos = sorted([
+              p.name for p in Path(".").iterdir()
+              if p.is_file() and p.suffix.lower() in [".jpg", ".jpeg", ".png"]
+          ])
 
-            awk '!seen[$0]++' "$TMP_LIST" | while read file; do
-              [ -z "$file" ] && continue
+          nuevo = {
+              "imagenes": [
+                  {
+                      "archivo": archivo,
+                      "tipo": tipos.get(archivo, "bn")
+                  }
+                  for archivo in archivos
+              ]
+          }
 
-              if [ "$first" = true ]; then
-                first=false
-              else
-                echo ','
-              fi
-
-              echo "{\"archivo\":\"$file\",\"tipo\":\"bn\"}"
-            done
-
-            echo ']}'
-          } > galeria.json
+          gallery.write_text(
+              json.dumps(nuevo, ensure_ascii=False, indent=2),
+              encoding="utf-8"
+          )
+          PY
 
       - name: Commit cambios
         if: steps.foto.outputs.count != '0'
