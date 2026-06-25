@@ -200,6 +200,36 @@ window.previewPhoto = (url) => {
     window.open(url, "_blank");
 };
 
+window.togglePhotoType = async (filename, currentType) => {
+    if (!state.currentCollection) return;
+
+    const newType = currentType === "color" ? "bn" : "color";
+    const label = newType === "color" ? "Color" : "B&N";
+
+    const ok = confirm(`¿Cambiar "${filename}" a ${label}?`);
+
+    if (!ok) return;
+
+    dom.managerMeta.textContent = "Actualizando fotografía...";
+
+    try {
+        await workerRequest({
+            action: "update_photo_type",
+            password: state.password,
+            collectionId: state.currentCollection.id,
+            filename,
+            type: newType
+        });
+
+        await openCollectionManager(state.currentCollection.id);
+        await refreshCollections();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await openCollectionManager(state.currentCollection.id);
+    }
+};
+
 window.deletePhoto = async (filename) => {
     if (!state.currentCollection) return;
 
@@ -265,16 +295,26 @@ async function openCollectionManager(id) {
         dom.managerPhotos.innerHTML = imagenes.map((imagen) => {
             const archivo = imagen.archivo || imagen.file || "";
             const tipo = imagen.tipo || imagen.type || "bn";
+            const tipoTexto = tipo === "color" ? "Color" : "Blanco y negro";
+            const botonTipo = tipo === "color" ? "Cambiar a B&N" : "Cambiar a Color";
 
             return `
                 <div class="photo-card">
-                    <img src="${basePath + archivo}" alt="${archivo}">
+                    <img src="${basePath + archivo}?t=${Date.now()}" alt="${archivo}">
                     <p>${archivo}</p>
-                    <p>${tipo === "color" ? "Color" : "Blanco y negro"}</p>
+                    <p>${tipoTexto}</p>
 
                     <div class="photo-actions">
                         <button type="button" class="secondary" onclick="previewPhoto('${basePath + archivo}')">
                             Ver
+                        </button>
+
+                        <button
+                            type="button"
+                            class="secondary"
+                            onclick="togglePhotoType('${archivo}', '${tipo}')"
+                        >
+                            ${botonTipo}
                         </button>
 
                         <button
