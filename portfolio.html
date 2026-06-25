@@ -4,7 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fotografías - mlopezmad</title>
+
 <link rel="stylesheet" href="style.css">
+
+<style>
+.portfolio-list{
+    max-width:760px;
+    margin:0 auto 70px;
+    padding:0 24px;
+}
+
+.portfolio-list a{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    padding:22px 0;
+    border-bottom:1px solid #ececec;
+    color:#111;
+    text-decoration:none;
+}
+
+.portfolio-list strong{
+    font-size:1.35rem;
+    font-weight:400;
+}
+
+.portfolio-list span{
+    color:#888;
+    font-size:.95rem;
+    text-align:right;
+}
+
+.portfolio-empty{
+    color:#888;
+    text-align:center;
+    margin-top:40px;
+}
+
+.volver{
+    display:block;
+    text-align:center;
+    margin:70px 0;
+    text-decoration:none;
+    color:#111;
+    font-size:1.05rem;
+}
+
+@media(max-width:768px){
+    .portfolio-list a{
+        display:block;
+    }
+
+    .portfolio-list span{
+        display:block;
+        text-align:left;
+        margin-top:8px;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -14,13 +72,67 @@
     <p>Archivo fotográfico</p>
 </section>
 
-<nav class="menu">
-    <a href="madrid.html">Madrid</a>
-    <a href="middelburg.html">Middelburg</a>
-    <a href="rotterdam.html">Rotterdam</a>
-    <a href="iphone4s.html">iPhone 4s</a>
-    <a href="index.html">← Volver</a>
-</nav>
+<section class="portfolio-list" id="portfolioList">
+    <p class="portfolio-empty">Cargando fotografías...</p>
+</section>
+
+<a class="volver" href="index.html">← Volver</a>
+
+<script>
+async function cargarPortfolio(){
+    const contenedor = document.getElementById("portfolioList");
+
+    try{
+        const response = await fetch("collections.json?t=" + Date.now());
+        const data = await response.json();
+
+        const colecciones = (data.collections || [])
+            .filter(c => c.type === "portfolio");
+
+        if(colecciones.length === 0){
+            contenedor.innerHTML = '<p class="portfolio-empty">No hay colecciones disponibles.</p>';
+            return;
+        }
+
+        const filas = await Promise.all(colecciones.map(async coleccion => {
+            let total = null;
+
+            try{
+                const galeriaResponse = await fetch(coleccion.json + "?t=" + Date.now());
+                const galeriaData = await galeriaResponse.json();
+                total = (galeriaData.imagenes || []).length;
+            }catch(error){
+                total = null;
+            }
+
+            const contador = total === null
+                ? "Abrir →"
+                : `${total} ${total === 1 ? "fotografía" : "fotografías"} →`;
+
+            return `
+                <a href="${coleccion.url}">
+                    <strong>${coleccion.title}</strong>
+                    <span>${contador}</span>
+                </a>
+            `;
+        }));
+
+        filas.push(`
+            <a href="iphone4s.html">
+                <strong>iPhone 4s</strong>
+                <span>Transfer Filter Project →</span>
+            </a>
+        `);
+
+        contenedor.innerHTML = filas.join("");
+
+    }catch(error){
+        contenedor.innerHTML = '<p class="portfolio-empty">No se pudo cargar el portfolio.</p>';
+    }
+}
+
+cargarPortfolio();
+</script>
 
 </body>
 </html>
