@@ -1,410 +1,267 @@
-const WORKER_URL = "https://mlopezmad-estudio.mlopezmad.workers.dev";
+import { dom } from "./modules/dom.js";
+import { state } from "./modules/state.js";
+import { show, fileToBase64 } from "./modules/utils.js";
+import { workerRequest, loadGalleryJson } from "./modules/api.js";
+import { refreshCollections, deleteCollection } from "./modules/collections.js";
 
-const PROTECTED_COLLECTIONS = [
-    "hall-of-fame",
-    "madrid",
-    "middelburg",
-    "rotterdam",
-    "iphone4s-cadiz",
-    "iphone4s-caceres"
-];
+dom.loginBtn.addEventListener("click", async () => {
+    state.password = dom.passwordInput.value.trim();
 
-const login = document.getElementById("login");
-const dashboard = document.getElementById("dashboard");
-const panel = document.getElementById("panel");
-const collectionPanel = document.getElementById("collectionPanel");
-const success = document.getElementById("success");
-const collectionSuccess = document.getElementById("collectionSuccess");
-
-const passwordInput = document.getElementById("password");
-const loginBtn = document.getElementById("loginBtn");
-const loginStatus = document.getElementById("loginStatus");
-
-const newPostBtn = document.getElementById("newPostBtn");
-const newCollectionBtn = document.getElementById("newCollectionBtn");
-const backBtn = document.getElementById("backBtn");
-const backFromCollectionBtn = document.getElementById("backFromCollectionBtn");
-
-const collectionSelect = document.getElementById("collection");
-const filesInput = document.getElementById("files");
-const preview = document.getElementById("preview");
-const fileStatus = document.getElementById("fileStatus");
-const publishBtn = document.getElementById("publishBtn");
-const publishStatus = document.getElementById("publishStatus");
-
-const collectionTitle = document.getElementById("collectionTitle");
-const collectionType = document.getElementById("collectionType");
-const collectionDescription = document.getElementById("collectionDescription");
-const collectionYear = document.getElementById("collectionYear");
-const createCollectionBtn = document.getElementById("createCollectionBtn");
-const createCollectionStatus = document.getElementById("createCollectionStatus");
-
-const collectionStats = document.getElementById("collectionStats");
-
-const successText = document.getElementById("successText");
-const viewGalleryBtn = document.getElementById("viewGalleryBtn");
-const newUploadBtn = document.getElementById("newUploadBtn");
-
-const collectionSuccessText = document.getElementById("collectionSuccessText");
-const uploadToNewCollectionBtn = document.getElementById("uploadToNewCollectionBtn");
-const backToDashboardBtn = document.getElementById("backToDashboardBtn");
-
-let password = "";
-let selectedFiles = [];
-let lastGalleryUrl = "";
-let lastCreatedCollectionPath = "";
-let collections = [];
-
-loginBtn.addEventListener("click", async () => {
-    password = passwordInput.value.trim();
-
-    if (!password) {
-        loginStatus.textContent = "Introduce la contraseña.";
+    if (!state.password) {
+        dom.loginStatus.textContent = "Introduce la contraseña.";
         return;
     }
 
-    login.classList.add("hidden");
-    dashboard.classList.remove("hidden");
-
+    show("dashboard");
     await refreshCollections();
 });
 
-newPostBtn.addEventListener("click", () => {
-    dashboard.classList.add("hidden");
-    panel.classList.remove("hidden");
+dom.newPostBtn.addEventListener("click", () => {
+    show("panel");
 });
 
-newCollectionBtn.addEventListener("click", () => {
-    dashboard.classList.add("hidden");
-    collectionPanel.classList.remove("hidden");
+dom.newCollectionBtn.addEventListener("click", () => {
+    show("collectionPanel");
 });
 
-backBtn.addEventListener("click", () => {
+dom.backBtn.addEventListener("click", () => {
     resetUpload();
-    panel.classList.add("hidden");
-    dashboard.classList.remove("hidden");
+    show("dashboard");
 });
 
-backFromCollectionBtn.addEventListener("click", () => {
+dom.backFromCollectionBtn.addEventListener("click", () => {
     resetCollectionForm();
-    collectionPanel.classList.add("hidden");
-    dashboard.classList.remove("hidden");
+    show("dashboard");
 });
 
-filesInput.addEventListener("change", () => {
-    selectedFiles = Array.from(filesInput.files || []);
-    preview.innerHTML = "";
+dom.filesInput.addEventListener("change", () => {
+    state.selectedFiles = Array.from(dom.filesInput.files || []);
+    dom.preview.innerHTML = "";
 
-    if (selectedFiles.length === 0) {
-        fileStatus.textContent = "No hay fotografías seleccionadas.";
-        publishBtn.disabled = true;
+    if (state.selectedFiles.length === 0) {
+        dom.fileStatus.textContent = "No hay fotografías seleccionadas.";
+        dom.publishBtn.disabled = true;
         return;
     }
 
-    selectedFiles.forEach(file => {
+    state.selectedFiles.forEach(file => {
         const img = document.createElement("img");
         img.src = URL.createObjectURL(file);
-        preview.appendChild(img);
+        dom.preview.appendChild(img);
     });
 
-    const totalMB = selectedFiles.reduce((sum, file) => sum + file.size, 0) / 1024 / 1024;
+    const totalMB = state.selectedFiles.reduce((sum, file) => sum + file.size, 0) / 1024 / 1024;
 
-    fileStatus.textContent = `${selectedFiles.length} fotografía${selectedFiles.length === 1 ? "" : "s"} seleccionada${selectedFiles.length === 1 ? "" : "s"} · ${totalMB.toFixed(1)} MB`;
+    dom.fileStatus.textContent =
+        `${state.selectedFiles.length} fotografía${state.selectedFiles.length === 1 ? "" : "s"} seleccionada${state.selectedFiles.length === 1 ? "" : "s"} · ${totalMB.toFixed(1)} MB`;
 
-    publishBtn.disabled = false;
+    dom.publishBtn.disabled = false;
 });
 
-publishBtn.addEventListener("click", async () => {
-    if (!password || selectedFiles.length === 0) return;
+dom.publishBtn.addEventListener("click", async () => {
+    if (!state.password || state.selectedFiles.length === 0) return;
 
-    publishBtn.disabled = true;
-    publishStatus.textContent = "Preparando fotografías...";
+    dom.publishBtn.disabled = true;
+    dom.publishStatus.textContent = "Preparando fotografías...";
 
     try {
         const files = [];
 
-        for (const file of selectedFiles) {
+        for (const file of state.selectedFiles) {
             const content = await fileToBase64(file);
+
             files.push({
                 name: file.name,
                 content
             });
         }
 
-        const selectedOption = collectionSelect.options[collectionSelect.selectedIndex];
-        lastGalleryUrl = selectedOption.dataset.url || "../portfolio.html";
+        const selectedOption = dom.collectionSelect.options[dom.collectionSelect.selectedIndex];
+        state.lastGalleryUrl = selectedOption.dataset.url || "../portfolio.html";
 
-        publishStatus.textContent = "Subiendo fotografías...";
+        dom.publishStatus.textContent = "Subiendo fotografías...";
 
-        const response = await fetch(WORKER_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                action: "upload",
-                password,
-                collectionPath: collectionSelect.value,
-                files
-            })
+        const data = await workerRequest({
+            action: "upload",
+            password: state.password,
+            collectionPath: dom.collectionSelect.value,
+            files
         });
 
-        const data = await response.json();
+        show("success");
 
-        if (!response.ok || !data.ok) {
-            throw new Error(data.error || "No se pudo publicar.");
-        }
-
-        panel.classList.add("hidden");
-        success.classList.remove("hidden");
-
-        successText.textContent = `${data.uploaded} fotografía${data.uploaded === 1 ? "" : "s"} publicada${data.uploaded === 1 ? "" : "s"} correctamente.`;
+        dom.successText.textContent =
+            `${data.uploaded} fotografía${data.uploaded === 1 ? "" : "s"} publicada${data.uploaded === 1 ? "" : "s"} correctamente.`;
 
         resetUpload();
         await refreshCollections();
 
     } catch (error) {
-        publishStatus.textContent = "Error: " + error.message;
-        publishBtn.disabled = false;
+        dom.publishStatus.textContent = "Error: " + error.message;
+        dom.publishBtn.disabled = false;
     }
 });
 
-createCollectionBtn.addEventListener("click", async () => {
-    const title = collectionTitle.value.trim();
-    const type = collectionType.value;
-    const description = collectionDescription.value.trim();
-    const year = collectionYear.value.trim() || new Date().getFullYear();
+dom.createCollectionBtn.addEventListener("click", async () => {
+    const title = dom.collectionTitle.value.trim();
+    const type = dom.collectionType.value;
+    const description = dom.collectionDescription.value.trim();
+    const year = dom.collectionYear.value.trim() || new Date().getFullYear();
 
     if (!title) {
-        createCollectionStatus.textContent = "Introduce el nombre de la colección.";
+        dom.createCollectionStatus.textContent = "Introduce el nombre de la colección.";
         return;
     }
 
-    createCollectionBtn.disabled = true;
-    createCollectionStatus.textContent = "Creando colección...";
+    dom.createCollectionBtn.disabled = true;
+    dom.createCollectionStatus.textContent = "Creando colección...";
 
     try {
-        const response = await fetch(WORKER_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                action: "create_collection",
-                password,
-                title,
-                type,
-                description,
-                year
-            })
+        const data = await workerRequest({
+            action: "create_collection",
+            password: state.password,
+            title,
+            type,
+            description,
+            year
         });
 
-        const data = await response.json();
+        state.lastGalleryUrl = "../" + data.url;
+        state.lastCreatedCollectionPath = data.path;
 
-        if (!response.ok || !data.ok) {
-            throw new Error(data.error || "No se pudo crear la colección.");
-        }
+        show("collectionSuccess");
 
-        lastGalleryUrl = "../" + data.url;
-        lastCreatedCollectionPath = data.path;
-
-        collectionPanel.classList.add("hidden");
-        collectionSuccess.classList.remove("hidden");
-
-        collectionSuccessText.textContent = `La colección "${data.title}" se ha creado correctamente.`;
+        dom.collectionSuccessText.textContent =
+            `La colección "${data.title}" se ha creado correctamente.`;
 
         resetCollectionForm();
         await refreshCollections();
 
     } catch (error) {
-        createCollectionStatus.textContent = "Error: " + error.message;
-        createCollectionBtn.disabled = false;
+        dom.createCollectionStatus.textContent = "Error: " + error.message;
+        dom.createCollectionBtn.disabled = false;
     }
 });
 
-viewGalleryBtn.addEventListener("click", () => {
-    if (lastGalleryUrl) {
-        window.open(lastGalleryUrl, "_blank");
+dom.viewGalleryBtn.addEventListener("click", () => {
+    if (state.lastGalleryUrl) {
+        window.open(state.lastGalleryUrl, "_blank");
     }
 });
 
-newUploadBtn.addEventListener("click", () => {
-    success.classList.add("hidden");
-    panel.classList.remove("hidden");
+dom.newUploadBtn.addEventListener("click", () => {
+    show("panel");
 });
 
-uploadToNewCollectionBtn.addEventListener("click", async () => {
-    collectionSuccess.classList.add("hidden");
-    panel.classList.remove("hidden");
+dom.uploadToNewCollectionBtn.addEventListener("click", async () => {
+    show("panel");
 
     await refreshCollections();
 
-    if (lastCreatedCollectionPath) {
-        collectionSelect.value = lastCreatedCollectionPath;
+    if (state.lastCreatedCollectionPath) {
+        dom.collectionSelect.value = state.lastCreatedCollectionPath;
     }
 });
 
-backToDashboardBtn.addEventListener("click", () => {
-    collectionSuccess.classList.add("hidden");
-    dashboard.classList.remove("hidden");
+dom.backToDashboardBtn.addEventListener("click", () => {
+    show("dashboard");
 });
 
-async function refreshCollections() {
-    await loadCollections();
-    populateCollectionSelect();
-    await loadStats();
-}
+dom.managerBack.addEventListener("click", () => {
+    state.currentCollection = null;
+    show("dashboard");
+});
 
-async function loadCollections() {
-    const response = await fetch("../collections.json?t=" + Date.now());
-    const data = await response.json();
-
-    collections = (data.collections || []).map(collection => {
-        const title = collection.type === "iphone4s"
-            ? `iPhone 4s · ${collection.title}`
-            : collection.title;
-
-        return {
-            id: collection.id,
-            name: title,
-            path: collection.path,
-            json: "../" + collection.json,
-            url: "../" + collection.url,
-            type: collection.type,
-            year: collection.year,
-            description: collection.description,
-            protected: PROTECTED_COLLECTIONS.includes(collection.id)
-        };
-    });
-}
-
-function populateCollectionSelect() {
-    collectionSelect.innerHTML = "";
-
-    collections.forEach(collection => {
-        const option = document.createElement("option");
-        option.value = collection.path;
-        option.dataset.url = collection.url;
-        option.textContent = collection.name;
-        collectionSelect.appendChild(option);
-    });
-}
-
-async function loadStats() {
-    collectionStats.innerHTML = `<div class="collection-row">Cargando colecciones...</div>`;
-
-    const rows = [];
-
-    for (const collection of collections) {
-        let totalText = "No disponible";
-
-        try {
-            const response = await fetch(collection.json + "?t=" + Date.now());
-            const data = await response.json();
-            const total = (data.imagenes || []).length;
-            totalText = `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
-        } catch (error) {
-            totalText = "No disponible";
-        }
-
-        rows.push(`
-            <div class="collection-row">
-                <a href="${collection.url}" target="_blank" style="color:#111;text-decoration:none;">
-                    <strong>${collection.name}</strong>
-                    <span>${totalText} →</span>
-                </a>
-
-                ${collection.protected ? "" : `
-                    <button
-                        type="button"
-                        onclick="deleteCollection('${collection.id}', '${escapeQuotes(collection.name)}')"
-                        style="margin-top:12px;background:#fff;color:#a33;border-color:#e5caca;"
-                    >
-                        Eliminar
-                    </button>
-                `}
-            </div>
-        `);
+dom.managerOpenGallery.addEventListener("click", () => {
+    if (state.currentCollection?.url) {
+        window.open(state.currentCollection.url, "_blank");
     }
+});
 
-    collectionStats.innerHTML = rows.join("");
-}
+dom.managerAddPhotos.addEventListener("click", async () => {
+    if (!state.currentCollection) return;
 
-async function deleteCollection(id, name) {
-    const firstConfirm = confirm(`¿Seguro que quieres eliminar la colección "${name}"?`);
+    show("panel");
 
-    if (!firstConfirm) return;
+    await refreshCollections();
 
-    const typed = prompt(`Esta acción eliminará la colección "${name}", su carpeta de imágenes, su galeria.json y su página HTML.\n\nEscribe ELIMINAR para confirmar.`);
+    dom.collectionSelect.value = state.currentCollection.path;
+});
 
-    if (typed !== "ELIMINAR") {
-        alert("Eliminación cancelada.");
-        return;
-    }
+window.deleteCollection = async (id, name) => {
+    await deleteCollection(id, name, state.password);
+};
 
-    collectionStats.innerHTML = `<div class="collection-row">Eliminando colección...</div>`;
+window.openCollectionManager = async (id) => {
+    const collection = state.collections.find(item => item.id === id);
+
+    if (!collection) return;
+
+    state.currentCollection = collection;
+
+    show("collectionManager");
+
+    dom.managerTitle.textContent = collection.name;
+    dom.managerMeta.textContent = "Cargando fotografías...";
+    dom.managerPhotos.innerHTML = "";
 
     try {
-        const response = await fetch(WORKER_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                action: "delete_collection",
-                password,
-                id
-            })
-        });
+        const data = await loadGalleryJson(collection.json);
+        const imagenes = data.imagenes || [];
 
-        const data = await response.json();
+        dom.managerMeta.textContent =
+            `${imagenes.length} ${imagenes.length === 1 ? "fotografía" : "fotografías"}`;
 
-        if (!response.ok || !data.ok) {
-            throw new Error(data.error || "No se pudo eliminar la colección.");
+        if (imagenes.length === 0) {
+            dom.managerPhotos.innerHTML = `<p class="status">Esta colección todavía no tiene fotografías.</p>`;
+            return;
         }
 
-        alert(`Colección "${data.deleted}" eliminada correctamente.`);
-        await refreshCollections();
+        const basePath = "../" + collection.path + "/";
+
+        dom.managerPhotos.innerHTML = imagenes.map((imagen, index) => {
+            const archivo = imagen.archivo || imagen.file || "";
+            const tipo = imagen.tipo || imagen.type || "bn";
+
+            return `
+                <div class="photo-card">
+                    <img src="${basePath + archivo}" alt="${archivo}">
+                    <p>${archivo}</p>
+                    <p>${tipo === "color" ? "Color" : "Blanco y negro"}</p>
+
+                    <div class="photo-actions">
+                        <button type="button" class="secondary" onclick="previewPhoto('${basePath + archivo}')">
+                            Ver
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join("");
 
     } catch (error) {
-        alert("Error: " + error.message);
-        await refreshCollections();
+        dom.managerMeta.textContent = "No se pudo cargar la colección.";
+        dom.managerPhotos.innerHTML = `<p class="status">${error.message}</p>`;
     }
-}
+};
+
+window.previewPhoto = (url) => {
+    window.open(url, "_blank");
+};
 
 function resetUpload() {
-    filesInput.value = "";
-    selectedFiles = [];
-    preview.innerHTML = "";
-    fileStatus.textContent = "No hay fotografías seleccionadas.";
-    publishStatus.textContent = "";
-    publishBtn.disabled = true;
+    dom.filesInput.value = "";
+    state.selectedFiles = [];
+    dom.preview.innerHTML = "";
+    dom.fileStatus.textContent = "No hay fotografías seleccionadas.";
+    dom.publishStatus.textContent = "";
+    dom.publishBtn.disabled = true;
 }
 
 function resetCollectionForm() {
-    collectionTitle.value = "";
-    collectionDescription.value = "";
-    collectionYear.value = "2026";
-    collectionType.value = "portfolio";
-    createCollectionStatus.textContent = "";
-    createCollectionBtn.disabled = false;
-}
-
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-            const result = reader.result;
-            const base64 = result.split(",")[1];
-            resolve(base64);
-        };
-
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
-
-function escapeQuotes(text) {
-    return String(text).replace(/'/g, "\\'");
+    dom.collectionTitle.value = "";
+    dom.collectionDescription.value = "";
+    dom.collectionYear.value = "2026";
+    dom.collectionType.value = "portfolio";
+    dom.createCollectionStatus.textContent = "";
+    dom.createCollectionBtn.disabled = false;
 }
