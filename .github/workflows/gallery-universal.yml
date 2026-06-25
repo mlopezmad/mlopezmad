@@ -46,12 +46,17 @@ jobs:
           IMAGE_URL="https://raw.githubusercontent.com/mlopezmad/mlopezmad/main/$FIRST_FILE"
           GALLERY_URL="https://mlopezmad.es/${PAGE_SLUG}.html"
 
-          echo "count=$COUNT" >> $GITHUB_OUTPUT
-          echo "gallery_dir=$GALLERY_DIR" >> $GITHUB_OUTPUT
-          echo "collection=$COLLECTION" >> $GITHUB_OUTPUT
-          echo "display_name=$DISPLAY_NAME" >> $GITHUB_OUTPUT
-          echo "image_url=$IMAGE_URL" >> $GITHUB_OUTPUT
-          echo "gallery_url=$GALLERY_URL" >> $GITHUB_OUTPUT
+          {
+            echo "count=$COUNT"
+            echo "gallery_dir=$GALLERY_DIR"
+            echo "collection=$COLLECTION"
+            echo "display_name=$DISPLAY_NAME"
+            echo "image_url=$IMAGE_URL"
+            echo "gallery_url=$GALLERY_URL"
+            echo "new_files<<EOF"
+            echo "$NEW_FILES"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
 
           if [ "$COUNT" -eq 1 ]; then
             echo "message=He añadido una nueva fotografía a la colección $DISPLAY_NAME." >> $GITHUB_OUTPUT
@@ -63,29 +68,44 @@ jobs:
         if: steps.foto.outputs.count != '0'
         env:
           GALLERY_DIR: ${{ steps.foto.outputs.gallery_dir }}
+          NEW_FILES: ${{ steps.foto.outputs.new_files }}
         run: |
           cd "$GALLERY_DIR"
 
-          echo '{"imagenes":[' > galeria.json
+          {
+            echo '{"imagenes":['
 
-          first=true
+            first=true
+            TMP_LIST=$(mktemp)
 
-          find . -maxdepth 1 -type f \( \
-            -iname "*.jpg" -o \
-            -iname "*.jpeg" -o \
-            -iname "*.png" \
-          \) -printf "%T@ %f\n" | sort -nr | cut -d' ' -f2- | while read file; do
+            echo "$NEW_FILES" | while read file; do
+              [ -z "$file" ] && continue
 
-            if [ "$first" = true ]; then
-              first=false
-            else
-              echo ',' >> galeria.json
-            fi
+              if [ "$(dirname "$file")" = "$GALLERY_DIR" ]; then
+                basename "$file" >> "$TMP_LIST"
+              fi
+            done
 
-            echo "{\"archivo\":\"$file\",\"tipo\":\"bn\"}" >> galeria.json
-          done
+            find . -maxdepth 1 -type f \( \
+              -iname "*.jpg" -o \
+              -iname "*.jpeg" -o \
+              -iname "*.png" \
+            \) | sed 's#^\./##' | sort >> "$TMP_LIST"
 
-          echo ']}' >> galeria.json
+            awk '!seen[$0]++' "$TMP_LIST" | while read file; do
+              [ -z "$file" ] && continue
+
+              if [ "$first" = true ]; then
+                first=false
+              else
+                echo ','
+              fi
+
+              echo "{\"archivo\":\"$file\",\"tipo\":\"bn\"}"
+            done
+
+            echo ']}'
+          } > galeria.json
 
       - name: Commit cambios
         if: steps.foto.outputs.count != '0'
