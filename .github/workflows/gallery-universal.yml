@@ -33,10 +33,19 @@ jobs:
 
           GALLERY_DIR=$(dirname "$FIRST_FILE")
           COLLECTION=$(basename "$GALLERY_DIR")
+
+          ROOT_FOLDER=$(echo "$FIRST_FILE" | cut -d'/' -f2)
+
+          if [ "$ROOT_FOLDER" = "iphone4s" ]; then
+            PAGE_SLUG="iphone4s-$COLLECTION"
+          else
+            PAGE_SLUG="$COLLECTION"
+          fi
+
           DISPLAY_NAME=$(echo "$COLLECTION" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)} print}')
 
           IMAGE_URL="https://raw.githubusercontent.com/mlopezmad/mlopezmad/main/$FIRST_FILE"
-          GALLERY_URL="https://mlopezmad.es/${COLLECTION}.html"
+          GALLERY_URL="https://mlopezmad.es/${PAGE_SLUG}.html"
 
           echo "count=$COUNT" >> $GITHUB_OUTPUT
           echo "gallery_dir=$GALLERY_DIR" >> $GITHUB_OUTPUT
