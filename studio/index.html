@@ -69,13 +69,20 @@ label{
 }
 
 input,
-select{
+select,
+textarea{
     width:100%;
     border:1px solid #ddd;
     background:#fff;
     padding:14px;
     font-family:Georgia,serif;
     font-size:1rem;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+    line-height:1.6;
 }
 
 button{
@@ -98,12 +105,6 @@ button.secondary{
 button:disabled{
     opacity:.35;
     cursor:not-allowed;
-}
-
-.dashboard-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:18px;
 }
 
 .collection-list{
@@ -222,6 +223,12 @@ button:disabled{
     </div>
 
     <div class="card">
+        <h2>Nueva colección</h2>
+        <p>Crea una galería nueva sin tocar GitHub ni editar código.</p>
+        <button id="newCollectionBtn">Nueva colección</button>
+    </div>
+
+    <div class="card">
         <h2>Colecciones</h2>
         <p>Resumen automático de tus galerías.</p>
 
@@ -238,14 +245,7 @@ button:disabled{
         <h2>Nueva publicación</h2>
 
         <label for="collection">Colección</label>
-        <select id="collection">
-            <option value="images/madrid" data-url="../madrid.html">Madrid</option>
-            <option value="images/middelburg" data-url="../middelburg.html">Middelburg</option>
-            <option value="images/rotterdam" data-url="../rotterdam.html">Rotterdam</option>
-            <option value="images/hall-of-fame" data-url="../hall-of-fame.html">Hall of Fame</option>
-            <option value="images/iphone4s/cadiz" data-url="../iphone4s-cadiz.html">iPhone 4s · Cádiz</option>
-            <option value="images/iphone4s/caceres" data-url="../iphone4s-caceres.html">iPhone 4s · Cáceres</option>
-        </select>
+        <select id="collection"></select>
 
         <label for="files">Fotografías</label>
         <input id="files" type="file" accept="image/jpeg,image/png" multiple>
@@ -262,6 +262,34 @@ button:disabled{
 
 </section>
 
+<section id="collectionPanel" class="hidden">
+
+    <div class="card">
+        <h2>Nueva colección</h2>
+
+        <label for="collectionTitle">Nombre</label>
+        <input id="collectionTitle" type="text" placeholder="Ejemplo: Lisboa">
+
+        <label for="collectionType">Tipo</label>
+        <select id="collectionType">
+            <option value="portfolio">Portfolio</option>
+            <option value="iphone4s">iPhone 4s</option>
+        </select>
+
+        <label for="collectionDescription">Descripción</label>
+        <textarea id="collectionDescription" placeholder="Una breve descripción de la colección."></textarea>
+
+        <label for="collectionYear">Año</label>
+        <input id="collectionYear" type="number" value="2026">
+
+        <button id="createCollectionBtn">Crear colección</button>
+        <button id="backFromCollectionBtn" class="secondary">Volver</button>
+
+        <p id="createCollectionStatus" class="status"></p>
+    </div>
+
+</section>
+
 <section id="success" class="hidden card success">
     <h2>✓ Publicación completada</h2>
     <p id="successText">Las fotografías ya están publicadas.</p>
@@ -270,13 +298,21 @@ button:disabled{
     <button id="newUploadBtn" class="secondary">Nueva publicación</button>
 </section>
 
+<section id="collectionSuccess" class="hidden card success">
+    <h2>✓ Colección creada</h2>
+    <p id="collectionSuccessText">La colección ya está disponible.</p>
+
+    <button id="uploadToNewCollectionBtn">Subir primeras fotografías</button>
+    <button id="backToDashboardBtn" class="secondary">Volver al Studio</button>
+</section>
+
 <footer class="footer">
     © Miguel López · mlopezmad
 </footer>
 
 </main>
 
-<script src="admin.js?v=2"></script>
+<script src="admin.js?v=4"></script>
 
 </body>
 </html>
