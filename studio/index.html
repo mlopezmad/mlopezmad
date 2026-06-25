@@ -21,14 +21,14 @@ body{
 }
 
 .studio{
-    max-width:820px;
+    max-width:920px;
     margin:0 auto;
-    padding:70px 24px;
+    padding:64px 22px;
 }
 
 .header{
     text-align:center;
-    margin-bottom:60px;
+    margin-bottom:54px;
 }
 
 .header h1{
@@ -37,29 +37,35 @@ body{
 }
 
 .header p{
-    color:#888;
     margin-top:10px;
+    color:#888;
     font-size:1rem;
 }
 
 .card{
     background:#fff;
     border:1px solid #e8e8e8;
-    padding:32px;
-    margin-bottom:28px;
+    padding:30px;
+    margin-bottom:24px;
 }
 
 .card h2{
-    font-size:1.7rem;
+    font-size:1.8rem;
     font-weight:400;
-    margin-bottom:24px;
+    margin-bottom:14px;
 }
+
+.card p{
+    color:#777;
+    line-height:1.7;
+}
+
+.hidden{display:none;}
 
 label{
     display:block;
     color:#777;
-    margin-bottom:10px;
-    font-size:.95rem;
+    margin:24px 0 10px;
 }
 
 input,
@@ -70,7 +76,6 @@ select{
     padding:14px;
     font-family:Georgia,serif;
     font-size:1rem;
-    margin-bottom:22px;
 }
 
 button{
@@ -78,10 +83,16 @@ button{
     border:1px solid #111;
     background:#111;
     color:#fff;
-    padding:15px;
+    padding:16px;
     font-family:Georgia,serif;
     font-size:1rem;
     cursor:pointer;
+    margin-top:24px;
+}
+
+button.secondary{
+    background:#fff;
+    color:#111;
 }
 
 button:disabled{
@@ -89,8 +100,30 @@ button:disabled{
     cursor:not-allowed;
 }
 
-.hidden{
-    display:none;
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:18px;
+}
+
+.collection-list{
+    margin-top:24px;
+    border-top:1px solid #eee;
+}
+
+.collection-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #eee;
+    color:#111;
+    text-decoration:none;
+}
+
+.collection-row span{
+    color:#888;
+    font-size:.95rem;
 }
 
 .status{
@@ -101,15 +134,31 @@ button:disabled{
 
 .preview{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
+    grid-template-columns:repeat(auto-fill,minmax(92px,1fr));
     gap:12px;
-    margin-top:18px;
+    margin-top:22px;
 }
 
 .preview img{
     width:100%;
     aspect-ratio:1/1;
     object-fit:cover;
+}
+
+.success{
+    text-align:center;
+    padding:40px 20px;
+}
+
+.success h2{
+    font-size:2rem;
+    font-weight:400;
+    margin-bottom:18px;
+}
+
+.success p{
+    color:#777;
+    line-height:1.7;
 }
 
 .footer{
@@ -125,11 +174,20 @@ button:disabled{
     }
 
     .header h1{
-        font-size:2.4rem;
+        font-size:2.45rem;
     }
 
     .card{
         padding:26px;
+    }
+
+    .collection-row{
+        display:block;
+    }
+
+    .collection-row span{
+        display:block;
+        margin-top:6px;
     }
 }
 </style>
@@ -155,6 +213,25 @@ button:disabled{
     <p id="loginStatus" class="status"></p>
 </section>
 
+<section id="dashboard" class="hidden">
+
+    <div class="card">
+        <h2>Nueva publicación</h2>
+        <p>Sube una o varias fotografías a una colección existente.</p>
+        <button id="newPostBtn">Nueva publicación</button>
+    </div>
+
+    <div class="card">
+        <h2>Colecciones</h2>
+        <p>Resumen automático de tus galerías.</p>
+
+        <div class="collection-list" id="collectionStats">
+            <div class="collection-row">Cargando colecciones...</div>
+        </div>
+    </div>
+
+</section>
+
 <section id="panel" class="hidden">
 
     <div class="card">
@@ -162,12 +239,12 @@ button:disabled{
 
         <label for="collection">Colección</label>
         <select id="collection">
-            <option value="images/madrid">Madrid</option>
-            <option value="images/middelburg">Middelburg</option>
-            <option value="images/rotterdam">Rotterdam</option>
-            <option value="images/hall-of-fame">Hall of Fame</option>
-            <option value="images/iphone4s/cadiz">iPhone 4s · Cádiz</option>
-            <option value="images/iphone4s/caceres">iPhone 4s · Cáceres</option>
+            <option value="images/madrid" data-url="../madrid.html">Madrid</option>
+            <option value="images/middelburg" data-url="../middelburg.html">Middelburg</option>
+            <option value="images/rotterdam" data-url="../rotterdam.html">Rotterdam</option>
+            <option value="images/hall-of-fame" data-url="../hall-of-fame.html">Hall of Fame</option>
+            <option value="images/iphone4s/cadiz" data-url="../iphone4s-cadiz.html">iPhone 4s · Cádiz</option>
+            <option value="images/iphone4s/caceres" data-url="../iphone4s-caceres.html">iPhone 4s · Cáceres</option>
         </select>
 
         <label for="files">Fotografías</label>
@@ -178,10 +255,19 @@ button:disabled{
         <p id="fileStatus" class="status">No hay fotografías seleccionadas.</p>
 
         <button id="publishBtn" disabled>Publicar</button>
+        <button id="backBtn" class="secondary">Volver</button>
 
         <p id="publishStatus" class="status"></p>
     </div>
 
+</section>
+
+<section id="success" class="hidden card success">
+    <h2>✓ Publicación completada</h2>
+    <p id="successText">Las fotografías ya están publicadas.</p>
+
+    <button id="viewGalleryBtn">Ver galería</button>
+    <button id="newUploadBtn" class="secondary">Nueva publicación</button>
 </section>
 
 <footer class="footer">
@@ -190,7 +276,7 @@ button:disabled{
 
 </main>
 
-<script src="admin.js?v=1"></script>
+<script src="admin.js?v=2"></script>
 
 </body>
 </html>
