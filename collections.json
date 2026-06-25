@@ -1,0 +1,66 @@
+{
+  "collections": [
+    {
+      "id": "hall-of-fame",
+      "title": "Hall of Fame",
+      "type": "portfolio",
+      "description": "Una selección personal",
+      "path": "images/hall-of-fame",
+      "json": "images/hall-of-fame/galeria.json",
+      "url": "hall-of-fame.html",
+      "year": "2026"
+    },
+    {
+      "id": "madrid",
+      "title": "Madrid",
+      "type": "portfolio",
+      "description": "Fotografía de calle",
+      "path": "images/madrid",
+      "json": "images/madrid/galeria.json",
+      "url": "madrid.html",
+      "year": "2026"
+    },
+    {
+      "id": "middelburg",
+      "title": "Middelburg",
+      "type": "portfolio",
+      "description": "Una serie desde Zelanda",
+      "path": "images/middelburg",
+      "json": "images/middelburg/galeria.json",
+      "url": "middelburg.html",
+      "year": "2026"
+    },
+    {
+      "id": "rotterdam",
+      "title": "Rotterdam",
+      "type": "portfolio",
+      "description": "Fotografía de calle y arquitectura",
+      "path": "images/rotterdam",
+      "json": "images/rotterdam/galeria.json",
+      "url": "rotterdam.html",
+      "year": "2026"
+    },
+    {
+      "id": "iphone4s-cadiz",
+      "title": "Cádiz",
+      "type": "iphone4s",
+      "parent": "iphone4s",
+      "description": "Primera colección del proyecto",
+      "path": "images/iphone4s/cadiz",
+      "json": "images/iphone4s/cadiz/galeria.json",
+      "url": "iphone4s-cadiz.html",
+      "year": "2026"
+    },
+    {
+      "id": "iphone4s-caceres",
+      "title": "Cáceres",
+      "type": "iphone4s",
+      "parent": "iphone4s",
+      "description": "Segunda colección del proyecto",
+      "path": "images/iphone4s/caceres",
+      "json": "images/iphone4s/caceres/galeria.json",
+      "url": "iphone4s-caceres.html",
+      "year": "2026"
+    }
+  ]
+}
