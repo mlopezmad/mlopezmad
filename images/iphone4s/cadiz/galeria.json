@@ -1,47 +1,92 @@
-{"imagenes":[
-{"archivo":"IMG_0558.jpeg","tipo":"bn"}
-,
-{"archivo":"IMG_5964.jpeg","tipo":"bn"}
-,
-{"archivo":"IMG_5990.jpeg","tipo":"bn"}
-,
-{"archivo":"iphone4s-01.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-02.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-03.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-04.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-05.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-06.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-07.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-08.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-09.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-10.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-11.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-12.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-13.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-14.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-15.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-16.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-17.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-18.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-19.jpg","tipo":"bn"}
-,
-{"archivo":"iphone4s-20.jpg","tipo":"bn"}
-]}
+{
+  "imagenes": [
+    {
+      "archivo": "IMG_0558.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_5964.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_5990.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-01.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-02.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-03.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-04.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-05.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-06.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-07.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-08.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-09.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-10.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-11.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-12.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-13.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-14.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-15.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-16.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-17.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-18.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "iphone4s-19.jpg",
+      "tipo": "bn"
+    }
+  ]
+}
