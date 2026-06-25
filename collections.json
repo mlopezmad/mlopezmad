@@ -2,22 +2,24 @@
   "collections": [
     {
       "id": "hall-of-fame",
-      "title": "Hall of Fame",
+      "title": "Editor's Choice",
       "type": "portfolio",
-      "description": "Una selecciÃÂ³n personal",
+      "description": "Una selección personal",
       "path": "images/hall-of-fame",
       "json": "images/hall-of-fame/galeria.json",
       "url": "hall-of-fame.html",
+      "cover": "images/hall-of-fame/cover.jpg",
       "year": "2026"
     },
     {
       "id": "madrid",
       "title": "Madrid",
       "type": "portfolio",
-      "description": "FotografÃÂ­a de calle",
+      "description": "Fotografía de calle",
       "path": "images/madrid",
       "json": "images/madrid/galeria.json",
       "url": "madrid.html",
+      "cover": "images/madrid/cover.jpg",
       "year": "2026"
     },
     {
@@ -28,38 +30,42 @@
       "path": "images/middelburg",
       "json": "images/middelburg/galeria.json",
       "url": "middelburg.html",
+      "cover": "images/middelburg/cover.jpg",
       "year": "2026"
     },
     {
       "id": "rotterdam",
       "title": "Rotterdam",
       "type": "portfolio",
-      "description": "FotografÃÂ­a de calle y arquitectura",
+      "description": "Fotografía de calle y arquitectura",
       "path": "images/rotterdam",
       "json": "images/rotterdam/galeria.json",
       "url": "rotterdam.html",
+      "cover": "images/rotterdam/cover.jpg",
       "year": "2026"
     },
     {
       "id": "iphone4s-cadiz",
-      "title": "CÃÂ¡diz",
+      "title": "Cádiz",
       "type": "iphone4s",
       "parent": "iphone4s",
-      "description": "Primera colecciÃÂ³n del proyecto",
+      "description": "Primera colección del proyecto",
       "path": "images/iphone4s/cadiz",
       "json": "images/iphone4s/cadiz/galeria.json",
       "url": "iphone4s-cadiz.html",
+      "cover": "images/iphone4s/cadiz/cover.jpg",
       "year": "2026"
     },
     {
       "id": "iphone4s-caceres",
-      "title": "CÃÂ¡ceres",
+      "title": "Cáceres",
       "type": "iphone4s",
       "parent": "iphone4s",
-      "description": "Segunda colecciÃÂ³n del proyecto",
+      "description": "Segunda colección del proyecto",
       "path": "images/iphone4s/caceres",
       "json": "images/iphone4s/caceres/galeria.json",
       "url": "iphone4s-caceres.html",
+      "cover": "images/iphone4s/caceres/cover.jpg",
       "year": "2026"
     }
   ]
