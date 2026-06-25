@@ -1,3 +1,16 @@
 {
-  "imagenes": []
+  "imagenes": [
+    {
+      "archivo": "IMG_0558.jpeg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "R0004073.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_0240.jpeg",
+      "tipo": "color"
+    }
+  ]
 }
