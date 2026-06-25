@@ -4,6 +4,8 @@ import { show, fileToBase64 } from "./modules/utils.js";
 import { workerRequest, loadGalleryJson } from "./modules/api.js";
 import { refreshCollections, deleteCollection } from "./modules/collections.js";
 
+let selectedPhotos = new Set();
+
 dom.loginBtn.addEventListener("click", async () => {
     state.password = dom.passwordInput.value.trim();
 
@@ -169,6 +171,7 @@ dom.backToDashboardBtn.addEventListener("click", () => {
 
 dom.managerBack.addEventListener("click", () => {
     state.currentCollection = null;
+    selectedPhotos.clear();
     show("dashboard");
 });
 
@@ -198,6 +201,77 @@ window.openCollectionManager = async (id) => {
 
 window.previewPhoto = (url) => {
     window.open(url, "_blank");
+};
+
+window.togglePhotoSelection = (encodedFilename) => {
+    const filename = decodeURIComponent(encodedFilename);
+
+    if (selectedPhotos.has(filename)) {
+        selectedPhotos.delete(filename);
+    } else {
+        selectedPhotos.add(filename);
+    }
+
+    updateSelectionUI();
+};
+
+window.selectAllPhotos = () => {
+    const checkboxes = document.querySelectorAll(".photo-select");
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = true;
+        selectedPhotos.add(checkbox.dataset.filename);
+    });
+
+    updateSelectionUI();
+};
+
+window.clearPhotoSelection = () => {
+    selectedPhotos.clear();
+
+    const checkboxes = document.querySelectorAll(".photo-select");
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    updateSelectionUI();
+};
+
+window.setSelectedPhotosType = async (newType) => {
+    if (!state.currentCollection) return;
+
+    const filenames = Array.from(selectedPhotos);
+
+    if (filenames.length === 0) {
+        alert("Selecciona al menos una fotografía.");
+        return;
+    }
+
+    const label = newType === "color" ? "Color" : "B&N";
+    const ok = confirm(`¿Cambiar ${filenames.length} fotografía${filenames.length === 1 ? "" : "s"} a ${label}?`);
+
+    if (!ok) return;
+
+    dom.managerMeta.textContent = "Actualizando selección...";
+
+    try {
+        const data = await workerRequest({
+            action: "update_photos_type",
+            password: state.password,
+            collectionId: state.currentCollection.id,
+            filenames,
+            type: newType
+        });
+
+        alert(`${data.updated} fotografía${data.updated === 1 ? "" : "s"} actualizada${data.updated === 1 ? "" : "s"} correctamente.`);
+
+        selectedPhotos.clear();
+        await openCollectionManager(state.currentCollection.id);
+        await refreshCollections();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await openCollectionManager(state.currentCollection.id);
+    }
 };
 
 window.togglePhotoType = async (filename, currentType) => {
@@ -256,6 +330,7 @@ window.deletePhoto = async (filename) => {
 
         alert(`Fotografía "${data.deleted}" eliminada correctamente.`);
 
+        selectedPhotos.delete(filename);
         await openCollectionManager(state.currentCollection.id);
         await refreshCollections();
 
@@ -271,6 +346,7 @@ async function openCollectionManager(id) {
     if (!collection) return;
 
     state.currentCollection = collection;
+    selectedPhotos.clear();
 
     show("collectionManager");
 
@@ -292,47 +368,104 @@ async function openCollectionManager(id) {
 
         const basePath = "../" + collection.path + "/";
 
-        dom.managerPhotos.innerHTML = imagenes.map((imagen) => {
-            const archivo = imagen.archivo || imagen.file || "";
-            const tipo = imagen.tipo || imagen.type || "bn";
-            const tipoTexto = tipo === "color" ? "Color" : "Blanco y negro";
-            const botonTipo = tipo === "color" ? "Cambiar a B&N" : "Cambiar a Color";
+        dom.managerPhotos.innerHTML = `
+            <div class="bulk-actions" style="grid-column:1/-1;border:1px solid #eee;background:#fafafa;padding:18px;margin-bottom:6px;">
+                <p id="selectionCount" class="status" style="margin-top:0;">0 fotografías seleccionadas</p>
 
-            return `
-                <div class="photo-card">
-                    <img src="${basePath + archivo}?t=${Date.now()}" alt="${archivo}">
-                    <p>${archivo}</p>
-                    <p>${tipoTexto}</p>
+                <button type="button" class="secondary" onclick="selectAllPhotos()" style="margin-top:12px;">
+                    Seleccionar todo
+                </button>
 
-                    <div class="photo-actions">
-                        <button type="button" class="secondary" onclick="previewPhoto('${basePath + archivo}')">
-                            Ver
-                        </button>
+                <button type="button" class="secondary" onclick="clearPhotoSelection()" style="margin-top:10px;">
+                    Quitar selección
+                </button>
 
-                        <button
-                            type="button"
-                            class="secondary"
-                            onclick="togglePhotoType('${archivo}', '${tipo}')"
-                        >
-                            ${botonTipo}
-                        </button>
+                <button type="button" onclick="setSelectedPhotosType('color')" style="margin-top:10px;">
+                    Cambiar selección a Color
+                </button>
 
-                        <button
-                            type="button"
-                            onclick="deletePhoto('${archivo}')"
-                            style="background:#fff;color:#a33;border-color:#e5caca;"
-                        >
-                            Eliminar
-                        </button>
+                <button type="button" onclick="setSelectedPhotosType('bn')" style="margin-top:10px;">
+                    Cambiar selección a B&N
+                </button>
+            </div>
+
+            ${imagenes.map((imagen) => {
+                const archivo = imagen.archivo || imagen.file || "";
+                const tipo = imagen.tipo || imagen.type || "bn";
+                const tipoTexto = tipo === "color" ? "Color" : "Blanco y negro";
+                const botonTipo = tipo === "color" ? "Cambiar a B&N" : "Cambiar a Color";
+                const encoded = encodeURIComponent(archivo);
+
+                return `
+                    <div class="photo-card" data-filename="${archivo}">
+                        <label style="display:flex;align-items:center;gap:8px;margin:0 0 10px;color:#111;">
+                            <input
+                                type="checkbox"
+                                class="photo-select"
+                                data-filename="${archivo}"
+                                onchange="togglePhotoSelection('${encoded}')"
+                                style="width:auto;"
+                            >
+                            Seleccionar
+                        </label>
+
+                        <img src="${basePath + archivo}?t=${Date.now()}" alt="${archivo}">
+                        <p>${archivo}</p>
+                        <p>${tipoTexto}</p>
+
+                        <div class="photo-actions">
+                            <button type="button" class="secondary" onclick="previewPhoto('${basePath + archivo}')">
+                                Ver
+                            </button>
+
+                            <button
+                                type="button"
+                                class="secondary"
+                                onclick="togglePhotoType('${archivo}', '${tipo}')"
+                            >
+                                ${botonTipo}
+                            </button>
+
+                            <button
+                                type="button"
+                                onclick="deletePhoto('${archivo}')"
+                                style="background:#fff;color:#a33;border-color:#e5caca;"
+                            >
+                                Eliminar
+                            </button>
+                        </div>
                     </div>
-                </div>
-            `;
-        }).join("");
+                `;
+            }).join("")}
+        `;
+
+        updateSelectionUI();
 
     } catch (error) {
         dom.managerMeta.textContent = "No se pudo cargar la colección.";
         dom.managerPhotos.innerHTML = `<p class="status">${error.message}</p>`;
     }
+}
+
+function updateSelectionUI() {
+    const count = selectedPhotos.size;
+    const selectionCount = document.getElementById("selectionCount");
+
+    if (selectionCount) {
+        selectionCount.textContent =
+            `${count} fotografía${count === 1 ? "" : "s"} seleccionada${count === 1 ? "" : "s"}`;
+    }
+
+    document.querySelectorAll(".photo-card").forEach(card => {
+        const filename = card.dataset.filename;
+        const checkbox = card.querySelector(".photo-select");
+
+        if (!filename || !checkbox) return;
+
+        const selected = selectedPhotos.has(filename);
+        checkbox.checked = selected;
+        card.style.outline = selected ? "2px solid #111" : "none";
+    });
 }
 
 function resetUpload() {
