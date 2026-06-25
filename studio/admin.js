@@ -1,11 +1,25 @@
 const WORKER_URL = "https://mlopezmad-estudio.mlopezmad.workers.dev";
 
+const COLLECTIONS = [
+    { name: "Madrid", path: "images/madrid", json: "../images/madrid/galeria.json", url: "../madrid.html" },
+    { name: "Middelburg", path: "images/middelburg", json: "../images/middelburg/galeria.json", url: "../middelburg.html" },
+    { name: "Rotterdam", path: "images/rotterdam", json: "../images/rotterdam/galeria.json", url: "../rotterdam.html" },
+    { name: "Hall of Fame", path: "images/hall-of-fame", json: "../images/hall-of-fame/galeria.json", url: "../hall-of-fame.html" },
+    { name: "iPhone 4s · Cádiz", path: "images/iphone4s/cadiz", json: "../images/iphone4s/cadiz/galeria.json", url: "../iphone4s-cadiz.html" },
+    { name: "iPhone 4s · Cáceres", path: "images/iphone4s/caceres", json: "../images/iphone4s/caceres/galeria.json", url: "../iphone4s-caceres.html" }
+];
+
 const login = document.getElementById("login");
+const dashboard = document.getElementById("dashboard");
 const panel = document.getElementById("panel");
+const success = document.getElementById("success");
 
 const passwordInput = document.getElementById("password");
 const loginBtn = document.getElementById("loginBtn");
 const loginStatus = document.getElementById("loginStatus");
+
+const newPostBtn = document.getElementById("newPostBtn");
+const backBtn = document.getElementById("backBtn");
 
 const collectionSelect = document.getElementById("collection");
 const filesInput = document.getElementById("files");
@@ -14,10 +28,17 @@ const fileStatus = document.getElementById("fileStatus");
 const publishBtn = document.getElementById("publishBtn");
 const publishStatus = document.getElementById("publishStatus");
 
+const collectionStats = document.getElementById("collectionStats");
+
+const successText = document.getElementById("successText");
+const viewGalleryBtn = document.getElementById("viewGalleryBtn");
+const newUploadBtn = document.getElementById("newUploadBtn");
+
 let password = "";
 let selectedFiles = [];
+let lastGalleryUrl = "";
 
-loginBtn.addEventListener("click", () => {
+loginBtn.addEventListener("click", async () => {
     password = passwordInput.value.trim();
 
     if (!password) {
@@ -26,7 +47,20 @@ loginBtn.addEventListener("click", () => {
     }
 
     login.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+
+    await loadStats();
+});
+
+newPostBtn.addEventListener("click", () => {
+    dashboard.classList.add("hidden");
     panel.classList.remove("hidden");
+});
+
+backBtn.addEventListener("click", () => {
+    resetUpload();
+    panel.classList.add("hidden");
+    dashboard.classList.remove("hidden");
 });
 
 filesInput.addEventListener("change", () => {
@@ -70,6 +104,9 @@ publishBtn.addEventListener("click", async () => {
             });
         }
 
+        const selectedOption = collectionSelect.options[collectionSelect.selectedIndex];
+        lastGalleryUrl = selectedOption.dataset.url || "../portfolio.html";
+
         publishStatus.textContent = "Subiendo fotografías...";
 
         const response = await fetch(WORKER_URL, {
@@ -91,19 +128,69 @@ publishBtn.addEventListener("click", async () => {
             throw new Error(data.error || "No se pudo publicar.");
         }
 
-        publishStatus.textContent = `✓ Publicado correctamente. ${data.uploaded} fotografía${data.uploaded === 1 ? "" : "s"} subida${data.uploaded === 1 ? "" : "s"}.`;
+        panel.classList.add("hidden");
+        success.classList.remove("hidden");
 
-        filesInput.value = "";
-        selectedFiles = [];
-        preview.innerHTML = "";
-        fileStatus.textContent = "No hay fotografías seleccionadas.";
-        publishBtn.disabled = true;
+        successText.textContent = `${data.uploaded} fotografía${data.uploaded === 1 ? "" : "s"} publicada${data.uploaded === 1 ? "" : "s"} correctamente.`;
+
+        resetUpload();
+        await loadStats();
 
     } catch (error) {
         publishStatus.textContent = "Error: " + error.message;
         publishBtn.disabled = false;
     }
 });
+
+viewGalleryBtn.addEventListener("click", () => {
+    if (lastGalleryUrl) {
+        window.open(lastGalleryUrl, "_blank");
+    }
+});
+
+newUploadBtn.addEventListener("click", () => {
+    success.classList.add("hidden");
+    panel.classList.remove("hidden");
+});
+
+async function loadStats() {
+    collectionStats.innerHTML = `<div class="collection-row">Cargando colecciones...</div>`;
+
+    const rows = [];
+
+    for (const collection of COLLECTIONS) {
+        try {
+            const response = await fetch(collection.json + "?t=" + Date.now());
+            const data = await response.json();
+            const total = (data.imagenes || []).length;
+
+            rows.push(`
+                <a class="collection-row" href="${collection.url}" target="_blank">
+                    <strong>${collection.name}</strong>
+                    <span>${total} ${total === 1 ? "fotografía" : "fotografías"} →</span>
+                </a>
+            `);
+        } catch (error) {
+            rows.push(`
+                <a class="collection-row" href="${collection.url}" target="_blank">
+                    <strong>${collection.name}</strong>
+                    <span>No disponible →</span>
+                </a>
+            `);
+        }
+    }
+
+    collectionStats.innerHTML = rows.join("");
+}
+
+function resetUpload() {
+    filesInput.value = "";
+    selectedFiles = [];
+    preview.innerHTML = "";
+    fileStatus.textContent = "No hay fotografías seleccionadas.";
+    publishStatus.textContent = "";
+    publishBtn.disabled = true;
+}
 
 function fileToBase64(file) {
     return new Promise((resolve, reject) => {
