@@ -8,60 +8,76 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
+
 .portfolio-list{
     max-width:760px;
-    margin:0 auto 70px;
-    padding:0 24px;
+    margin:0 auto 90px;
+    padding:0 28px;
 }
 
-.portfolio-list a{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    padding:22px 0;
+.portfolio-item{
+    display:block;
+    padding:34px 0;
     border-bottom:1px solid #ececec;
     color:#111;
     text-decoration:none;
+    transition:.25s ease;
 }
 
-.portfolio-list strong{
-    font-size:1.35rem;
+.portfolio-item:hover{
+    opacity:.65;
+}
+
+.portfolio-item h2{
+    font-size:2rem;
     font-weight:400;
+    margin:0;
 }
 
-.portfolio-list span{
+.portfolio-item p{
+    margin:10px 0 18px;
     color:#888;
+    font-size:1.05rem;
+    line-height:1.6;
+}
+
+.portfolio-meta{
     font-size:.95rem;
-    text-align:right;
+    color:#999;
+    letter-spacing:.5px;
 }
 
 .portfolio-empty{
-    color:#888;
     text-align:center;
+    color:#888;
     margin-top:40px;
 }
 
 .volver{
     display:block;
     text-align:center;
-    margin:70px 0;
+    margin:80px 0;
     text-decoration:none;
     color:#111;
-    font-size:1.05rem;
+    font-size:1.1rem;
 }
 
 @media(max-width:768px){
-    .portfolio-list a{
-        display:block;
+
+    .portfolio-list{
+        padding:0 24px;
     }
 
-    .portfolio-list span{
-        display:block;
-        text-align:left;
-        margin-top:8px;
+    .portfolio-item{
+        padding:28px 0;
     }
+
+    .portfolio-item h2{
+        font-size:1.8rem;
+    }
+
 }
+
 </style>
 </head>
 
@@ -79,59 +95,93 @@
 <a class="volver" href="index.html">← Volver</a>
 
 <script>
+
 async function cargarPortfolio(){
-    const contenedor = document.getElementById("portfolioList");
+
+    const contenedor=document.getElementById("portfolioList");
 
     try{
-        const response = await fetch("collections.json?t=" + Date.now());
-        const data = await response.json();
 
-        const colecciones = (data.collections || [])
-            .filter(c => c.type === "portfolio");
+        const response=await fetch("collections.json?t="+Date.now());
+        const data=await response.json();
 
-        if(colecciones.length === 0){
-            contenedor.innerHTML = '<p class="portfolio-empty">No hay colecciones disponibles.</p>';
+        const colecciones=(data.collections||[])
+            .filter(c=>c.type==="portfolio");
+
+        if(!colecciones.length){
+            contenedor.innerHTML='<p class="portfolio-empty">No hay colecciones disponibles.</p>';
             return;
         }
 
-        const filas = await Promise.all(colecciones.map(async coleccion => {
-            let total = null;
+        const filas=await Promise.all(
+            colecciones.map(async coleccion=>{
 
-            try{
-                const galeriaResponse = await fetch(coleccion.json + "?t=" + Date.now());
-                const galeriaData = await galeriaResponse.json();
-                total = (galeriaData.imagenes || []).length;
-            }catch(error){
-                total = null;
-            }
+                let total=null;
 
-            const contador = total === null
-                ? "Abrir →"
-                : `${total} ${total === 1 ? "fotografía" : "fotografías"} →`;
+                try{
+                    const g=await fetch(coleccion.json+"?t="+Date.now());
+                    const gd=await g.json();
+                    total=(gd.imagenes||[]).length;
+                }catch(e){}
 
-            return `
-                <a href="${coleccion.url}">
-                    <strong>${coleccion.title}</strong>
-                    <span>${contador}</span>
-                </a>
-            `;
-        }));
+                const descripcion=
+                    coleccion.title==="Editor's Choice"
+                        ? "Una selección personal"
+                        : (coleccion.description||"");
+
+                const contador=
+                    total===null
+                    ? ""
+                    : `${total} ${total===1?"fotografía":"fotografías"}`;
+
+                return `
+
+<a class="portfolio-item" href="${coleccion.url}">
+
+<h2>${coleccion.title}</h2>
+
+${descripcion?`<p>${descripcion}</p>`:""}
+
+<div class="portfolio-meta">
+${contador} →
+</div>
+
+</a>
+
+`;
+
+            })
+
+        );
 
         filas.push(`
-            <a href="iphone4s.html">
-                <strong>iPhone 4s</strong>
-                <span>Transfer Filter Project →</span>
-            </a>
-        `);
 
-        contenedor.innerHTML = filas.join("");
+<a class="portfolio-item" href="iphone4s.html">
 
-    }catch(error){
-        contenedor.innerHTML = '<p class="portfolio-empty">No se pudo cargar el portfolio.</p>';
+<h2>iPhone 4s</h2>
+
+<p>Transfer Filter Project</p>
+
+<div class="portfolio-meta">
+Proyecto →
+</div>
+
+</a>
+
+`);
+
+        contenedor.innerHTML=filas.join("");
+
+    }catch(e){
+
+        contenedor.innerHTML='<p class="portfolio-empty">No se pudo cargar el portfolio.</p>';
+
     }
+
 }
 
 cargarPortfolio();
+
 </script>
 
 </body>
