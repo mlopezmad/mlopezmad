@@ -127,6 +127,16 @@ button:disabled{
     font-size:.95rem;
 }
 
+.collection-main{
+    display:block;
+    color:#111;
+    text-decoration:none;
+}
+
+.collection-main strong{
+    display:block;
+}
+
 .status{
     color:#777;
     line-height:1.7;
@@ -144,6 +154,53 @@ button:disabled{
     width:100%;
     aspect-ratio:1/1;
     object-fit:cover;
+}
+
+.manager-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+    gap:16px;
+    margin-top:26px;
+}
+
+.photo-card{
+    border:1px solid #eee;
+    background:#fff;
+    padding:10px;
+}
+
+.photo-card img{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    display:block;
+    margin-bottom:10px;
+}
+
+.photo-card p{
+    font-family:Arial,sans-serif;
+    font-size:.75rem;
+    color:#777;
+    line-height:1.4;
+    word-break:break-all;
+}
+
+.photo-actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    margin-top:10px;
+}
+
+.photo-actions button{
+    margin-top:0;
+    padding:10px;
+    font-size:.85rem;
+}
+
+.manager-meta{
+    color:#888;
+    margin-top:8px;
 }
 
 .success{
@@ -189,6 +246,11 @@ button:disabled{
     .collection-row span{
         display:block;
         margin-top:6px;
+    }
+
+    .manager-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:14px;
     }
 }
 </style>
@@ -290,6 +352,21 @@ button:disabled{
 
 </section>
 
+<section id="collectionManager" class="hidden">
+
+    <div class="card">
+        <h2 id="managerTitle">Colección</h2>
+        <p id="managerMeta" class="manager-meta">Cargando fotografías...</p>
+
+        <div id="managerPhotos" class="manager-grid"></div>
+
+        <button id="managerAddPhotos">Añadir fotografías</button>
+        <button id="managerOpenGallery" class="secondary">Abrir galería pública</button>
+        <button id="managerBack" class="secondary">Volver</button>
+    </div>
+
+</section>
+
 <section id="success" class="hidden card success">
     <h2>✓ Publicación completada</h2>
     <p id="successText">Las fotografías ya están publicadas.</p>
@@ -312,7 +389,7 @@ button:disabled{
 
 </main>
 
-<script src="admin.js?v=10"></script>
+<script src="admin.js?v=40"></script>
 
 </body>
 </html>
