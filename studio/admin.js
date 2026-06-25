@@ -5,6 +5,7 @@ import { workerRequest, loadGalleryJson } from "./modules/api.js";
 import { refreshCollections, deleteCollection } from "./modules/collections.js";
 
 let selectedPhotos = new Set();
+let uploadTypes = new Map();
 
 dom.loginBtn.addEventListener("click", async () => {
     state.password = dom.passwordInput.value.trim();
@@ -38,6 +39,7 @@ dom.backFromCollectionBtn.addEventListener("click", () => {
 
 dom.filesInput.addEventListener("change", () => {
     state.selectedFiles = Array.from(dom.filesInput.files || []);
+    uploadTypes.clear();
     dom.preview.innerHTML = "";
 
     if (state.selectedFiles.length === 0) {
@@ -46,19 +48,71 @@ dom.filesInput.addEventListener("change", () => {
         return;
     }
 
-    state.selectedFiles.forEach(file => {
+    state.selectedFiles.forEach((file, index) => {
+        const key = getUploadKey(file, index);
+        uploadTypes.set(key, "bn");
+
+        const card = document.createElement("div");
+        card.className = "photo-card";
+        card.style.padding = "12px";
+
         const img = document.createElement("img");
         img.src = URL.createObjectURL(file);
-        dom.preview.appendChild(img);
+        img.alt = file.name;
+        img.style.marginBottom = "10px";
+
+        const name = document.createElement("p");
+        name.textContent = file.name;
+        name.style.wordBreak = "break-all";
+
+        const controls = document.createElement("div");
+        controls.style.display = "grid";
+        controls.style.gridTemplateColumns = "1fr 1fr";
+        controls.style.gap = "8px";
+        controls.style.marginTop = "10px";
+
+        controls.innerHTML = `
+            <label style="margin:0;border:1px solid #111;padding:10px;text-align:center;color:#111;">
+                <input
+                    type="radio"
+                    name="upload-type-${index}"
+                    value="bn"
+                    checked
+                    onchange="setUploadType('${key}', 'bn')"
+                    style="width:auto;margin-right:6px;"
+                >
+                B&N
+            </label>
+
+            <label style="margin:0;border:1px solid #ddd;padding:10px;text-align:center;color:#111;">
+                <input
+                    type="radio"
+                    name="upload-type-${index}"
+                    value="color"
+                    onchange="setUploadType('${key}', 'color')"
+                    style="width:auto;margin-right:6px;"
+                >
+                Color
+            </label>
+        `;
+
+        card.appendChild(img);
+        card.appendChild(name);
+        card.appendChild(controls);
+        dom.preview.appendChild(card);
     });
 
     const totalMB = state.selectedFiles.reduce((sum, file) => sum + file.size, 0) / 1024 / 1024;
 
     dom.fileStatus.textContent =
-        `${state.selectedFiles.length} fotografía${state.selectedFiles.length === 1 ? "" : "s"} seleccionada${state.selectedFiles.length === 1 ? "" : "s"} · ${totalMB.toFixed(1)} MB`;
+        `${state.selectedFiles.length} fotografía${state.selectedFiles.length === 1 ? "" : "s"} seleccionada${state.selectedFiles.length === 1 ? "" : "s"} · ${totalMB.toFixed(1)} MB · Revisa Color/B&N antes de publicar`;
 
     dom.publishBtn.disabled = false;
 });
+
+window.setUploadType = (key, type) => {
+    uploadTypes.set(key, type);
+};
 
 dom.publishBtn.addEventListener("click", async () => {
     if (!state.password || state.selectedFiles.length === 0) return;
@@ -69,12 +123,15 @@ dom.publishBtn.addEventListener("click", async () => {
     try {
         const files = [];
 
-        for (const file of state.selectedFiles) {
+        for (let index = 0; index < state.selectedFiles.length; index++) {
+            const file = state.selectedFiles[index];
+            const key = getUploadKey(file, index);
             const content = await fileToBase64(file);
 
             files.push({
                 name: file.name,
-                content
+                content,
+                tipo: uploadTypes.get(key) || "bn"
             });
         }
 
@@ -468,9 +525,14 @@ function updateSelectionUI() {
     });
 }
 
+function getUploadKey(file, index) {
+    return `${index}-${file.name}-${file.size}`;
+}
+
 function resetUpload() {
     dom.filesInput.value = "";
     state.selectedFiles = [];
+    uploadTypes.clear();
     dom.preview.innerHTML = "";
     dom.fileStatus.textContent = "No hay fotografías seleccionadas.";
     dom.publishStatus.textContent = "";
