@@ -1,14 +1,5 @@
 const WORKER_URL = "https://mlopezmad-estudio.mlopezmad.workers.dev";
 
-const COLLECTIONS = [
-    { name: "Madrid", path: "images/madrid", json: "../images/madrid/galeria.json", url: "../madrid.html" },
-    { name: "Middelburg", path: "images/middelburg", json: "../images/middelburg/galeria.json", url: "../middelburg.html" },
-    { name: "Rotterdam", path: "images/rotterdam", json: "../images/rotterdam/galeria.json", url: "../rotterdam.html" },
-    { name: "Hall of Fame", path: "images/hall-of-fame", json: "../images/hall-of-fame/galeria.json", url: "../hall-of-fame.html" },
-    { name: "iPhone 4s · Cádiz", path: "images/iphone4s/cadiz", json: "../images/iphone4s/cadiz/galeria.json", url: "../iphone4s-cadiz.html" },
-    { name: "iPhone 4s · Cáceres", path: "images/iphone4s/caceres", json: "../images/iphone4s/caceres/galeria.json", url: "../iphone4s-caceres.html" }
-];
-
 const login = document.getElementById("login");
 const dashboard = document.getElementById("dashboard");
 const panel = document.getElementById("panel");
@@ -37,6 +28,7 @@ const newUploadBtn = document.getElementById("newUploadBtn");
 let password = "";
 let selectedFiles = [];
 let lastGalleryUrl = "";
+let collections = [];
 
 loginBtn.addEventListener("click", async () => {
     password = passwordInput.value.trim();
@@ -49,6 +41,8 @@ loginBtn.addEventListener("click", async () => {
     login.classList.add("hidden");
     dashboard.classList.remove("hidden");
 
+    await loadCollections();
+    populateCollectionSelect();
     await loadStats();
 });
 
@@ -153,12 +147,45 @@ newUploadBtn.addEventListener("click", () => {
     panel.classList.remove("hidden");
 });
 
+async function loadCollections() {
+    const response = await fetch("../collections.json?t=" + Date.now());
+    const data = await response.json();
+
+    collections = (data.collections || []).map(collection => {
+        const title = collection.type === "iphone4s"
+            ? `iPhone 4s · ${collection.title}`
+            : collection.title;
+
+        return {
+            name: title,
+            path: collection.path,
+            json: "../" + collection.json,
+            url: "../" + collection.url,
+            type: collection.type,
+            year: collection.year,
+            description: collection.description
+        };
+    });
+}
+
+function populateCollectionSelect() {
+    collectionSelect.innerHTML = "";
+
+    collections.forEach(collection => {
+        const option = document.createElement("option");
+        option.value = collection.path;
+        option.dataset.url = collection.url;
+        option.textContent = collection.name;
+        collectionSelect.appendChild(option);
+    });
+}
+
 async function loadStats() {
     collectionStats.innerHTML = `<div class="collection-row">Cargando colecciones...</div>`;
 
     const rows = [];
 
-    for (const collection of COLLECTIONS) {
+    for (const collection of collections) {
         try {
             const response = await fetch(collection.json + "?t=" + Date.now());
             const data = await response.json();
