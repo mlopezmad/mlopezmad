@@ -33,7 +33,6 @@ jobs:
 
           GALLERY_DIR=$(dirname "$FIRST_FILE")
           COLLECTION=$(basename "$GALLERY_DIR")
-
           ROOT_FOLDER=$(echo "$FIRST_FILE" | cut -d'/' -f2)
 
           if [ "$ROOT_FOLDER" = "iphone4s" ]; then
@@ -71,18 +70,19 @@ jobs:
 
           first=true
 
-          for file in $(git log --name-only --pretty=format: -- . | grep -Ei '\.(jpg|jpeg|png)$' | awk '!seen[$0]++'); do
-            file=$(basename "$file")
+          find . -maxdepth 1 -type f \( \
+            -iname "*.jpg" -o \
+            -iname "*.jpeg" -o \
+            -iname "*.png" \
+          \) -printf "%T@ %f\n" | sort -nr | cut -d' ' -f2- | while read file; do
 
-            if [ -f "$file" ]; then
-              if [ "$first" = true ]; then
-                first=false
-              else
-                echo ',' >> galeria.json
-              fi
-
-              echo "{\"archivo\":\"$file\",\"tipo\":\"bn\"}" >> galeria.json
+            if [ "$first" = true ]; then
+              first=false
+            else
+              echo ',' >> galeria.json
             fi
+
+            echo "{\"archivo\":\"$file\",\"tipo\":\"bn\"}" >> galeria.json
           done
 
           echo ']}' >> galeria.json
