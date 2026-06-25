@@ -1,5 +1,14 @@
 const WORKER_URL = "https://mlopezmad-estudio.mlopezmad.workers.dev";
 
+const PROTECTED_COLLECTIONS = [
+    "hall-of-fame",
+    "madrid",
+    "middelburg",
+    "rotterdam",
+    "iphone4s-cadiz",
+    "iphone4s-caceres"
+];
+
 const login = document.getElementById("login");
 const dashboard = document.getElementById("dashboard");
 const panel = document.getElementById("panel");
@@ -256,13 +265,15 @@ async function loadCollections() {
             : collection.title;
 
         return {
+            id: collection.id,
             name: title,
             path: collection.path,
             json: "../" + collection.json,
             url: "../" + collection.url,
             type: collection.type,
             year: collection.year,
-            description: collection.description
+            description: collection.description,
+            protected: PROTECTED_COLLECTIONS.includes(collection.id)
         };
     });
 }
@@ -285,28 +296,80 @@ async function loadStats() {
     const rows = [];
 
     for (const collection of collections) {
+        let totalText = "No disponible";
+
         try {
             const response = await fetch(collection.json + "?t=" + Date.now());
             const data = await response.json();
             const total = (data.imagenes || []).length;
-
-            rows.push(`
-                <a class="collection-row" href="${collection.url}" target="_blank">
-                    <strong>${collection.name}</strong>
-                    <span>${total} ${total === 1 ? "fotografía" : "fotografías"} →</span>
-                </a>
-            `);
+            totalText = `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
         } catch (error) {
-            rows.push(`
-                <a class="collection-row" href="${collection.url}" target="_blank">
-                    <strong>${collection.name}</strong>
-                    <span>No disponible →</span>
-                </a>
-            `);
+            totalText = "No disponible";
         }
+
+        rows.push(`
+            <div class="collection-row">
+                <a href="${collection.url}" target="_blank" style="color:#111;text-decoration:none;">
+                    <strong>${collection.name}</strong>
+                    <span>${totalText} →</span>
+                </a>
+
+                ${collection.protected ? "" : `
+                    <button
+                        type="button"
+                        onclick="deleteCollection('${collection.id}', '${escapeQuotes(collection.name)}')"
+                        style="margin-top:12px;background:#fff;color:#a33;border-color:#e5caca;"
+                    >
+                        Eliminar
+                    </button>
+                `}
+            </div>
+        `);
     }
 
     collectionStats.innerHTML = rows.join("");
+}
+
+async function deleteCollection(id, name) {
+    const firstConfirm = confirm(`¿Seguro que quieres eliminar la colección "${name}"?`);
+
+    if (!firstConfirm) return;
+
+    const typed = prompt(`Esta acción eliminará la colección "${name}", su carpeta de imágenes, su galeria.json y su página HTML.\n\nEscribe ELIMINAR para confirmar.`);
+
+    if (typed !== "ELIMINAR") {
+        alert("Eliminación cancelada.");
+        return;
+    }
+
+    collectionStats.innerHTML = `<div class="collection-row">Eliminando colección...</div>`;
+
+    try {
+        const response = await fetch(WORKER_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "delete_collection",
+                password,
+                id
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.ok) {
+            throw new Error(data.error || "No se pudo eliminar la colección.");
+        }
+
+        alert(`Colección "${data.deleted}" eliminada correctamente.`);
+        await refreshCollections();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await refreshCollections();
+    }
 }
 
 function resetUpload() {
@@ -340,4 +403,8 @@ function fileToBase64(file) {
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
+}
+
+function escapeQuotes(text) {
+    return String(text).replace(/'/g, "\\'");
 }
