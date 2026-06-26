@@ -115,30 +115,6 @@ transition:.3s;
 opacity:.5;
 }
 
-/* BOTÓN TEMA */
-
-.theme-toggle{
-position:fixed;
-right:18px;
-bottom:calc(90px + env(safe-area-inset-bottom));
-z-index:9999;
-border:1px solid var(--line);
-background:color-mix(in srgb,var(--surface) 92%,transparent);
-color:var(--text);
-font-family:Georgia,serif;
-font-size:.85rem;
-padding:9px 12px;
-border-radius:999px;
-cursor:pointer;
-backdrop-filter:blur(10px);
--webkit-backdrop-filter:blur(10px);
-box-shadow:0 8px 24px rgba(0,0,0,.06);
-}
-
-.theme-toggle:hover{
-opacity:.75;
-}
-
 /* SUSCRIPCIÓN */
 
 .subscribe-page{
@@ -353,13 +329,6 @@ font-size:3rem;
 
 .subscribe-text{
 font-size:.95rem;
-}
-
-.theme-toggle{
-right:12px;
-top:12px;
-font-size:.78rem;
-padding:8px 10px;
 }
 
 }
