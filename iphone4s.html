@@ -140,6 +140,12 @@
     text-decoration:underline;
 }
 
+.collection-empty{
+    color:#999;
+    font-size:1rem;
+    line-height:1.7;
+}
+
 .volver{
     display:block;
     text-align:center;
@@ -201,27 +207,88 @@
 
 <section class="colecciones">
 <h2>Colecciones</h2>
-<div id="colecciones"></div>
+<div id="colecciones">
+    <p class="collection-empty">Cargando colecciones...</p>
+</div>
 </section>
 
 <script>
-window.COLLECTIONS = [
-    {
-        titulo: "Cádiz",
-        descripcion: "Primera colección del proyecto.",
-        json: "images/iphone4s/cadiz/galeria.json",
-        url: "iphone4s-cadiz.html"
-    },
-    {
-        titulo: "Cáceres",
-        descripcion: "Segunda colección del proyecto.",
-        json: "images/iphone4s/caceres/galeria.json",
-        url: "iphone4s-caceres.html"
-    }
-];
-</script>
+async function cargarColeccionesIphone4s(){
+    const contenedor = document.getElementById("colecciones");
 
-<script src="js/collection.js?v=1"></script>
+    try{
+        const response = await fetch("collections.json?t=" + Date.now());
+        const data = await response.json();
+
+        const colecciones = (data.collections || [])
+            .filter(c => c.type === "iphone4s")
+            .sort((a, b) => String(a.title || "").localeCompare(String(b.title || ""), "es"));
+
+        if(colecciones.length === 0){
+            contenedor.innerHTML = '<p class="collection-empty">Todavía no hay colecciones disponibles.</p>';
+            return;
+        }
+
+        const tarjetas = await Promise.all(colecciones.map(async coleccion => {
+            let total = null;
+
+            try{
+                const galeriaResponse = await fetch(coleccion.json + "?t=" + Date.now());
+                const galeriaData = await galeriaResponse.json();
+                total = (galeriaData.imagenes || []).length;
+            }catch(error){
+                total = null;
+            }
+
+            let cover = "";
+
+            if(coleccion.cover){
+                if(coleccion.cover.startsWith("images/")){
+                    cover = coleccion.cover;
+                }else{
+                    cover = coleccion.path + "/" + coleccion.cover;
+                }
+            }
+
+            if(!cover){
+                try{
+                    const galeriaResponse = await fetch(coleccion.json + "?t=" + Date.now());
+                    const galeriaData = await galeriaResponse.json();
+                    const primera = (galeriaData.imagenes || [])[0];
+                    if(primera){
+                        cover = coleccion.path + "/" + primera.archivo;
+                    }
+                }catch(error){}
+            }
+
+            const contador = total === null
+                ? "Abrir colección"
+                : `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
+
+            return `
+                <a class="collection-card" href="${coleccion.url}">
+                    <div class="collection-cover">
+                        ${cover ? `<img src="${cover}?t=${Date.now()}" alt="${coleccion.title}">` : ""}
+                    </div>
+                    <div class="collection-content">
+                        <h3>${coleccion.title}</h3>
+                        <p>${coleccion.description || ""}</p>
+                        <span>${contador}</span>
+                        <strong>Ver colección →</strong>
+                    </div>
+                </a>
+            `;
+        }));
+
+        contenedor.innerHTML = `<div class="collection-grid">${tarjetas.join("")}</div>`;
+
+    }catch(error){
+        contenedor.innerHTML = '<p class="collection-empty">No se pudieron cargar las colecciones.</p>';
+    }
+}
+
+cargarColeccionesIphone4s();
+</script>
 
 <a class="volver" href="portfolio.html">← Volver a fotografías</a>
 
