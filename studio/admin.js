@@ -54,43 +54,46 @@ dom.filesInput.addEventListener("change", () => {
 
         const card = document.createElement("div");
         card.className = "photo-card";
-        card.style.padding = "12px";
+        card.style.padding = "10px";
 
         const img = document.createElement("img");
         img.src = URL.createObjectURL(file);
         img.alt = file.name;
-        img.style.marginBottom = "10px";
+        img.style.marginBottom = "8px";
 
         const name = document.createElement("p");
-        name.textContent = file.name;
-        name.style.wordBreak = "break-all";
+        name.textContent = cleanDisplayName(file.name);
+        name.style.wordBreak = "break-word";
+        name.style.fontSize = ".78rem";
+        name.style.lineHeight = "1.35";
+        name.style.marginBottom = "8px";
 
         const controls = document.createElement("div");
         controls.style.display = "grid";
-        controls.style.gridTemplateColumns = "1fr 1fr";
-        controls.style.gap = "8px";
-        controls.style.marginTop = "10px";
+        controls.style.gridTemplateColumns = "1fr";
+        controls.style.gap = "6px";
+        controls.style.marginTop = "8px";
 
         controls.innerHTML = `
-            <label style="margin:0;border:1px solid #111;padding:10px;text-align:center;color:#111;">
+            <label style="margin:0;border:1px solid #111;padding:7px 8px;color:#111;font-size:.82rem;display:flex;align-items:center;gap:6px;line-height:1;">
                 <input
                     type="radio"
                     name="upload-type-${index}"
                     value="bn"
                     checked
                     onchange="setUploadType('${key}', 'bn')"
-                    style="width:auto;margin-right:6px;"
+                    style="width:auto;margin:0;"
                 >
                 B&N
             </label>
 
-            <label style="margin:0;border:1px solid #ddd;padding:10px;text-align:center;color:#111;">
+            <label style="margin:0;border:1px solid #ddd;padding:7px 8px;color:#111;font-size:.82rem;display:flex;align-items:center;gap:6px;line-height:1;">
                 <input
                     type="radio"
                     name="upload-type-${index}"
                     value="color"
                     onchange="setUploadType('${key}', 'color')"
-                    style="width:auto;margin-right:6px;"
+                    style="width:auto;margin:0;"
                 >
                 Color
             </label>
@@ -527,6 +530,10 @@ function updateSelectionUI() {
 
 function getUploadKey(file, index) {
     return `${index}-${file.name}-${file.size}`;
+}
+
+function cleanDisplayName(filename) {
+    return filename.replace(/\.(jpg|jpeg|png)$/i, "");
 }
 
 function resetUpload() {
