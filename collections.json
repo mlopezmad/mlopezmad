@@ -67,16 +67,6 @@
       "url": "iphone4s-caceres.html",
       "cover": "IMG_6756.jpeg",
       "year": "2026"
-    },
-    {
-      "id": "prueba-coleccion",
-      "title": "Prueba colección",
-      "type": "portfolio",
-      "description": "Prueba colección",
-      "path": "images/prueba-coleccion",
-      "json": "images/prueba-coleccion/galeria.json",
-      "url": "prueba-coleccion.html",
-      "year": "2026"
     }
   ]
 }
