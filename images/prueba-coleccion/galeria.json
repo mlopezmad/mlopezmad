@@ -1,6 +1,10 @@
 {
   "imagenes": [
     {
+      "archivo": "DSCF6068.jpeg",
+      "tipo": "bn"
+    },
+    {
       "archivo": "1779124348000_R0000003.jpeg",
       "tipo": "bn"
     },
@@ -14,10 +18,6 @@
     },
     {
       "archivo": "R0004073.jpeg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "DSCF6068.jpeg",
       "tipo": "bn"
     }
   ]
