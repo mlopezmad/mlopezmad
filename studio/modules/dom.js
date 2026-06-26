@@ -13,6 +13,13 @@ export const dom = {
     loginBtn: qs("loginBtn"),
     loginStatus: qs("loginStatus"),
 
+    deployCard: qs("deployCard"),
+    deployCommit: qs("deployCommit"),
+    deployGithub: qs("deployGithub"),
+    deployPages: qs("deployPages"),
+    deployBadge: qs("deployBadge"),
+    checkDeployBtn: qs("checkDeployBtn"),
+
     newPostBtn: qs("newPostBtn"),
     newCollectionBtn: qs("newCollectionBtn"),
     backBtn: qs("backBtn"),
