@@ -19,17 +19,18 @@ export async function loadCollections() {
             : collection.title;
 
         return {
-            id: collection.id,
-            name: title,
-            path: collection.path,
-            json: "../" + collection.json,
-            rawJson: collection.json,
-            url: "../" + collection.url,
-            type: collection.type,
-            year: collection.year,
-            description: collection.description,
-            protected: PROTECTED_COLLECTIONS.includes(collection.id)
-        };
+    id: collection.id,
+    name: title,
+    path: collection.path,
+    json: "../" + collection.json,
+    rawJson: collection.json,
+    url: "../" + collection.url,
+    type: collection.type,
+    year: collection.year,
+    description: collection.description,
+    cover: collection.cover || "",
+    protected: PROTECTED_COLLECTIONS.includes(collection.id)
+};
     });
 }
 
