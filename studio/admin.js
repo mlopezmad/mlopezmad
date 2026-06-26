@@ -1,11 +1,14 @@
 import { dom } from "./modules/dom.js";
 import { state } from "./modules/state.js";
 import { show, fileToBase64 } from "./modules/utils.js";
-import { workerRequest, loadGalleryJson } from "./modules/api.js";
+import { workerRequest, loadGalleryJson, getDeployStatus } from "./modules/api.js";
 import { refreshCollections, deleteCollection } from "./modules/collections.js";
 
 let selectedPhotos = new Set();
 let uploadTypes = new Map();
+let deployTimer = null;
+
+const DEPLOY_STORAGE_KEY = "mlopezmad-last-deploy";
 
 dom.loginBtn.addEventListener("click", async () => {
     state.password = dom.passwordInput.value.trim();
@@ -17,6 +20,11 @@ dom.loginBtn.addEventListener("click", async () => {
 
     show("dashboard");
     await refreshCollections();
+    await refreshDeployStatus();
+});
+
+dom.checkDeployBtn.addEventListener("click", async () => {
+    await refreshDeployStatus(true);
 });
 
 dom.newPostBtn.addEventListener("click", () => {
@@ -156,6 +164,8 @@ dom.publishBtn.addEventListener("click", async () => {
             files
         });
 
+        saveDeployCommit(data.commit, "Publicación de fotografías");
+
         show("success");
 
         dom.successText.textContent =
@@ -163,6 +173,7 @@ dom.publishBtn.addEventListener("click", async () => {
 
         resetUpload();
         await refreshCollections();
+        startDeployPolling();
 
     } catch (error) {
         dom.publishStatus.textContent = "Error: " + error.message;
@@ -194,6 +205,8 @@ dom.createCollectionBtn.addEventListener("click", async () => {
             year
         });
 
+        saveDeployCommit(data.commit, `Nueva colección: ${data.title}`);
+
         state.lastGalleryUrl = "../" + data.url;
         state.lastCreatedCollectionPath = data.path;
 
@@ -204,6 +217,7 @@ dom.createCollectionBtn.addEventListener("click", async () => {
 
         resetCollectionForm();
         await refreshCollections();
+        startDeployPolling();
 
     } catch (error) {
         dom.createCollectionStatus.textContent = "Error: " + error.message;
@@ -258,7 +272,12 @@ dom.managerAddPhotos.addEventListener("click", async () => {
 });
 
 window.deleteCollection = async (id, name) => {
-    await deleteCollection(id, name, state.password);
+    const data = await deleteCollection(id, name, state.password);
+
+    if (data?.commit) {
+        saveDeployCommit(data.commit, `Eliminar colección: ${name}`);
+        startDeployPolling();
+    }
 };
 
 window.openCollectionManager = async (id) => {
@@ -328,11 +347,14 @@ window.setSelectedPhotosType = async (newType) => {
             type: newType
         });
 
+        saveDeployCommit(data.commit, `Cambio masivo a ${label}`);
+
         alert(`${data.updated} fotografía${data.updated === 1 ? "" : "s"} actualizada${data.updated === 1 ? "" : "s"} correctamente.`);
 
         selectedPhotos.clear();
         await openCollectionManager(state.currentCollection.id);
         await refreshCollections();
+        startDeployPolling();
 
     } catch (error) {
         alert("Error: " + error.message);
@@ -353,7 +375,7 @@ window.togglePhotoType = async (filename, currentType) => {
     dom.managerMeta.textContent = "Actualizando fotografía...";
 
     try {
-        await workerRequest({
+        const data = await workerRequest({
             action: "update_photo_type",
             password: state.password,
             collectionId: state.currentCollection.id,
@@ -361,8 +383,11 @@ window.togglePhotoType = async (filename, currentType) => {
             type: newType
         });
 
+        saveDeployCommit(data.commit, `Cambiar tipo: ${filename}`);
+
         await openCollectionManager(state.currentCollection.id);
         await refreshCollections();
+        startDeployPolling();
 
     } catch (error) {
         alert("Error: " + error.message);
@@ -387,10 +412,13 @@ window.setCollectionCover = async (filename) => {
             filename
         });
 
+        saveDeployCommit(data.commit, `Cambiar portada: ${state.currentCollection.name}`);
+
         alert(`Portada actualizada: ${data.cover}`);
 
         await refreshCollections();
         await openCollectionManager(state.currentCollection.id);
+        startDeployPolling();
 
     } catch (error) {
         alert("Error: " + error.message);
@@ -422,11 +450,14 @@ window.deletePhoto = async (filename) => {
             filename
         });
 
+        saveDeployCommit(data.commit, `Eliminar fotografía: ${filename}`);
+
         alert(`Fotografía "${data.deleted}" eliminada correctamente.`);
 
         selectedPhotos.delete(filename);
         await openCollectionManager(state.currentCollection.id);
         await refreshCollections();
+        startDeployPolling();
 
     } catch (error) {
         alert("Error: " + error.message);
@@ -551,6 +582,132 @@ async function openCollectionManager(id) {
         dom.managerMeta.textContent = "No se pudo cargar la colección.";
         dom.managerPhotos.innerHTML = `<p class="status">${error.message}</p>`;
     }
+}
+
+async function refreshDeployStatus(manual = false) {
+    const last = getLastDeploy();
+
+    if (!last) {
+        renderDeployIdle();
+        return;
+    }
+
+    renderDeployChecking(last, manual);
+
+    try {
+        const data = await getDeployStatus(state.password);
+        renderDeployResult(last, data);
+
+        if (isDeployFinished(data)) {
+            stopDeployPolling();
+        }
+    } catch (error) {
+        dom.deployGithub.textContent = "No se pudo comprobar";
+        dom.deployPages.textContent = error.message;
+        setDeployBadge("Error al consultar", "deploy-error");
+    }
+}
+
+function saveDeployCommit(commit, label) {
+    if (!commit) return;
+
+    const payload = {
+        commit,
+        label,
+        time: new Date().toISOString()
+    };
+
+    localStorage.setItem(DEPLOY_STORAGE_KEY, JSON.stringify(payload));
+    renderDeployChecking(payload, false);
+}
+
+function getLastDeploy() {
+    try {
+        const raw = localStorage.getItem(DEPLOY_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch {
+        return null;
+    }
+}
+
+function renderDeployIdle() {
+    dom.deployCommit.textContent = "Sin cambios recientes";
+    dom.deployGithub.textContent = "Pendiente de comprobar";
+    dom.deployPages.textContent = "Pendiente de comprobar";
+    setDeployBadge("Sin actividad", "");
+}
+
+function renderDeployChecking(last, manual) {
+    dom.deployCommit.textContent = `${last.label || "Último cambio"} · ${shortSha(last.commit)}`;
+    dom.deployGithub.textContent = manual ? "Comprobando..." : "Cambio enviado";
+    dom.deployPages.textContent = "Esperando publicación";
+    setDeployBadge("Publicando...", "deploy-working");
+}
+
+function renderDeployResult(last, data) {
+    dom.deployCommit.textContent = `${last.label || "Último cambio"} · ${shortSha(last.commit)}`;
+
+    const status = data.workflow?.status || data.status || "unknown";
+    const conclusion = data.workflow?.conclusion || data.conclusion || "";
+
+    if (status === "completed" && conclusion === "success") {
+        dom.deployGithub.textContent = "Completado correctamente";
+        dom.deployPages.textContent = "Web actualizada";
+        setDeployBadge("Todo publicado", "deploy-ok");
+        return;
+    }
+
+    if (status === "completed" && conclusion && conclusion !== "success") {
+        dom.deployGithub.textContent = `Finalizado con error: ${conclusion}`;
+        dom.deployPages.textContent = "Revisar GitHub";
+        setDeployBadge("Error en publicación", "deploy-error");
+        return;
+    }
+
+    if (status === "in_progress" || status === "queued") {
+        dom.deployGithub.textContent = status === "queued" ? "En cola" : "Trabajando";
+        dom.deployPages.textContent = "Aún no disponible";
+        setDeployBadge("Publicando...", "deploy-working");
+        return;
+    }
+
+    dom.deployGithub.textContent = "Estado desconocido";
+    dom.deployPages.textContent = "Pulsa comprobar de nuevo";
+    setDeployBadge("Comprobación pendiente", "deploy-working");
+}
+
+function isDeployFinished(data) {
+    const status = data.workflow?.status || data.status || "";
+    return status === "completed";
+}
+
+function startDeployPolling() {
+    stopDeployPolling();
+    refreshDeployStatus();
+
+    deployTimer = setInterval(() => {
+        refreshDeployStatus();
+    }, 10000);
+}
+
+function stopDeployPolling() {
+    if (deployTimer) {
+        clearInterval(deployTimer);
+        deployTimer = null;
+    }
+}
+
+function setDeployBadge(text, className) {
+    dom.deployBadge.textContent = text;
+    dom.deployBadge.className = "deploy-pill";
+
+    if (className) {
+        dom.deployBadge.classList.add(className);
+    }
+}
+
+function shortSha(sha) {
+    return String(sha || "").slice(0, 7);
 }
 
 function updateSelectionUI() {
