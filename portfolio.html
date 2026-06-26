@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fotografías - mlopezmad</title>
 
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+
 <link rel="stylesheet" href="style.css">
+<script src="js/theme.js?v=3"></script>
 
 <style>
 
@@ -23,9 +28,9 @@
 
 .portfolio-item{
     display:block;
-    border:1px solid #e8e8e8;
-    background:#fff;
-    color:#111;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--text);
     text-decoration:none;
     transition:.25s ease;
 }
@@ -37,7 +42,7 @@
 .portfolio-cover{
     aspect-ratio:4/3;
     overflow:hidden;
-    background:#f2f2f2;
+    background:var(--surface-soft);
 }
 
 .portfolio-cover img{
@@ -55,24 +60,25 @@
     font-size:1.75rem;
     font-weight:400;
     margin:0;
+    color:var(--text);
 }
 
 .portfolio-item p{
     margin:10px 0 18px;
-    color:#888;
+    color:var(--muted-3);
     font-size:1.02rem;
     line-height:1.6;
 }
 
 .portfolio-meta{
     font-size:.95rem;
-    color:#999;
+    color:var(--muted-3);
     letter-spacing:.5px;
 }
 
 .portfolio-empty{
     text-align:center;
-    color:#888;
+    color:var(--muted-3);
     margin-top:40px;
 }
 
@@ -81,7 +87,7 @@
     text-align:center;
     margin:80px 0;
     text-decoration:none;
-    color:#111;
+    color:var(--text);
     font-size:1.1rem;
 }
 
