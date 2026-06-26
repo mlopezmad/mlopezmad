@@ -64,7 +64,7 @@ jobs:
             echo "message=He añadido $COUNT nuevas fotografías a la colección $DISPLAY_NAME." >> $GITHUB_OUTPUT
           fi
 
-      - name: Generar galeria.json
+            - name: Generar galeria.json
         if: steps.foto.outputs.count != '0'
         env:
           GALLERY_DIR: ${{ steps.foto.outputs.gallery_dir }}
@@ -74,6 +74,7 @@ jobs:
 
           python3 <<'PY'
           import json
+          import os
           from pathlib import Path
 
           gallery = Path("galeria.json")
@@ -85,17 +86,45 @@ jobs:
               except Exception:
                   old = {"imagenes": []}
 
-          tipos = {}
-          for img in old.get("imagenes", []):
-              archivo = img.get("archivo") or img.get("file")
-              tipo = img.get("tipo", "bn")
-              if archivo:
-                  tipos[archivo] = tipo
+          old_items = old.get("imagenes", [])
 
-          archivos = sorted([
+          existing_files = {
               p.name for p in Path(".").iterdir()
               if p.is_file() and p.suffix.lower() in [".jpg", ".jpeg", ".png"]
-          ])
+          }
+
+          new_files_raw = os.environ.get("NEW_FILES", "").splitlines()
+          new_names = []
+
+          for file in new_files_raw:
+              name = Path(file).name
+              if name in existing_files and name not in new_names:
+                  new_names.append(name)
+
+          tipos = {}
+          old_order = []
+
+          for img in old_items:
+              archivo = img.get("archivo") or img.get("file")
+              tipo = img.get("tipo", "bn")
+
+              if archivo and archivo in existing_files:
+                  tipos[archivo] = tipo
+                  old_order.append(archivo)
+
+          final_order = []
+
+          for name in new_names:
+              if name not in final_order:
+                  final_order.append(name)
+
+          for name in old_order:
+              if name not in final_order:
+                  final_order.append(name)
+
+          for name in sorted(existing_files):
+              if name not in final_order:
+                  final_order.append(name)
 
           nuevo = {
               "imagenes": [
@@ -103,7 +132,7 @@ jobs:
                       "archivo": archivo,
                       "tipo": tipos.get(archivo, "bn")
                   }
-                  for archivo in archivos
+                  for archivo in final_order
               ]
           }
 
