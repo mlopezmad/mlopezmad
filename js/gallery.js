@@ -43,9 +43,10 @@
     *{margin:0;padding:0;box-sizing:border-box;}
 
     body{
-      background:#fafafa;
+      background:var(--bg);
       font-family:Georgia,serif;
-      color:#111;
+      color:var(--text);
+      transition:background .25s ease,color .25s ease;
     }
 
     header{
@@ -56,10 +57,11 @@
     header h1{
       font-size:3rem;
       font-weight:400;
+      color:var(--text);
     }
 
     header p{
-      color:#777;
+      color:var(--muted-2);
       margin-top:10px;
     }
 
@@ -74,12 +76,12 @@
       font-family:Georgia,serif;
       font-size:1rem;
       margin:0 12px;
-      color:#777;
+      color:var(--muted-2);
       cursor:pointer;
     }
 
     .filtros button.activo{
-      color:#111;
+      color:var(--text);
       text-decoration:underline;
     }
 
@@ -106,13 +108,13 @@
       text-align:center;
       margin:50px 0;
       text-decoration:none;
-      color:#111;
+      color:var(--text);
       font-size:1.1rem;
     }
 
     .footer{
       text-align:center;
-      color:#999;
+      color:var(--muted-3);
       font-size:.9rem;
       line-height:1.7;
       padding:40px 20px 60px;
@@ -253,7 +255,7 @@
   async function cargarGaleria(){
     const respuesta = await fetch(config.json + "?t=" + Date.now());
     const datos = await respuesta.json();
-    imagenes = datos.imagenes;
+    imagenes = datos.imagenes || [];
     aplicarFiltro("todas");
   }
 
