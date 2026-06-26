@@ -43,7 +43,7 @@ jobs:
 
           DISPLAY_NAME=$(echo "$COLLECTION" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)} print}')
 
-          IMAGE_URL="https://raw.githubusercontent.com/mlopezmad/mlopezmad/main/$FIRST_FILE"
+          IMAGE_URL="https://mlopezmad.es/$FIRST_FILE"
           GALLERY_URL="https://mlopezmad.es/${PAGE_SLUG}.html"
 
           {
@@ -133,7 +133,7 @@ jobs:
       - name: Esperar antes de enviar newsletter
         if: steps.foto.outputs.count != '0'
         run: |
-          sleep 60
+          sleep 180
 
       - name: Enviar newsletter
         if: steps.foto.outputs.count != '0'
