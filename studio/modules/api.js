@@ -37,3 +37,24 @@ export async function workerRequest(payload) {
 
     return data;
 }
+
+export async function getDeployStatus(password) {
+    const response = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            action: "deploy_status",
+            password
+        })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.ok) {
+        throw new Error(data.error || "No se pudo consultar el despliegue");
+    }
+
+    return data;
+}
