@@ -107,6 +107,57 @@ button:disabled{
     cursor:not-allowed;
 }
 
+.deploy-status{
+    border-left:4px solid #111;
+}
+
+.deploy-box{
+    margin-top:22px;
+    padding:20px;
+    background:#fafafa;
+    border:1px solid #eee;
+}
+
+.deploy-line{
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+    color:#777;
+    line-height:1.5;
+}
+
+.deploy-line:last-child{
+    border-bottom:none;
+}
+
+.deploy-line strong{
+    color:#111;
+    font-weight:400;
+}
+
+.deploy-pill{
+    display:inline-block;
+    margin-top:18px;
+    padding:8px 12px;
+    border:1px solid #ddd;
+    color:#777;
+    font-size:.9rem;
+}
+
+.deploy-ok{
+    color:#2f7d32;
+}
+
+.deploy-working{
+    color:#9a6a00;
+}
+
+.deploy-error{
+    color:#a33;
+}
+
 .collection-list{
     margin-top:24px;
     border-top:1px solid #eee;
@@ -252,6 +303,15 @@ button:disabled{
         grid-template-columns:repeat(2,1fr);
         gap:14px;
     }
+
+    .deploy-line{
+        display:block;
+    }
+
+    .deploy-line span{
+        display:block;
+        margin-top:4px;
+    }
 }
 </style>
 </head>
@@ -277,6 +337,32 @@ button:disabled{
 </section>
 
 <section id="dashboard" class="hidden">
+
+    <div class="card deploy-status" id="deployCard">
+        <h2>Estado de publicación</h2>
+        <p>Seguimiento del último cambio enviado a GitHub.</p>
+
+        <div class="deploy-box">
+            <div class="deploy-line">
+                <strong>Último cambio</strong>
+                <span id="deployCommit">Sin cambios recientes</span>
+            </div>
+
+            <div class="deploy-line">
+                <strong>GitHub Actions</strong>
+                <span id="deployGithub">Pendiente de comprobar</span>
+            </div>
+
+            <div class="deploy-line">
+                <strong>Web pública</strong>
+                <span id="deployPages">Pendiente de comprobar</span>
+            </div>
+
+            <div id="deployBadge" class="deploy-pill">Sin actividad</div>
+        </div>
+
+        <button id="checkDeployBtn" class="secondary">Comprobar estado</button>
+    </div>
 
     <div class="card">
         <h2>Nueva publicación</h2>
@@ -389,7 +475,7 @@ button:disabled{
 
 </main>
 
-<script type="module" src="admin.js?v=95"></script>
+<script type="module" src="admin.js?v=96"></script>
 
 </body>
 </html>
