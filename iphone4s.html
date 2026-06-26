@@ -5,12 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>iPhone 4s · Transfer Filter Project - mlopezmad</title>
 
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 <link rel="stylesheet" href="style.css">
+<script src="js/theme.js?v=3"></script>
 
 <style>
 .proyecto{
@@ -34,7 +39,7 @@
 .hero figcaption{
     margin-top:16px;
     text-align:center;
-    color:#999;
+    color:var(--muted-3);
     font-size:.95rem;
     line-height:1.6;
     font-style:italic;
@@ -43,18 +48,18 @@
 .proyecto p{
     font-size:1.12rem;
     line-height:1.9;
-    color:#555;
+    color:var(--muted);
     margin-bottom:26px;
 }
 
 .proyecto strong{
-    color:#111;
+    color:var(--text);
 }
 
 .equipo{
     margin-top:60px;
     padding-top:35px;
-    border-top:1px solid #ececec;
+    border-top:1px solid var(--line-soft);
 }
 
 .equipo h2,
@@ -62,6 +67,7 @@
     font-size:2rem;
     font-weight:400;
     margin-bottom:30px;
+    color:var(--text);
 }
 
 .equipo ul{
@@ -71,7 +77,7 @@
 
 .equipo li{
     margin-bottom:12px;
-    color:#666;
+    color:var(--muted);
     font-size:1.05rem;
 }
 
@@ -89,10 +95,10 @@
 
 .collection-card{
     display:block;
-    color:#111;
+    color:var(--text);
     text-decoration:none;
-    border:1px solid #e8e8e8;
-    background:#fff;
+    border:1px solid var(--line);
+    background:var(--surface);
     transition:.25s ease;
 }
 
@@ -103,7 +109,7 @@
 .collection-cover{
     aspect-ratio:4/3;
     overflow:hidden;
-    background:#f2f2f2;
+    background:var(--surface-soft);
 }
 
 .collection-cover img{
@@ -121,16 +127,17 @@
     font-size:1.55rem;
     font-weight:400;
     margin-bottom:8px;
+    color:var(--text);
 }
 
 .collection-content p{
-    color:#777;
+    color:var(--muted-2);
     margin-bottom:16px;
 }
 
 .collection-content span{
     display:block;
-    color:#999;
+    color:var(--muted-3);
     font-size:.95rem;
     margin-bottom:18px;
 }
@@ -138,10 +145,11 @@
 .collection-content strong{
     font-weight:400;
     text-decoration:underline;
+    color:var(--text);
 }
 
 .collection-empty{
-    color:#999;
+    color:var(--muted-3);
     font-size:1rem;
     line-height:1.7;
 }
@@ -151,7 +159,7 @@
     text-align:center;
     margin:70px 0;
     text-decoration:none;
-    color:#111;
+    color:var(--text);
     font-size:1.05rem;
 }
 
