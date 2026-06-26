@@ -120,7 +120,7 @@ opacity:.5;
 .theme-toggle{
 position:fixed;
 right:18px;
-top:18px;
+bottom:calc(90px + env(safe-area-inset-bottom));
 z-index:9999;
 border:1px solid var(--line);
 background:color-mix(in srgb,var(--surface) 92%,transparent);
