@@ -54,28 +54,34 @@ dom.filesInput.addEventListener("change", () => {
 
         const card = document.createElement("div");
         card.className = "photo-card";
-        card.style.padding = "10px";
+        card.style.padding = "8px";
 
         const img = document.createElement("img");
         img.src = URL.createObjectURL(file);
         img.alt = file.name;
+        img.style.width = "100%";
+        img.style.aspectRatio = "1 / 1";
+        img.style.objectFit = "cover";
         img.style.marginBottom = "8px";
 
         const name = document.createElement("p");
         name.textContent = cleanDisplayName(file.name);
         name.style.wordBreak = "break-word";
-        name.style.fontSize = ".78rem";
-        name.style.lineHeight = "1.35";
-        name.style.marginBottom = "8px";
+        name.style.fontSize = ".8rem";
+        name.style.lineHeight = "1.25";
+        name.style.margin = "0 0 6px";
+        name.style.color = "#777";
 
         const controls = document.createElement("div");
-        controls.style.display = "grid";
-        controls.style.gridTemplateColumns = "1fr";
-        controls.style.gap = "6px";
-        controls.style.marginTop = "8px";
+        controls.style.display = "flex";
+        controls.style.flexDirection = "column";
+        controls.style.gap = "3px";
+        controls.style.marginTop = "4px";
+        controls.style.fontSize = ".78rem";
+        controls.style.color = "#111";
 
         controls.innerHTML = `
-            <label style="margin:0;border:1px solid #111;padding:7px 8px;color:#111;font-size:.82rem;display:flex;align-items:center;gap:6px;line-height:1;">
+            <label style="display:flex;align-items:center;gap:5px;margin:0;padding:0;border:none;line-height:1.2;">
                 <input
                     type="radio"
                     name="upload-type-${index}"
@@ -84,10 +90,10 @@ dom.filesInput.addEventListener("change", () => {
                     onchange="setUploadType('${key}', 'bn')"
                     style="width:auto;margin:0;"
                 >
-                B&N
+                <span>B&N</span>
             </label>
 
-            <label style="margin:0;border:1px solid #ddd;padding:7px 8px;color:#111;font-size:.82rem;display:flex;align-items:center;gap:6px;line-height:1;">
+            <label style="display:flex;align-items:center;gap:5px;margin:0;padding:0;border:none;line-height:1.2;">
                 <input
                     type="radio"
                     name="upload-type-${index}"
@@ -95,7 +101,7 @@ dom.filesInput.addEventListener("change", () => {
                     onchange="setUploadType('${key}', 'color')"
                     style="width:auto;margin:0;"
                 >
-                Color
+                <span>Color</span>
             </label>
         `;
 
