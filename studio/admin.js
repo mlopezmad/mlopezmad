@@ -461,7 +461,7 @@ async function openCollectionManager(id) {
         }
 
         const basePath = "../" + collection.path + "/";
-        const cover = collection.cover || "";
+        const cover = normalizeCoverFilename(collection.cover);
 
         dom.managerPhotos.innerHTML = `
             <div class="bulk-actions" style="grid-column:1/-1;border:1px solid #eee;background:#fafafa;padding:18px;margin-bottom:6px;">
@@ -580,6 +580,13 @@ function getUploadKey(file, index) {
 
 function cleanDisplayName(filename) {
     return filename.replace(/\.(jpg|jpeg|png)$/i, "");
+}
+
+function normalizeCoverFilename(cover) {
+    if (!cover) return "";
+
+    const parts = String(cover).split("/");
+    return parts[parts.length - 1];
 }
 
 function resetUpload() {
