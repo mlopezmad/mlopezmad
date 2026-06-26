@@ -22,10 +22,10 @@
     }
 
     function getLabel(mode){
-        if(mode === "light") return "☀️ Claro";
-        if(mode === "dark") return "🌙 Oscuro";
-        return "🌓 Auto";
-    }
+    if(mode === "light") return "○ Claro";
+    if(mode === "dark") return "● Oscuro";
+    return "◐ Auto";
+}
 
     function updateButton(mode){
         const button = document.querySelector("[data-theme-toggle]");
