@@ -10,26 +10,49 @@
 <style>
 
 .portfolio-list{
-    max-width:760px;
+    max-width:920px;
     margin:0 auto 90px;
     padding:0 28px;
 }
 
+.portfolio-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:26px;
+}
+
 .portfolio-item{
     display:block;
-    padding:34px 0;
-    border-bottom:1px solid #ececec;
+    border:1px solid #e8e8e8;
+    background:#fff;
     color:#111;
     text-decoration:none;
     transition:.25s ease;
 }
 
 .portfolio-item:hover{
-    opacity:.65;
+    transform:translateY(-3px);
+}
+
+.portfolio-cover{
+    aspect-ratio:4/3;
+    overflow:hidden;
+    background:#f2f2f2;
+}
+
+.portfolio-cover img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.portfolio-content{
+    padding:24px;
 }
 
 .portfolio-item h2{
-    font-size:2rem;
+    font-size:1.75rem;
     font-weight:400;
     margin:0;
 }
@@ -37,7 +60,7 @@
 .portfolio-item p{
     margin:10px 0 18px;
     color:#888;
-    font-size:1.05rem;
+    font-size:1.02rem;
     line-height:1.6;
 }
 
@@ -68,8 +91,9 @@
         padding:0 24px;
     }
 
-    .portfolio-item{
-        padding:28px 0;
+    .portfolio-grid{
+        grid-template-columns:1fr;
+        gap:28px;
     }
 
     .portfolio-item h2{
@@ -98,85 +122,115 @@
 
 async function cargarPortfolio(){
 
-    const contenedor=document.getElementById("portfolioList");
+    const contenedor = document.getElementById("portfolioList");
 
     try{
 
-        const response=await fetch("collections.json?t="+Date.now());
-        const data=await response.json();
+        const response = await fetch("collections.json?t=" + Date.now());
+        const data = await response.json();
 
-        const colecciones=(data.collections||[])
-            .filter(c=>c.type==="portfolio");
+        const colecciones = (data.collections || [])
+            .filter(c => c.type === "portfolio");
 
         if(!colecciones.length){
-            contenedor.innerHTML='<p class="portfolio-empty">No hay colecciones disponibles.</p>';
+            contenedor.innerHTML = '<p class="portfolio-empty">No hay colecciones disponibles.</p>';
             return;
         }
 
-        const filas=await Promise.all(
-            colecciones.map(async coleccion=>{
+        const filas = await Promise.all(
+            colecciones.map(async coleccion => {
 
-                let total=null;
+                let total = null;
+                let primeraFoto = "";
 
                 try{
-                    const g=await fetch(coleccion.json+"?t="+Date.now());
-                    const gd=await g.json();
-                    total=(gd.imagenes||[]).length;
+                    const g = await fetch(coleccion.json + "?t=" + Date.now());
+                    const gd = await g.json();
+                    const imagenes = gd.imagenes || [];
+                    total = imagenes.length;
+
+                    if(imagenes[0]){
+                        primeraFoto = imagenes[0].archivo || imagenes[0].file || "";
+                    }
                 }catch(e){}
 
-                const descripcion=
-                    coleccion.title==="Editor's Choice"
+                const descripcion =
+                    coleccion.title === "Editor's Choice"
                         ? "Una selección personal"
-                        : (coleccion.description||"");
+                        : (coleccion.description || "");
 
-                const contador=
-                    total===null
-                    ? ""
-                    : `${total} ${total===1?"fotografía":"fotografías"}`;
+                const contador =
+                    total === null
+                    ? "Abrir"
+                    : `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
 
-                return `
+                const cover = getCoverUrl(coleccion, primeraFoto);
 
-<a class="portfolio-item" href="${coleccion.url}">
-
-<h2>${coleccion.title}</h2>
-
-${descripcion?`<p>${descripcion}</p>`:""}
-
-<div class="portfolio-meta">
-${contador} →
-</div>
-
-</a>
-
-`;
+                return crearTarjeta({
+                    url: coleccion.url,
+                    title: coleccion.title,
+                    description: descripcion,
+                    meta: contador + " →",
+                    cover
+                });
 
             })
-
         );
 
-        filas.push(`
+        filas.push(crearTarjeta({
+            url: "iphone4s.html",
+            title: "iPhone 4s",
+            description: "Transfer Filter Project",
+            meta: "Proyecto →",
+            cover: "images/iphone4s/hero.jpg"
+        }));
 
-<a class="portfolio-item" href="iphone4s.html">
-
-<h2>iPhone 4s</h2>
-
-<p>Transfer Filter Project</p>
-
-<div class="portfolio-meta">
-Proyecto →
-</div>
-
-</a>
-
-`);
-
-        contenedor.innerHTML=filas.join("");
+        contenedor.innerHTML = `<div class="portfolio-grid">${filas.join("")}</div>`;
 
     }catch(e){
 
-        contenedor.innerHTML='<p class="portfolio-empty">No se pudo cargar el portfolio.</p>';
+        contenedor.innerHTML = '<p class="portfolio-empty">No se pudo cargar el portfolio.</p>';
 
     }
+
+}
+
+function getCoverUrl(coleccion, primeraFoto){
+
+    if(coleccion.cover){
+        if(String(coleccion.cover).startsWith("images/")){
+            return coleccion.cover;
+        }
+
+        return coleccion.path + "/" + coleccion.cover;
+    }
+
+    if(primeraFoto){
+        return coleccion.path + "/" + primeraFoto;
+    }
+
+    return "";
+}
+
+function crearTarjeta({ url, title, description, meta, cover }){
+
+    return `
+        <a class="portfolio-item" href="${url}">
+            <div class="portfolio-cover">
+                ${cover ? `<img src="${cover}?t=${Date.now()}" alt="${title}">` : ""}
+            </div>
+
+            <div class="portfolio-content">
+                <h2>${title}</h2>
+
+                ${description ? `<p>${description}</p>` : ""}
+
+                <div class="portfolio-meta">
+                    ${meta}
+                </div>
+            </div>
+        </a>
+    `;
 
 }
 
