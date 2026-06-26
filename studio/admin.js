@@ -370,6 +370,34 @@ window.togglePhotoType = async (filename, currentType) => {
     }
 };
 
+window.setCollectionCover = async (filename) => {
+    if (!state.currentCollection) return;
+
+    const ok = confirm(`¿Usar esta fotografía como portada de "${state.currentCollection.name}"?\n\n${filename}`);
+
+    if (!ok) return;
+
+    dom.managerMeta.textContent = "Actualizando portada...";
+
+    try {
+        const data = await workerRequest({
+            action: "set_collection_cover",
+            password: state.password,
+            collectionId: state.currentCollection.id,
+            filename
+        });
+
+        alert(`Portada actualizada: ${data.cover}`);
+
+        await refreshCollections();
+        await openCollectionManager(state.currentCollection.id);
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await openCollectionManager(state.currentCollection.id);
+    }
+};
+
 window.deletePhoto = async (filename) => {
     if (!state.currentCollection) return;
 
@@ -433,6 +461,7 @@ async function openCollectionManager(id) {
         }
 
         const basePath = "../" + collection.path + "/";
+        const cover = collection.cover || "";
 
         dom.managerPhotos.innerHTML = `
             <div class="bulk-actions" style="grid-column:1/-1;border:1px solid #eee;background:#fafafa;padding:18px;margin-bottom:6px;">
@@ -461,9 +490,10 @@ async function openCollectionManager(id) {
                 const tipoTexto = tipo === "color" ? "Color" : "Blanco y negro";
                 const botonTipo = tipo === "color" ? "Cambiar a B&N" : "Cambiar a Color";
                 const encoded = encodeURIComponent(archivo);
+                const isCover = cover === archivo;
 
                 return `
-                    <div class="photo-card" data-filename="${archivo}">
+                    <div class="photo-card" data-filename="${archivo}" style="${isCover ? "outline:2px solid #111;" : ""}">
                         <label style="display:flex;align-items:center;gap:8px;margin:0 0 10px;color:#111;">
                             <input
                                 type="checkbox"
@@ -474,6 +504,8 @@ async function openCollectionManager(id) {
                             >
                             Seleccionar
                         </label>
+
+                        ${isCover ? `<p style="margin:0 0 8px;color:#111;font-size:.85rem;">⭐ Portada actual</p>` : ""}
 
                         <img src="${basePath + archivo}?t=${Date.now()}" alt="${archivo}">
                         <p>${archivo}</p>
@@ -490,6 +522,14 @@ async function openCollectionManager(id) {
                                 onclick="togglePhotoType('${archivo}', '${tipo}')"
                             >
                                 ${botonTipo}
+                            </button>
+
+                            <button
+                                type="button"
+                                class="secondary"
+                                onclick="setCollectionCover('${archivo}')"
+                            >
+                                ${isCover ? "⭐ Portada actual" : "⭐ Usar como portada"}
                             </button>
 
                             <button
@@ -530,7 +570,7 @@ function updateSelectionUI() {
 
         const selected = selectedPhotos.has(filename);
         checkbox.checked = selected;
-        card.style.outline = selected ? "2px solid #111" : "none";
+        card.style.outline = selected ? "2px solid #111" : card.style.outline;
     });
 }
 
