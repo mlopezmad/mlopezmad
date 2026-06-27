@@ -13,12 +13,28 @@ export const dom = {
     loginBtn: qs("loginBtn"),
     loginStatus: qs("loginStatus"),
 
+    publicationsTabBtn: qs("publicationsTabBtn"),
+    statsTabBtn: qs("statsTabBtn"),
+    publicationsTab: qs("publicationsTab"),
+    statsTab: qs("statsTab"),
+
     deployCard: qs("deployCard"),
     deployCommit: qs("deployCommit"),
     deployGithub: qs("deployGithub"),
     deployPages: qs("deployPages"),
     deployBadge: qs("deployBadge"),
     checkDeployBtn: qs("checkDeployBtn"),
+
+    statsToday: qs("statsToday"),
+    statsWeek: qs("statsWeek"),
+    statsMonth: qs("statsMonth"),
+    statsPhotos: qs("statsPhotos"),
+    statsCollections: qs("statsCollections"),
+    statsEditors: qs("statsEditors"),
+    statsChart: qs("statsChart"),
+    statsTopGallery: qs("statsTopGallery"),
+    statsTopSource: qs("statsTopSource"),
+    statsTopCountry: qs("statsTopCountry"),
 
     newPostBtn: qs("newPostBtn"),
     newCollectionBtn: qs("newCollectionBtn"),
