@@ -1,18 +1,6 @@
 {
   "imagenes": [
     {
-      "archivo": "IMG_6755.jpeg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6756.jpeg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6757.jpeg",
-      "tipo": "color"
-    },
-    {
       "archivo": "IMG_6758.jpeg",
       "tipo": "color"
     },
@@ -30,6 +18,18 @@
     },
     {
       "archivo": "IMG_6763.jpeg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_6755.jpeg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_6756.jpeg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_6757.jpeg",
       "tipo": "color"
     }
   ]
