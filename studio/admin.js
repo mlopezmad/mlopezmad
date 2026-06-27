@@ -565,34 +565,40 @@ async function openCollectionManager(id) {
                         <p>${tipoTexto}</p>
 
                         <div class="photo-actions">
-                            <button type="button" class="secondary" onclick="previewPhoto('${basePath + archivo}')">
-                                Ver
-                            </button>
+    <details class="photo-menu">
+        <summary>Acciones</summary>
 
-                            <button
-                                type="button"
-                                class="secondary"
-                                onclick="togglePhotoType('${archivo}', '${tipo}')"
-                            >
-                                ${botonTipo}
-                            </button>
+        <div class="photo-menu-body">
+            <button type="button" class="secondary" onclick="previewPhoto('${basePath + archivo}')">
+                Ver fotografía
+            </button>
 
-                            <button
-                                type="button"
-                                class="secondary"
-                                onclick="setCollectionCover('${archivo}')"
-                            >
-                                ${isCover ? "⭐ Portada actual" : "⭐ Usar como portada"}
-                            </button>
+            <button
+                type="button"
+                class="secondary"
+                onclick="togglePhotoType('${archivo}', '${tipo}')"
+            >
+                ${botonTipo}
+            </button>
 
-                            <button
-                                type="button"
-                                onclick="deletePhoto('${archivo}')"
-                                style="background:#fff;color:#a33;border-color:#e5caca;"
-                            >
-                                Eliminar
-                            </button>
-                        </div>
+            <button
+                type="button"
+                class="secondary"
+                onclick="setCollectionCover('${archivo}')"
+            >
+                ${isCover ? "⭐ Portada actual" : "⭐ Usar como portada"}
+            </button>
+
+            <button
+                type="button"
+                class="danger"
+                onclick="deletePhoto('${archivo}')"
+            >
+                Eliminar fotografía
+            </button>
+        </div>
+    </details>
+</div>
                     </div>
                 `;
             }).join("")}
