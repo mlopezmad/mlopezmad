@@ -62,6 +62,73 @@ body{
 
 .hidden{display:none;}
 
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:24px;
+}
+
+.stat-box{
+    border:1px solid #eee;
+    background:#fafafa;
+    padding:18px;
+}
+
+.stat-box span{
+    display:block;
+    color:#888;
+    font-size:.9rem;
+    margin-bottom:10px;
+}
+
+.stat-box strong{
+    display:block;
+    font-size:1.8rem;
+    font-weight:400;
+    color:#111;
+}
+
+.stats-chart{
+    margin-top:22px;
+    padding:22px;
+    border:1px solid #eee;
+    background:#fafafa;
+}
+
+.chart-placeholder{
+    height:120px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#aaa;
+    border:1px dashed #ddd;
+    font-size:.95rem;
+}
+
+.stats-list{
+    margin-top:22px;
+    border-top:1px solid #eee;
+}
+
+.stats-row{
+    display:flex;
+    justify-content:space-between;
+    gap:18px;
+    padding:14px 0;
+    border-bottom:1px solid #eee;
+    color:#777;
+}
+
+.stats-row strong{
+    color:#111;
+    font-weight:400;
+}
+
+.stats-row span{
+    color:#888;
+}
+
 label{
     display:block;
     color:#777;
@@ -290,6 +357,19 @@ button:disabled{
         padding:26px;
     }
 
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats-row{
+        display:block;
+    }
+
+    .stats-row span{
+        display:block;
+        margin-top:4px;
+    }
+
     .collection-row{
         display:block;
     }
@@ -338,6 +418,86 @@ button:disabled{
 
 <section id="dashboard" class="hidden">
 
+    <div class="card" id="statsCard">
+        <h2>Estadísticas</h2>
+        <p>Resumen de actividad de la web. Próximamente conectado a Google Analytics.</p>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <span>Visitantes hoy</span>
+                <strong id="statsToday">—</strong>
+            </div>
+
+            <div class="stat-box">
+                <span>Últimos 7 días</span>
+                <strong id="statsWeek">—</strong>
+            </div>
+
+            <div class="stat-box">
+                <span>Últimos 30 días</span>
+                <strong id="statsMonth">—</strong>
+            </div>
+
+            <div class="stat-box">
+                <span>Fotografías</span>
+                <strong id="statsPhotos">—</strong>
+            </div>
+
+            <div class="stat-box">
+                <span>Colecciones</span>
+                <strong id="statsCollections">—</strong>
+            </div>
+
+            <div class="stat-box">
+                <span>Editor's Choice</span>
+                <strong id="statsEditors">—</strong>
+            </div>
+        </div>
+
+        <div class="stats-chart">
+            <p style="margin-bottom:14px;color:#777;">Visitas últimos 30 días</p>
+            <div id="statsChart" class="chart-placeholder">Gráfico pendiente de conectar</div>
+        </div>
+
+        <div class="stats-list">
+            <div class="stats-row">
+                <strong>Galería más visitada</strong>
+                <span id="statsTopGallery">Pendiente</span>
+            </div>
+
+            <div class="stats-row">
+                <strong>Fuente principal</strong>
+                <span id="statsTopSource">Pendiente</span>
+            </div>
+
+            <div class="stats-row">
+                <strong>País principal</strong>
+                <span id="statsTopCountry">Pendiente</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Nueva publicación</h2>
+        <p>Sube una o varias fotografías a una colección existente.</p>
+        <button id="newPostBtn">Nueva publicación</button>
+    </div>
+
+    <div class="card">
+        <h2>Nueva colección</h2>
+        <p>Crea una galería nueva sin tocar GitHub ni editar código.</p>
+        <button id="newCollectionBtn">Nueva colección</button>
+    </div>
+
+    <div class="card">
+        <h2>Colecciones</h2>
+        <p>Resumen automático de tus galerías.</p>
+
+        <div class="collection-list" id="collectionStats">
+            <div class="collection-row">Cargando colecciones...</div>
+        </div>
+    </div>
+
     <div class="card deploy-status" id="deployCard">
         <h2>Estado de publicación</h2>
         <p>Seguimiento del último cambio enviado a GitHub.</p>
@@ -362,27 +522,6 @@ button:disabled{
         </div>
 
         <button id="checkDeployBtn" class="secondary">Comprobar estado</button>
-    </div>
-
-    <div class="card">
-        <h2>Nueva publicación</h2>
-        <p>Sube una o varias fotografías a una colección existente.</p>
-        <button id="newPostBtn">Nueva publicación</button>
-    </div>
-
-    <div class="card">
-        <h2>Nueva colección</h2>
-        <p>Crea una galería nueva sin tocar GitHub ni editar código.</p>
-        <button id="newCollectionBtn">Nueva colección</button>
-    </div>
-
-    <div class="card">
-        <h2>Colecciones</h2>
-        <p>Resumen automático de tus galerías.</p>
-
-        <div class="collection-list" id="collectionStats">
-            <div class="collection-row">Cargando colecciones...</div>
-        </div>
     </div>
 
 </section>
@@ -475,7 +614,7 @@ button:disabled{
 
 </main>
 
-<script type="module" src="admin.js?v=97"></script>
+<script type="module" src="admin.js?v=98"></script>
 
 </body>
 </html>
