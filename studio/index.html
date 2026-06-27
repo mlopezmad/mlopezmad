@@ -364,16 +364,54 @@ button:disabled{
 }
 
 .photo-actions{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:8px;
     margin-top:10px;
 }
 
-.photo-actions button{
+.photo-menu{
+    margin-top:10px;
+}
+
+.photo-menu summary{
+    list-style:none;
+    border:1px solid #111;
+    background:#fff;
+    color:#111;
+    padding:10px;
+    text-align:center;
+    cursor:pointer;
+    font-size:.9rem;
+}
+
+.photo-menu summary::-webkit-details-marker{
+    display:none;
+}
+
+.photo-menu summary::after{
+    content:" ↓";
+    color:#888;
+}
+
+.photo-menu[open] summary::after{
+    content:" ↑";
+}
+
+.photo-menu-body{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    margin-top:8px;
+}
+
+.photo-menu button{
     margin-top:0;
     padding:10px;
     font-size:.85rem;
+}
+
+.photo-menu button.danger{
+    background:#fff;
+    color:#a33;
+    border-color:#e5caca;
 }
 
 .manager-meta{
@@ -691,7 +729,7 @@ button:disabled{
 
 </main>
 
-<script type="module" src="admin.js?v=106"></script>
+<script type="module" src="admin.js?v=107"></script>
 
 </body>
 </html>
