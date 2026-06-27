@@ -28,7 +28,7 @@ body{
 
 .header{
     text-align:center;
-    margin-bottom:54px;
+    margin-bottom:44px;
 }
 
 .header h1{
@@ -40,6 +40,26 @@ body{
     margin-top:10px;
     color:#888;
     font-size:1rem;
+}
+
+.tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:28px;
+}
+
+.tab-btn{
+    margin-top:0;
+    background:#fff;
+    color:#111;
+    border:1px solid #ddd;
+}
+
+.tab-btn.active{
+    background:#111;
+    color:#fff;
+    border-color:#111;
 }
 
 .card{
@@ -213,17 +233,9 @@ button:disabled{
     font-size:.9rem;
 }
 
-.deploy-ok{
-    color:#2f7d32;
-}
-
-.deploy-working{
-    color:#9a6a00;
-}
-
-.deploy-error{
-    color:#a33;
-}
+.deploy-ok{color:#2f7d32;}
+.deploy-working{color:#9a6a00;}
+.deploy-error{color:#a33;}
 
 .collection-list{
     margin-top:24px;
@@ -361,36 +373,22 @@ button:disabled{
         grid-template-columns:1fr;
     }
 
-    .stats-row{
+    .stats-row,
+    .collection-row,
+    .deploy-line{
         display:block;
     }
 
-    .stats-row span{
+    .stats-row span,
+    .collection-row span,
+    .deploy-line span{
         display:block;
         margin-top:4px;
-    }
-
-    .collection-row{
-        display:block;
-    }
-
-    .collection-row span{
-        display:block;
-        margin-top:6px;
     }
 
     .manager-grid{
         grid-template-columns:repeat(2,1fr);
         gap:14px;
-    }
-
-    .deploy-line{
-        display:block;
-    }
-
-    .deploy-line span{
-        display:block;
-        margin-top:4px;
     }
 }
 </style>
@@ -418,111 +416,124 @@ button:disabled{
 
 <section id="dashboard" class="hidden">
 
-    <div class="card" id="statsCard">
-        <h2>Estadísticas</h2>
-        <p>Resumen de actividad de la web. Próximamente conectado a Google Analytics.</p>
+    <nav class="tabs">
+        <button id="publicationsTabBtn" class="tab-btn active" type="button">Publicaciones</button>
+        <button id="statsTabBtn" class="tab-btn" type="button">Estadísticas</button>
+    </nav>
 
-        <div class="stats-grid">
-            <div class="stat-box">
-                <span>Visitantes hoy</span>
-                <strong id="statsToday">—</strong>
-            </div>
+    <section id="publicationsTab">
 
-            <div class="stat-box">
-                <span>Últimos 7 días</span>
-                <strong id="statsWeek">—</strong>
-            </div>
+        <div class="card">
+            <h2>Nueva publicación</h2>
+            <p>Sube una o varias fotografías a una colección existente.</p>
+            <button id="newPostBtn">Nueva publicación</button>
+        </div>
 
-            <div class="stat-box">
-                <span>Últimos 30 días</span>
-                <strong id="statsMonth">—</strong>
-            </div>
+        <div class="card">
+            <h2>Nueva colección</h2>
+            <p>Crea una galería nueva sin tocar GitHub ni editar código.</p>
+            <button id="newCollectionBtn">Nueva colección</button>
+        </div>
 
-            <div class="stat-box">
-                <span>Fotografías</span>
-                <strong id="statsPhotos">—</strong>
-            </div>
+        <div class="card">
+            <h2>Colecciones</h2>
+            <p>Resumen automático de tus galerías.</p>
 
-            <div class="stat-box">
-                <span>Colecciones</span>
-                <strong id="statsCollections">—</strong>
-            </div>
-
-            <div class="stat-box">
-                <span>Editor's Choice</span>
-                <strong id="statsEditors">—</strong>
+            <div class="collection-list" id="collectionStats">
+                <div class="collection-row">Cargando colecciones...</div>
             </div>
         </div>
 
-        <div class="stats-chart">
-            <p style="margin-bottom:14px;color:#777;">Visitas últimos 30 días</p>
-            <div id="statsChart" class="chart-placeholder">Gráfico pendiente de conectar</div>
+        <div class="card deploy-status" id="deployCard">
+            <h2>Estado de publicación</h2>
+            <p>Seguimiento del último cambio enviado a GitHub.</p>
+
+            <div class="deploy-box">
+                <div class="deploy-line">
+                    <strong>Último cambio</strong>
+                    <span id="deployCommit">Sin cambios recientes</span>
+                </div>
+
+                <div class="deploy-line">
+                    <strong>GitHub Actions</strong>
+                    <span id="deployGithub">Pendiente de comprobar</span>
+                </div>
+
+                <div class="deploy-line">
+                    <strong>Web pública</strong>
+                    <span id="deployPages">Pendiente de comprobar</span>
+                </div>
+
+                <div id="deployBadge" class="deploy-pill">Sin actividad</div>
+            </div>
+
+            <button id="checkDeployBtn" class="secondary">Comprobar estado</button>
         </div>
 
-        <div class="stats-list">
-            <div class="stats-row">
-                <strong>Galería más visitada</strong>
-                <span id="statsTopGallery">Pendiente</span>
+    </section>
+
+    <section id="statsTab" class="hidden">
+
+        <div class="card" id="statsCard">
+            <h2>Estadísticas</h2>
+            <p>Resumen de actividad de la web. Próximamente conectado a Google Analytics.</p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span>Visitantes hoy</span>
+                    <strong id="statsToday">—</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Últimos 7 días</span>
+                    <strong id="statsWeek">—</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Últimos 30 días</span>
+                    <strong id="statsMonth">—</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Fotografías</span>
+                    <strong id="statsPhotos">—</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Colecciones</span>
+                    <strong id="statsCollections">—</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Editor's Choice</span>
+                    <strong id="statsEditors">—</strong>
+                </div>
             </div>
 
-            <div class="stats-row">
-                <strong>Fuente principal</strong>
-                <span id="statsTopSource">Pendiente</span>
+            <div class="stats-chart">
+                <p style="margin-bottom:14px;color:#777;">Visitas últimos 30 días</p>
+                <div id="statsChart" class="chart-placeholder">Gráfico pendiente de conectar</div>
             </div>
 
-            <div class="stats-row">
-                <strong>País principal</strong>
-                <span id="statsTopCountry">Pendiente</span>
+            <div class="stats-list">
+                <div class="stats-row">
+                    <strong>Galería más visitada</strong>
+                    <span id="statsTopGallery">Pendiente</span>
+                </div>
+
+                <div class="stats-row">
+                    <strong>Fuente principal</strong>
+                    <span id="statsTopSource">Pendiente</span>
+                </div>
+
+                <div class="stats-row">
+                    <strong>País principal</strong>
+                    <span id="statsTopCountry">Pendiente</span>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <h2>Nueva publicación</h2>
-        <p>Sube una o varias fotografías a una colección existente.</p>
-        <button id="newPostBtn">Nueva publicación</button>
-    </div>
-
-    <div class="card">
-        <h2>Nueva colección</h2>
-        <p>Crea una galería nueva sin tocar GitHub ni editar código.</p>
-        <button id="newCollectionBtn">Nueva colección</button>
-    </div>
-
-    <div class="card">
-        <h2>Colecciones</h2>
-        <p>Resumen automático de tus galerías.</p>
-
-        <div class="collection-list" id="collectionStats">
-            <div class="collection-row">Cargando colecciones...</div>
-        </div>
-    </div>
-
-    <div class="card deploy-status" id="deployCard">
-        <h2>Estado de publicación</h2>
-        <p>Seguimiento del último cambio enviado a GitHub.</p>
-
-        <div class="deploy-box">
-            <div class="deploy-line">
-                <strong>Último cambio</strong>
-                <span id="deployCommit">Sin cambios recientes</span>
-            </div>
-
-            <div class="deploy-line">
-                <strong>GitHub Actions</strong>
-                <span id="deployGithub">Pendiente de comprobar</span>
-            </div>
-
-            <div class="deploy-line">
-                <strong>Web pública</strong>
-                <span id="deployPages">Pendiente de comprobar</span>
-            </div>
-
-            <div id="deployBadge" class="deploy-pill">Sin actividad</div>
-        </div>
-
-        <button id="checkDeployBtn" class="secondary">Comprobar estado</button>
-    </div>
+    </section>
 
 </section>
 
@@ -614,7 +625,7 @@ button:disabled{
 
 </main>
 
-<script type="module" src="admin.js?v=98"></script>
+<script type="module" src="admin.js?v=99"></script>
 
 </body>
 </html>
