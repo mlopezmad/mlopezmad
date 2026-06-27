@@ -116,14 +116,62 @@ body{
     background:#fafafa;
 }
 
+.stats-chart-title{
+    margin-bottom:18px;
+    color:#777;
+}
+
 .chart-placeholder{
-    height:120px;
+    min-height:180px;
+    color:#777;
+}
+
+.analytics-chart{
+    width:100%;
+    height:190px;
+    display:block;
+}
+
+.analytics-chart .grid-line{
+    stroke:#e5e5e5;
+    stroke-width:1;
+}
+
+.analytics-chart .axis-line{
+    stroke:#d8d8d8;
+    stroke-width:1;
+}
+
+.analytics-chart .chart-line{
+    fill:none;
+    stroke:#111;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+
+.analytics-chart .chart-area{
+    fill:#111;
+    opacity:.035;
+}
+
+.analytics-chart .chart-point{
+    fill:#111;
+}
+
+.chart-meta{
     display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#aaa;
-    border:1px dashed #ddd;
-    font-size:.95rem;
+    justify-content:space-between;
+    gap:18px;
+    margin-top:14px;
+    color:#999;
+    font-size:.85rem;
+    line-height:1.5;
+}
+
+.chart-meta strong{
+    color:#111;
+    font-weight:400;
 }
 
 .stats-list{
@@ -373,6 +421,19 @@ button:disabled{
         grid-template-columns:1fr;
     }
 
+    .analytics-chart{
+        height:160px;
+    }
+
+    .chart-meta{
+        display:block;
+    }
+
+    .chart-meta span{
+        display:block;
+        margin-top:4px;
+    }
+
     .stats-row,
     .collection-row,
     .deploy-line{
@@ -476,7 +537,7 @@ button:disabled{
 
         <div class="card" id="statsCard">
             <h2>Estadísticas</h2>
-            <p>Resumen de actividad de la web. Próximamente conectado a Google Analytics.</p>
+            <p>Resumen de actividad de la web conectado a Google Analytics.</p>
 
             <div class="stats-grid">
                 <div class="stat-box">
@@ -511,8 +572,8 @@ button:disabled{
             </div>
 
             <div class="stats-chart">
-                <p style="margin-bottom:14px;color:#777;">Visitas últimos 30 días</p>
-                <div id="statsChart" class="chart-placeholder">Gráfico pendiente de conectar</div>
+                <p class="stats-chart-title">Visitas últimos 30 días</p>
+                <div id="statsChart" class="chart-placeholder">Cargando gráfico...</div>
             </div>
 
             <div class="stats-list">
@@ -625,7 +686,7 @@ button:disabled{
 
 </main>
 
-<script type="module" src="admin.js?v=104"></script>
+<script type="module" src="admin.js?v=105"></script>
 
 </body>
 </html>
