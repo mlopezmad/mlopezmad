@@ -676,6 +676,7 @@ async function refreshStudioStats() {
         dom.statsTopGallery.textContent = "Error cargando Analytics";
         dom.statsTopSource.textContent = error.message;
         dom.statsTopCountry.textContent = "—";
+        dom.statsCountries.textContent = "—";
         dom.statsChart.textContent = "No se pudo cargar Google Analytics";
     }
 }
