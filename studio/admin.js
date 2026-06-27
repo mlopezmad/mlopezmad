@@ -609,8 +609,8 @@ async function openCollectionManager(id) {
 function showStudioTab(tab) {
     const isStats = tab === "stats";
 
-    dom.publicationsTab.classList.toggle("hidden", isStats);
-    dom.statsTab.classList.toggle("hidden", !isStats);
+    dom.dashboardPublications.classList.toggle("hidden", isStats);
+    dom.dashboardStatistics.classList.toggle("hidden", !isStats);
 
     dom.publicationsTabBtn.classList.toggle("active", !isStats);
     dom.statsTabBtn.classList.toggle("active", isStats);
