@@ -35,6 +35,7 @@ export const dom = {
     statsTopGallery: qs("statsTopGallery"),
     statsTopSource: qs("statsTopSource"),
     statsTopCountry: qs("statsTopCountry"),
+    statsCountries: qs("statsCountries"),
 
     newPostBtn: qs("newPostBtn"),
     newCollectionBtn: qs("newCollectionBtn"),
