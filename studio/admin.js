@@ -447,6 +447,37 @@ window.setCollectionCover = async (filename) => {
     }
 };
 
+window.setHomeCover = async (filename) => {
+    if (!state.currentCollection) return;
+
+    const ok = confirm(`¿Usar esta fotografía como portada principal de la web?\n\n${filename}`);
+
+    if (!ok) return;
+
+    dom.managerMeta.textContent = "Actualizando portada principal...";
+
+    try {
+        const data = await workerRequest({
+            action: "set_home_cover",
+            password: state.password,
+            collectionId: state.currentCollection.id,
+            filename
+        });
+
+        saveDeployCommit(data.commit, "Cambiar portada principal");
+
+        alert("Portada principal actualizada correctamente.");
+
+        await refreshCollections();
+        await openCollectionManager(state.currentCollection.id);
+        await refreshStudioStats();
+        startDeployPolling();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await openCollectionManager(state.currentCollection.id);
+    }
+};
 window.deletePhoto = async (filename) => {
     if (!state.currentCollection) return;
 
@@ -589,6 +620,13 @@ async function openCollectionManager(id) {
                 ${isCover ? "⭐ Portada actual" : "⭐ Usar como portada"}
             </button>
 
+<button
+    type="button"
+    class="secondary"
+    onclick="setHomeCover('${archivo}')"
+>
+    🏠 Portada principal
+</button>
             <button
                 type="button"
                 class="danger"
