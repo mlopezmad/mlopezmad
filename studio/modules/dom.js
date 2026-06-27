@@ -15,8 +15,8 @@ export const dom = {
 
     publicationsTabBtn: qs("publicationsTabBtn"),
     statsTabBtn: qs("statsTabBtn"),
-    publicationsTab: qs("publicationsTab"),
-    statsTab: qs("statsTab"),
+    dashboardPublications: qs("dashboardPublications"),
+    dashboardStatistics: qs("dashboardStatistics"),
 
     deployCard: qs("deployCard"),
     deployCommit: qs("deployCommit"),
