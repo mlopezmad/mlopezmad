@@ -661,6 +661,11 @@ async function refreshStudioStats() {
 
         dom.statsTopSource.textContent = analytics.topSource || "Sin datos";
         dom.statsTopCountry.textContent = analytics.topCountry || "Sin datos";
+        dom.statsCountries.textContent = analytics.countries?.length
+    ? analytics.countries
+        .map(item => `${item.label} (${formatNumber(item.value)})`)
+        .join(" · ")
+    : "Sin datos";
 
         renderMiniChart(analytics.daily || []);
 
