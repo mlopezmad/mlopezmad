@@ -1,692 +1,835 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>mlopezmad Studio</title>
-
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
-<link rel="shortcut icon" href="../favicon.ico">
-<link rel="apple-touch-icon" href="../apple-touch-icon.png">
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-    background:#fafafa;
-    color:#111;
-    font-family:Georgia,serif;
-    min-height:100vh;
-}
-
-.studio{
-    max-width:920px;
-    margin:0 auto;
-    padding:64px 22px;
-}
-
-.header{
-    text-align:center;
-    margin-bottom:44px;
-}
-
-.header h1{
-    font-size:3rem;
-    font-weight:400;
-}
-
-.header p{
-    margin-top:10px;
-    color:#888;
-    font-size:1rem;
-}
-
-.tabs{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-bottom:28px;
-}
-
-.tab-btn{
-    margin-top:0;
-    background:#fff;
-    color:#111;
-    border:1px solid #ddd;
-}
-
-.tab-btn.active{
-    background:#111;
-    color:#fff;
-    border-color:#111;
-}
-
-.card{
-    background:#fff;
-    border:1px solid #e8e8e8;
-    padding:30px;
-    margin-bottom:24px;
-}
-
-.card h2{
-    font-size:1.8rem;
-    font-weight:400;
-    margin-bottom:14px;
-}
-
-.card p{
-    color:#777;
-    line-height:1.7;
-}
-
-.hidden{display:none;}
-
-.stats-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
-    margin-top:24px;
-}
-
-.stat-box{
-    border:1px solid #eee;
-    background:#fafafa;
-    padding:18px;
-}
-
-.stat-box span{
-    display:block;
-    color:#888;
-    font-size:.9rem;
-    margin-bottom:10px;
-}
-
-.stat-box strong{
-    display:block;
-    font-size:1.8rem;
-    font-weight:400;
-    color:#111;
-}
-
-.stats-chart{
-    margin-top:22px;
-    padding:22px;
-    border:1px solid #eee;
-    background:#fafafa;
-}
-
-.stats-chart-title{
-    margin-bottom:18px;
-    color:#777;
-}
-
-.chart-placeholder{
-    min-height:180px;
-    color:#777;
-}
-
-.analytics-chart{
-    width:100%;
-    height:190px;
-    display:block;
-}
-
-.analytics-chart .grid-line{
-    stroke:#e5e5e5;
-    stroke-width:1;
-}
-
-.analytics-chart .axis-line{
-    stroke:#d8d8d8;
-    stroke-width:1;
-}
-
-.analytics-chart .chart-line{
-    fill:none;
-    stroke:#111;
-    stroke-width:2;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-}
-
-.analytics-chart .chart-area{
-    fill:#111;
-    opacity:.035;
-}
-
-.analytics-chart .chart-point{
-    fill:#111;
-}
-
-.chart-meta{
-    display:flex;
-    justify-content:space-between;
-    gap:18px;
-    margin-top:14px;
-    color:#999;
-    font-size:.85rem;
-    line-height:1.5;
-}
-
-.chart-meta strong{
-    color:#111;
-    font-weight:400;
-}
-
-.stats-list{
-    margin-top:22px;
-    border-top:1px solid #eee;
-}
-
-.stats-row{
-    display:flex;
-    justify-content:space-between;
-    gap:18px;
-    padding:14px 0;
-    border-bottom:1px solid #eee;
-    color:#777;
-}
-
-.stats-row strong{
-    color:#111;
-    font-weight:400;
-}
-
-.stats-row span{
-    color:#888;
-}
-
-label{
-    display:block;
-    color:#777;
-    margin:24px 0 10px;
-}
-
-input,
-select,
-textarea{
-    width:100%;
-    border:1px solid #ddd;
-    background:#fff;
-    padding:14px;
-    font-family:Georgia,serif;
-    font-size:1rem;
-}
-
-textarea{
-    min-height:110px;
-    resize:vertical;
-    line-height:1.6;
-}
-
-button{
-    width:100%;
-    border:1px solid #111;
-    background:#111;
-    color:#fff;
-    padding:16px;
-    font-family:Georgia,serif;
-    font-size:1rem;
-    cursor:pointer;
-    margin-top:24px;
-}
-
-button.secondary{
-    background:#fff;
-    color:#111;
-}
-
-button:disabled{
-    opacity:.35;
-    cursor:not-allowed;
-}
-
-.deploy-status{
-    border-left:4px solid #111;
-}
-
-.deploy-box{
-    margin-top:22px;
-    padding:20px;
-    background:#fafafa;
-    border:1px solid #eee;
-}
-
-.deploy-line{
-    display:flex;
-    justify-content:space-between;
-    gap:18px;
-    padding:10px 0;
-    border-bottom:1px solid #eee;
-    color:#777;
-    line-height:1.5;
-}
-
-.deploy-line:last-child{
-    border-bottom:none;
-}
-
-.deploy-line strong{
-    color:#111;
-    font-weight:400;
-}
-
-.deploy-pill{
-    display:inline-block;
-    margin-top:18px;
-    padding:8px 12px;
-    border:1px solid #ddd;
-    color:#777;
-    font-size:.9rem;
-}
-
-.deploy-ok{color:#2f7d32;}
-.deploy-working{color:#9a6a00;}
-.deploy-error{color:#a33;}
-
-.collection-list{
-    margin-top:24px;
-    border-top:1px solid #eee;
-}
-
-.collection-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 0;
-    border-bottom:1px solid #eee;
-    color:#111;
-    text-decoration:none;
-}
-
-.collection-row span{
-    color:#888;
-    font-size:.95rem;
-}
-
-.collection-main{
-    display:block;
-    color:#111;
-    text-decoration:none;
-}
-
-.collection-main strong{
-    display:block;
-}
-
-.status{
-    color:#777;
-    line-height:1.7;
-    margin-top:20px;
-}
-
-.preview{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(92px,1fr));
-    gap:12px;
-    margin-top:22px;
-}
-
-.preview img{
-    width:100%;
-    aspect-ratio:1/1;
-    object-fit:cover;
-}
-
-.manager-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
-    gap:16px;
-    margin-top:26px;
-}
-
-.photo-card{
-    border:1px solid #eee;
-    background:#fff;
-    padding:10px;
-}
-
-.photo-card img{
-    width:100%;
-    aspect-ratio:1/1;
-    object-fit:cover;
-    display:block;
-    margin-bottom:10px;
-}
-
-.photo-card p{
-    font-family:Arial,sans-serif;
-    font-size:.75rem;
-    color:#777;
-    line-height:1.4;
-    word-break:break-all;
-}
-
-.photo-actions{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:8px;
-    margin-top:10px;
-}
-
-.photo-actions button{
-    margin-top:0;
-    padding:10px;
-    font-size:.85rem;
-}
-
-.manager-meta{
-    color:#888;
-    margin-top:8px;
-}
-
-.success{
-    text-align:center;
-    padding:40px 20px;
-}
-
-.success h2{
-    font-size:2rem;
-    font-weight:400;
-    margin-bottom:18px;
-}
-
-.success p{
-    color:#777;
-    line-height:1.7;
-}
-
-.footer{
-    text-align:center;
-    color:#aaa;
-    margin-top:60px;
-    font-size:.85rem;
-}
-
-@media(max-width:768px){
-    .studio{
-        padding:52px 20px;
+import { dom } from "./modules/dom.js";
+import { state } from "./modules/state.js";
+import { show, fileToBase64 } from "./modules/utils.js";
+import { workerRequest, loadGalleryJson, getDeployStatus } from "./modules/api.js";
+import { refreshCollections, deleteCollection } from "./modules/collections.js";
+
+let selectedPhotos = new Set();
+let uploadTypes = new Map();
+let deployTimer = null;
+
+const DEPLOY_STORAGE_KEY = "mlopezmad-last-deploy";
+
+dom.loginBtn.addEventListener("click", async () => {
+    state.password = dom.passwordInput.value.trim();
+
+    if (!state.password) {
+        dom.loginStatus.textContent = "Introduce la contraseña.";
+        return;
     }
 
-    .header h1{
-        font-size:2.45rem;
+    show("dashboard");
+    showStudioTab("publications");
+    await refreshCollections();
+    await refreshStudioStats();
+    await refreshDeployStatus();
+});
+
+dom.publicationsTabBtn.addEventListener("click", () => {
+    showStudioTab("publications");
+});
+
+dom.statsTabBtn.addEventListener("click", async () => {
+    showStudioTab("stats");
+    await refreshStudioStats();
+});
+
+dom.checkDeployBtn.addEventListener("click", async () => {
+    await refreshDeployStatus(true);
+});
+
+dom.newPostBtn.addEventListener("click", () => {
+    show("panel");
+});
+
+dom.newCollectionBtn.addEventListener("click", () => {
+    show("collectionPanel");
+});
+
+dom.backBtn.addEventListener("click", () => {
+    resetUpload();
+    show("dashboard");
+    showStudioTab("publications");
+});
+
+dom.backFromCollectionBtn.addEventListener("click", () => {
+    resetCollectionForm();
+    show("dashboard");
+    showStudioTab("publications");
+});
+
+dom.filesInput.addEventListener("change", () => {
+    state.selectedFiles = Array.from(dom.filesInput.files || []);
+    uploadTypes.clear();
+    dom.preview.innerHTML = "";
+
+    if (state.selectedFiles.length === 0) {
+        dom.fileStatus.textContent = "No hay fotografías seleccionadas.";
+        dom.publishBtn.disabled = true;
+        return;
     }
 
-    .card{
-        padding:26px;
+    state.selectedFiles.forEach((file, index) => {
+        const key = getUploadKey(file, index);
+        uploadTypes.set(key, "bn");
+
+        const card = document.createElement("div");
+        card.className = "photo-card";
+        card.style.padding = "8px";
+
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.alt = file.name;
+        img.style.width = "100%";
+        img.style.aspectRatio = "1 / 1";
+        img.style.objectFit = "cover";
+        img.style.marginBottom = "8px";
+
+        const name = document.createElement("p");
+        name.textContent = cleanDisplayName(file.name);
+        name.style.wordBreak = "break-word";
+        name.style.fontSize = ".8rem";
+        name.style.lineHeight = "1.25";
+        name.style.margin = "0 0 6px";
+        name.style.color = "#777";
+
+        const controls = document.createElement("div");
+        controls.style.display = "flex";
+        controls.style.flexDirection = "column";
+        controls.style.gap = "3px";
+        controls.style.marginTop = "4px";
+        controls.style.fontSize = ".78rem";
+        controls.style.color = "#111";
+
+        controls.innerHTML = `
+            <label style="display:flex;align-items:center;gap:5px;margin:0;padding:0;border:none;line-height:1.2;">
+                <input
+                    type="radio"
+                    name="upload-type-${index}"
+                    value="bn"
+                    checked
+                    onchange="setUploadType('${key}', 'bn')"
+                    style="width:auto;margin:0;"
+                >
+                <span>B&N</span>
+            </label>
+
+            <label style="display:flex;align-items:center;gap:5px;margin:0;padding:0;border:none;line-height:1.2;">
+                <input
+                    type="radio"
+                    name="upload-type-${index}"
+                    value="color"
+                    onchange="setUploadType('${key}', 'color')"
+                    style="width:auto;margin:0;"
+                >
+                <span>Color</span>
+            </label>
+        `;
+
+        card.appendChild(img);
+        card.appendChild(name);
+        card.appendChild(controls);
+        dom.preview.appendChild(card);
+    });
+
+    const totalMB = state.selectedFiles.reduce((sum, file) => sum + file.size, 0) / 1024 / 1024;
+
+    dom.fileStatus.textContent =
+        `${state.selectedFiles.length} fotografía${state.selectedFiles.length === 1 ? "" : "s"} seleccionada${state.selectedFiles.length === 1 ? "" : "s"} · ${totalMB.toFixed(1)} MB · Revisa Color/B&N antes de publicar`;
+
+    dom.publishBtn.disabled = false;
+});
+
+window.setUploadType = (key, type) => {
+    uploadTypes.set(key, type);
+};
+
+dom.publishBtn.addEventListener("click", async () => {
+    if (!state.password || state.selectedFiles.length === 0) return;
+
+    dom.publishBtn.disabled = true;
+    dom.publishStatus.textContent = "Preparando fotografías...";
+
+    try {
+        const files = [];
+
+        for (let index = 0; index < state.selectedFiles.length; index++) {
+            const file = state.selectedFiles[index];
+            const key = getUploadKey(file, index);
+            const content = await fileToBase64(file);
+
+            files.push({
+                name: file.name,
+                content,
+                tipo: uploadTypes.get(key) || "bn"
+            });
+        }
+
+        const selectedOption = dom.collectionSelect.options[dom.collectionSelect.selectedIndex];
+        state.lastGalleryUrl = selectedOption.dataset.url || "../portfolio.html";
+
+        dom.publishStatus.textContent = "Subiendo fotografías...";
+
+        const data = await workerRequest({
+            action: "upload",
+            password: state.password,
+            collectionPath: dom.collectionSelect.value,
+            files
+        });
+
+        saveDeployCommit(data.commit, "Publicación de fotografías");
+
+        show("success");
+
+        dom.successText.textContent =
+            `${data.uploaded} fotografía${data.uploaded === 1 ? "" : "s"} publicada${data.uploaded === 1 ? "" : "s"} correctamente.`;
+
+        resetUpload();
+        await refreshCollections();
+        await refreshStudioStats();
+        startDeployPolling();
+
+    } catch (error) {
+        dom.publishStatus.textContent = "Error: " + error.message;
+        dom.publishBtn.disabled = false;
+    }
+});
+
+dom.createCollectionBtn.addEventListener("click", async () => {
+    const title = dom.collectionTitle.value.trim();
+    const type = dom.collectionType.value;
+    const description = dom.collectionDescription.value.trim();
+    const year = dom.collectionYear.value.trim() || new Date().getFullYear();
+
+    if (!title) {
+        dom.createCollectionStatus.textContent = "Introduce el nombre de la colección.";
+        return;
     }
 
-    .stats-grid{
-        grid-template-columns:1fr;
+    dom.createCollectionBtn.disabled = true;
+    dom.createCollectionStatus.textContent = "Creando colección...";
+
+    try {
+        const data = await workerRequest({
+            action: "create_collection",
+            password: state.password,
+            title,
+            type,
+            description,
+            year
+        });
+
+        saveDeployCommit(data.commit, `Nueva colección: ${data.title}`);
+
+        state.lastGalleryUrl = "../" + data.url;
+        state.lastCreatedCollectionPath = data.path;
+
+        show("collectionSuccess");
+
+        dom.collectionSuccessText.textContent =
+            `La colección "${data.title}" se ha creado correctamente.`;
+
+        resetCollectionForm();
+        await refreshCollections();
+        await refreshStudioStats();
+        startDeployPolling();
+
+    } catch (error) {
+        dom.createCollectionStatus.textContent = "Error: " + error.message;
+        dom.createCollectionBtn.disabled = false;
+    }
+});
+
+dom.viewGalleryBtn.addEventListener("click", () => {
+    if (state.lastGalleryUrl) {
+        window.open(state.lastGalleryUrl, "_blank");
+    }
+});
+
+dom.newUploadBtn.addEventListener("click", () => {
+    show("panel");
+});
+
+dom.uploadToNewCollectionBtn.addEventListener("click", async () => {
+    show("panel");
+
+    await refreshCollections();
+
+    if (state.lastCreatedCollectionPath) {
+        dom.collectionSelect.value = state.lastCreatedCollectionPath;
+    }
+});
+
+dom.backToDashboardBtn.addEventListener("click", () => {
+    show("dashboard");
+    showStudioTab("publications");
+});
+
+dom.managerBack.addEventListener("click", () => {
+    state.currentCollection = null;
+    selectedPhotos.clear();
+    show("dashboard");
+    showStudioTab("publications");
+});
+
+dom.managerOpenGallery.addEventListener("click", () => {
+    if (state.currentCollection?.url) {
+        window.open(state.currentCollection.url, "_blank");
+    }
+});
+
+dom.managerAddPhotos.addEventListener("click", async () => {
+    if (!state.currentCollection) return;
+
+    show("panel");
+
+    await refreshCollections();
+
+    dom.collectionSelect.value = state.currentCollection.path;
+});
+
+window.deleteCollection = async (id, name) => {
+    const data = await deleteCollection(id, name, state.password);
+
+    if (data?.commit) {
+        saveDeployCommit(data.commit, `Eliminar colección: ${name}`);
+        await refreshStudioStats();
+        startDeployPolling();
+    }
+};
+
+window.openCollectionManager = async (id) => {
+    await openCollectionManager(id);
+};
+
+window.previewPhoto = (url) => {
+    window.open(url, "_blank");
+};
+
+window.togglePhotoSelection = (encodedFilename) => {
+    const filename = decodeURIComponent(encodedFilename);
+
+    if (selectedPhotos.has(filename)) {
+        selectedPhotos.delete(filename);
+    } else {
+        selectedPhotos.add(filename);
     }
 
-    .analytics-chart{
-        height:160px;
+    updateSelectionUI();
+};
+
+window.selectAllPhotos = () => {
+    const checkboxes = document.querySelectorAll(".photo-select");
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = true;
+        selectedPhotos.add(checkbox.dataset.filename);
+    });
+
+    updateSelectionUI();
+};
+
+window.clearPhotoSelection = () => {
+    selectedPhotos.clear();
+
+    const checkboxes = document.querySelectorAll(".photo-select");
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    updateSelectionUI();
+};
+
+window.setSelectedPhotosType = async (newType) => {
+    if (!state.currentCollection) return;
+
+    const filenames = Array.from(selectedPhotos);
+
+    if (filenames.length === 0) {
+        alert("Selecciona al menos una fotografía.");
+        return;
     }
 
-    .chart-meta{
-        display:block;
+    const label = newType === "color" ? "Color" : "B&N";
+    const ok = confirm(`¿Cambiar ${filenames.length} fotografía${filenames.length === 1 ? "" : "s"} a ${label}?`);
+
+    if (!ok) return;
+
+    dom.managerMeta.textContent = "Actualizando selección...";
+
+    try {
+        const data = await workerRequest({
+            action: "update_photos_type",
+            password: state.password,
+            collectionId: state.currentCollection.id,
+            filenames,
+            type: newType
+        });
+
+        saveDeployCommit(data.commit, `Cambio masivo a ${label}`);
+
+        alert(`${data.updated} fotografía${data.updated === 1 ? "" : "s"} actualizada${data.updated === 1 ? "" : "s"} correctamente.`);
+
+        selectedPhotos.clear();
+        await openCollectionManager(state.currentCollection.id);
+        await refreshCollections();
+        await refreshStudioStats();
+        startDeployPolling();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await openCollectionManager(state.currentCollection.id);
+    }
+};
+
+window.togglePhotoType = async (filename, currentType) => {
+    if (!state.currentCollection) return;
+
+    const newType = currentType === "color" ? "bn" : "color";
+    const label = newType === "color" ? "Color" : "B&N";
+
+    const ok = confirm(`¿Cambiar "${filename}" a ${label}?`);
+
+    if (!ok) return;
+
+    dom.managerMeta.textContent = "Actualizando fotografía...";
+
+    try {
+        const data = await workerRequest({
+            action: "update_photo_type",
+            password: state.password,
+            collectionId: state.currentCollection.id,
+            filename,
+            type: newType
+        });
+
+        saveDeployCommit(data.commit, `Cambiar tipo: ${filename}`);
+
+        await openCollectionManager(state.currentCollection.id);
+        await refreshCollections();
+        await refreshStudioStats();
+        startDeployPolling();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await openCollectionManager(state.currentCollection.id);
+    }
+};
+
+window.setCollectionCover = async (filename) => {
+    if (!state.currentCollection) return;
+
+    const ok = confirm(`¿Usar esta fotografía como portada de "${state.currentCollection.name}"?\n\n${filename}`);
+
+    if (!ok) return;
+
+    dom.managerMeta.textContent = "Actualizando portada...";
+
+    try {
+        const data = await workerRequest({
+            action: "set_collection_cover",
+            password: state.password,
+            collectionId: state.currentCollection.id,
+            filename
+        });
+
+        saveDeployCommit(data.commit, `Cambiar portada: ${state.currentCollection.name}`);
+
+        alert(`Portada actualizada: ${data.cover}`);
+
+        await refreshCollections();
+        await openCollectionManager(state.currentCollection.id);
+        await refreshStudioStats();
+        startDeployPolling();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await openCollectionManager(state.currentCollection.id);
+    }
+};
+
+window.deletePhoto = async (filename) => {
+    if (!state.currentCollection) return;
+
+    const firstConfirm = confirm(`¿Seguro que quieres eliminar esta fotografía?\n\n${filename}`);
+
+    if (!firstConfirm) return;
+
+    const typed = prompt(`Esta acción eliminará la imagen de GitHub y de la galería.\n\nEscribe ELIMINAR para confirmar.`);
+
+    if (typed !== "ELIMINAR") {
+        alert("Eliminación cancelada.");
+        return;
     }
 
-    .chart-meta span{
-        display:block;
-        margin-top:4px;
+    dom.managerMeta.textContent = "Eliminando fotografía...";
+
+    try {
+        const data = await workerRequest({
+            action: "delete_photo",
+            password: state.password,
+            collectionId: state.currentCollection.id,
+            filename
+        });
+
+        saveDeployCommit(data.commit, `Eliminar fotografía: ${filename}`);
+
+        alert(`Fotografía "${data.deleted}" eliminada correctamente.`);
+
+        selectedPhotos.delete(filename);
+        await openCollectionManager(state.currentCollection.id);
+        await refreshCollections();
+        await refreshStudioStats();
+        startDeployPolling();
+
+    } catch (error) {
+        alert("Error: " + error.message);
+        await openCollectionManager(state.currentCollection.id);
     }
+};
 
-    .stats-row,
-    .collection-row,
-    .deploy-line{
-        display:block;
-    }
+async function openCollectionManager(id) {
+    const collection = state.collections.find(item => item.id === id);
 
-    .stats-row span,
-    .collection-row span,
-    .deploy-line span{
-        display:block;
-        margin-top:4px;
-    }
+    if (!collection) return;
 
-    .manager-grid{
-        grid-template-columns:repeat(2,1fr);
-        gap:14px;
-    }
-}
-</style>
-</head>
+    state.currentCollection = collection;
+    selectedPhotos.clear();
 
-<body>
+    show("collectionManager");
 
-<main class="studio">
+    dom.managerTitle.textContent = collection.name;
+    dom.managerMeta.textContent = "Cargando fotografías...";
+    dom.managerPhotos.innerHTML = "";
 
-<header class="header">
-    <h1>mlopezmad Studio</h1>
-    <p>Photography Publisher</p>
-</header>
+    try {
+        const data = await loadGalleryJson(collection.json);
+        const imagenes = data.imagenes || [];
 
-<section id="login" class="card">
-    <h2>Acceso privado</h2>
+        dom.managerMeta.textContent =
+            `${imagenes.length} ${imagenes.length === 1 ? "fotografía" : "fotografías"}`;
 
-    <label for="password">Contraseña</label>
-    <input id="password" type="password" autocomplete="current-password">
+        if (imagenes.length === 0) {
+            dom.managerPhotos.innerHTML = `<p class="status">Esta colección todavía no tiene fotografías.</p>`;
+            return;
+        }
 
-    <button id="loginBtn">Entrar</button>
+        const basePath = "../" + collection.path + "/";
+        const cover = normalizeCoverFilename(collection.cover);
 
-    <p id="loginStatus" class="status"></p>
-</section>
+        dom.managerPhotos.innerHTML = `
+            <div class="bulk-actions" style="grid-column:1/-1;border:1px solid #eee;background:#fafafa;padding:18px;margin-bottom:6px;">
+                <p id="selectionCount" class="status" style="margin-top:0;">0 fotografías seleccionadas</p>
 
-<section id="dashboard" class="hidden">
+                <button type="button" class="secondary" onclick="selectAllPhotos()" style="margin-top:12px;">
+                    Seleccionar todo
+                </button>
 
-    <nav class="tabs">
-        <button id="publicationsTabBtn" class="tab-btn active" type="button">Publicaciones</button>
-        <button id="statsTabBtn" class="tab-btn" type="button">Estadísticas</button>
-    </nav>
+                <button type="button" class="secondary" onclick="clearPhotoSelection()" style="margin-top:10px;">
+                    Quitar selección
+                </button>
 
-    <section id="dashboardPublications">
+                <button type="button" onclick="setSelectedPhotosType('color')" style="margin-top:10px;">
+                    Cambiar selección a Color
+                </button>
 
-        <div class="card">
-            <h2>Nueva publicación</h2>
-            <p>Sube una o varias fotografías a una colección existente.</p>
-            <button id="newPostBtn">Nueva publicación</button>
-        </div>
-
-        <div class="card">
-            <h2>Nueva colección</h2>
-            <p>Crea una galería nueva sin tocar GitHub ni editar código.</p>
-            <button id="newCollectionBtn">Nueva colección</button>
-        </div>
-
-        <div class="card">
-            <h2>Colecciones</h2>
-            <p>Resumen automático de tus galerías.</p>
-
-            <div class="collection-list" id="collectionStats">
-                <div class="collection-row">Cargando colecciones...</div>
-            </div>
-        </div>
-
-        <div class="card deploy-status" id="deployCard">
-            <h2>Estado de publicación</h2>
-            <p>Seguimiento del último cambio enviado a GitHub.</p>
-
-            <div class="deploy-box">
-                <div class="deploy-line">
-                    <strong>Último cambio</strong>
-                    <span id="deployCommit">Sin cambios recientes</span>
-                </div>
-
-                <div class="deploy-line">
-                    <strong>GitHub Actions</strong>
-                    <span id="deployGithub">Pendiente de comprobar</span>
-                </div>
-
-                <div class="deploy-line">
-                    <strong>Web pública</strong>
-                    <span id="deployPages">Pendiente de comprobar</span>
-                </div>
-
-                <div id="deployBadge" class="deploy-pill">Sin actividad</div>
-            </div>
-
-            <button id="checkDeployBtn" class="secondary">Comprobar estado</button>
-        </div>
-
-    </section>
-
-    <section id="dashboardStatistics" class="hidden">
-
-        <div class="card" id="statsCard">
-            <h2>Estadísticas</h2>
-            <p>Resumen de actividad de la web conectado a Google Analytics.</p>
-
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <span>Visitantes hoy</span>
-                    <strong id="statsToday">—</strong>
-                </div>
-
-                <div class="stat-box">
-                    <span>Últimos 7 días</span>
-                    <strong id="statsWeek">—</strong>
-                </div>
-
-                <div class="stat-box">
-                    <span>Últimos 30 días</span>
-                    <strong id="statsMonth">—</strong>
-                </div>
-
-                <div class="stat-box">
-                    <span>Fotografías</span>
-                    <strong id="statsPhotos">—</strong>
-                </div>
-
-                <div class="stat-box">
-                    <span>Colecciones</span>
-                    <strong id="statsCollections">—</strong>
-                </div>
-
-                <div class="stat-box">
-                    <span>Editor's Choice</span>
-                    <strong id="statsEditors">—</strong>
-                </div>
+                <button type="button" onclick="setSelectedPhotosType('bn')" style="margin-top:10px;">
+                    Cambiar selección a B&N
+                </button>
             </div>
 
-            <div class="stats-chart">
-                <p class="stats-chart-title">Visitas últimos 30 días</p>
-                <div id="statsChart" class="chart-placeholder">Cargando gráfico...</div>
-            </div>
+            ${imagenes.map((imagen) => {
+                const archivo = imagen.archivo || imagen.file || "";
+                const tipo = imagen.tipo || imagen.type || "bn";
+                const tipoTexto = tipo === "color" ? "Color" : "Blanco y negro";
+                const botonTipo = tipo === "color" ? "Cambiar a B&N" : "Cambiar a Color";
+                const encoded = encodeURIComponent(archivo);
+                const isCover = cover === archivo;
 
-            <div class="stats-list">
-                <div class="stats-row">
-                    <strong>Galería más visitada</strong>
-                    <span id="statsTopGallery">Pendiente</span>
-                </div>
+                return `
+                    <div class="photo-card" data-filename="${archivo}" style="${isCover ? "outline:2px solid #111;" : ""}">
+                        <label style="display:flex;align-items:center;gap:8px;margin:0 0 10px;color:#111;">
+                            <input
+                                type="checkbox"
+                                class="photo-select"
+                                data-filename="${archivo}"
+                                onchange="togglePhotoSelection('${encoded}')"
+                                style="width:auto;"
+                            >
+                            Seleccionar
+                        </label>
 
-                <div class="stats-row">
-                    <strong>Fuente principal</strong>
-                    <span id="statsTopSource">Pendiente</span>
-                </div>
+                        ${isCover ? `<p style="margin:0 0 8px;color:#111;font-size:.85rem;">⭐ Portada actual</p>` : ""}
 
-                <div class="stats-row">
-                    <strong>País principal</strong>
-                    <span id="statsTopCountry">Pendiente</span>
-                </div>
-            </div>
-        </div>
+                        <img src="${basePath + archivo}?t=${Date.now()}" alt="${archivo}">
+                        <p>${archivo}</p>
+                        <p>${tipoTexto}</p>
 
-    </section>
+                        <div class="photo-actions">
+                            <button type="button" class="secondary" onclick="previewPhoto('${basePath + archivo}')">
+                                Ver
+                            </button>
 
-</section>
+                            <button
+                                type="button"
+                                class="secondary"
+                                onclick="togglePhotoType('${archivo}', '${tipo}')"
+                            >
+                                ${botonTipo}
+                            </button>
 
-<section id="panel" class="hidden">
+                            <button
+                                type="button"
+                                class="secondary"
+                                onclick="setCollectionCover('${archivo}')"
+                            >
+                                ${isCover ? "⭐ Portada actual" : "⭐ Usar como portada"}
+                            </button>
 
-    <div class="card">
-        <h2>Nueva publicación</h2>
+                            <button
+                                type="button"
+                                onclick="deletePhoto('${archivo}')"
+                                style="background:#fff;color:#a33;border-color:#e5caca;"
+                            >
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join("")}
+        `;
 
-        <label for="collection">Colección</label>
-        <select id="collection"></select>
+        updateSelectionUI();
 
-        <label for="files">Fotografías</label>
-        <input id="files" type="file" accept="image/jpeg,image/png" multiple>
+    } catch (error) {
+        dom.managerMeta.textContent = "No se pudo cargar la colección.";
+        dom.managerPhotos.innerHTML = `<p class="status">${error.message}</p>`;
+    }
+}
 
-        <div id="preview" class="preview"></div>
+function showStudioTab(tab) {
+    const isStats = tab === "stats";
 
-        <p id="fileStatus" class="status">No hay fotografías seleccionadas.</p>
+    dom.publicationsTab.classList.toggle("hidden", isStats);
+    dom.statsTab.classList.toggle("hidden", !isStats);
 
-        <button id="publishBtn" disabled>Publicar</button>
-        <button id="backBtn" class="secondary">Volver</button>
+    dom.publicationsTabBtn.classList.toggle("active", !isStats);
+    dom.statsTabBtn.classList.toggle("active", isStats);
+}
 
-        <p id="publishStatus" class="status"></p>
-    </div>
+async function refreshStudioStats() {
+    try {
+        const collections = state.collections || [];
+        let totalPhotos = 0;
+        let editorsPhotos = 0;
 
-</section>
+        for (const collection of collections) {
+            try {
+                const data = await loadGalleryJson(collection.json);
+                const total = (data.imagenes || []).length;
+                totalPhotos += total;
 
-<section id="collectionPanel" class="hidden">
+                if (collection.id === "hall-of-fame") {
+                    editorsPhotos = total;
+                }
+            } catch {}
+        }
 
-    <div class="card">
-        <h2>Nueva colección</h2>
+        dom.statsPhotos.textContent = totalPhotos;
+        dom.statsCollections.textContent = collections.length;
+        dom.statsEditors.textContent = editorsPhotos;
 
-        <label for="collectionTitle">Nombre</label>
-        <input id="collectionTitle" type="text" placeholder="Ejemplo: Lisboa">
+        dom.statsToday.textContent = "—";
+        dom.statsWeek.textContent = "—";
+        dom.statsMonth.textContent = "—";
+        dom.statsTopGallery.textContent = "Pendiente de Google Analytics";
+        dom.statsTopSource.textContent = "Pendiente de Google Analytics";
+        dom.statsTopCountry.textContent = "Pendiente de Google Analytics";
+        dom.statsChart.textContent = "Google Analytics pendiente de conectar";
 
-        <label for="collectionType">Tipo</label>
-        <select id="collectionType">
-            <option value="portfolio">Portfolio</option>
-            <option value="iphone4s">iPhone 4s</option>
-        </select>
+    } catch {
+        dom.statsPhotos.textContent = "—";
+        dom.statsCollections.textContent = "—";
+        dom.statsEditors.textContent = "—";
+    }
+}
 
-        <label for="collectionDescription">Descripción</label>
-        <textarea id="collectionDescription" placeholder="Una breve descripción de la colección."></textarea>
+async function refreshDeployStatus(manual = false) {
+    const last = getLastDeploy();
 
-        <label for="collectionYear">Año</label>
-        <input id="collectionYear" type="number" value="2026">
+    if (!last) {
+        renderDeployIdle();
+        return;
+    }
 
-        <button id="createCollectionBtn">Crear colección</button>
-        <button id="backFromCollectionBtn" class="secondary">Volver</button>
+    renderDeployChecking(last, manual);
 
-        <p id="createCollectionStatus" class="status"></p>
-    </div>
+    try {
+        const data = await getDeployStatus(state.password);
+        renderDeployResult(last, data);
 
-</section>
+        if (isDeployFinished(data)) {
+            stopDeployPolling();
+        }
+    } catch (error) {
+        dom.deployGithub.textContent = "No se pudo comprobar";
+        dom.deployPages.textContent = error.message;
+        setDeployBadge("Error al consultar", "deploy-error");
+    }
+}
 
-<section id="collectionManager" class="hidden">
+function saveDeployCommit(commit, label) {
+    if (!commit) return;
 
-    <div class="card">
-        <h2 id="managerTitle">Colección</h2>
-        <p id="managerMeta" class="manager-meta">Cargando fotografías...</p>
+    const payload = {
+        commit,
+        label,
+        time: new Date().toISOString()
+    };
 
-        <div id="managerPhotos" class="manager-grid"></div>
+    localStorage.setItem(DEPLOY_STORAGE_KEY, JSON.stringify(payload));
+    renderDeployChecking(payload, false);
+}
 
-        <button id="managerAddPhotos">Añadir fotografías</button>
-        <button id="managerOpenGallery" class="secondary">Abrir galería pública</button>
-        <button id="managerBack" class="secondary">Volver</button>
-    </div>
+function getLastDeploy() {
+    try {
+        const raw = localStorage.getItem(DEPLOY_STORAGE_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch {
+        return null;
+    }
+}
 
-</section>
+function renderDeployIdle() {
+    dom.deployCommit.textContent = "Sin cambios recientes";
+    dom.deployGithub.textContent = "Pendiente de comprobar";
+    dom.deployPages.textContent = "Pendiente de comprobar";
+    setDeployBadge("Sin actividad", "");
+}
 
-<section id="success" class="hidden card success">
-    <h2>✓ Publicación completada</h2>
-    <p id="successText">Las fotografías ya están publicadas.</p>
+function renderDeployChecking(last, manual) {
+    dom.deployCommit.textContent = `${last.label || "Último cambio"} · ${shortSha(last.commit)}`;
+    dom.deployGithub.textContent = manual ? "Comprobando..." : "Cambio enviado";
+    dom.deployPages.textContent = "Esperando publicación";
+    setDeployBadge("Publicando...", "deploy-working");
+}
 
-    <button id="viewGalleryBtn">Ver galería</button>
-    <button id="newUploadBtn" class="secondary">Nueva publicación</button>
-</section>
+function renderDeployResult(last, data) {
+    dom.deployCommit.textContent = `${last.label || "Último cambio"} · ${shortSha(last.commit)}`;
 
-<section id="collectionSuccess" class="hidden card success">
-    <h2>✓ Colección creada</h2>
-    <p id="collectionSuccessText">La colección ya está disponible.</p>
+    const status = data.workflow?.status || data.status || "unknown";
+    const conclusion = data.workflow?.conclusion || data.conclusion || "";
 
-    <button id="uploadToNewCollectionBtn">Subir primeras fotografías</button>
-    <button id="backToDashboardBtn" class="secondary">Volver al Studio</button>
-</section>
+    if (status === "completed" && conclusion === "success") {
+        dom.deployGithub.textContent = "Completado correctamente";
+        dom.deployPages.textContent = "Web actualizada";
+        setDeployBadge("Todo publicado", "deploy-ok");
+        return;
+    }
 
-<footer class="footer">
-    © Miguel López · mlopezmad
-</footer>
+    if (status === "completed" && conclusion && conclusion !== "success") {
+        dom.deployGithub.textContent = `Finalizado con error: ${conclusion}`;
+        dom.deployPages.textContent = "Revisar GitHub";
+        setDeployBadge("Error en publicación", "deploy-error");
+        return;
+    }
 
-</main>
+    if (status === "in_progress" || status === "queued") {
+        dom.deployGithub.textContent = status === "queued" ? "En cola" : "Trabajando";
+        dom.deployPages.textContent = "Aún no disponible";
+        setDeployBadge("Publicando...", "deploy-working");
+        return;
+    }
 
-<script type="module" src="admin.js?v=105"></script>
+    dom.deployGithub.textContent = "Estado desconocido";
+    dom.deployPages.textContent = "Pulsa comprobar de nuevo";
+    setDeployBadge("Comprobación pendiente", "deploy-working");
+}
 
-</body>
-</html>
+function isDeployFinished(data) {
+    const status = data.workflow?.status || data.status || "";
+    return status === "completed";
+}
+
+function startDeployPolling() {
+    stopDeployPolling();
+    refreshDeployStatus();
+
+    deployTimer = setInterval(() => {
+        refreshDeployStatus();
+    }, 10000);
+}
+
+function stopDeployPolling() {
+    if (deployTimer) {
+        clearInterval(deployTimer);
+        deployTimer = null;
+    }
+}
+
+function setDeployBadge(text, className) {
+    dom.deployBadge.textContent = text;
+    dom.deployBadge.className = "deploy-pill";
+
+    if (className) {
+        dom.deployBadge.classList.add(className);
+    }
+}
+
+function shortSha(sha) {
+    return String(sha || "").slice(0, 7);
+}
+
+function updateSelectionUI() {
+    const count = selectedPhotos.size;
+    const selectionCount = document.getElementById("selectionCount");
+
+    if (selectionCount) {
+        selectionCount.textContent =
+            `${count} fotografía${count === 1 ? "" : "s"} seleccionada${count === 1 ? "" : "s"}`;
+    }
+
+    document.querySelectorAll(".photo-card").forEach(card => {
+        const filename = card.dataset.filename;
+        const checkbox = card.querySelector(".photo-select");
+
+        if (!filename || !checkbox) return;
+
+        const selected = selectedPhotos.has(filename);
+        checkbox.checked = selected;
+        card.style.outline = selected ? "2px solid #111" : card.style.outline;
+    });
+}
+
+function getUploadKey(file, index) {
+    return `${index}-${file.name}-${file.size}`;
+}
+
+function cleanDisplayName(filename) {
+    return filename.replace(/\.(jpg|jpeg|png)$/i, "");
+}
+
+function normalizeCoverFilename(cover) {
+    if (!cover) return "";
+
+    const parts = String(cover).split("/");
+    return parts[parts.length - 1];
+}
+
+function resetUpload() {
+    dom.filesInput.value = "";
+    state.selectedFiles = [];
+    uploadTypes.clear();
+    dom.preview.innerHTML = "";
+    dom.fileStatus.textContent = "No hay fotografías seleccionadas.";
+    dom.publishStatus.textContent = "";
+    dom.publishBtn.disabled = true;
+}
+
+function resetCollectionForm() {
+    dom.collectionTitle.value = "";
+    dom.collectionDescription.value = "";
+    dom.collectionYear.value = "2026";
+    dom.collectionType.value = "portfolio";
+    dom.createCollectionStatus.textContent = "";
+    dom.createCollectionBtn.disabled = false;
+}
