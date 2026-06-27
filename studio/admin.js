@@ -641,19 +641,67 @@ async function refreshStudioStats() {
         dom.statsCollections.textContent = collections.length;
         dom.statsEditors.textContent = editorsPhotos;
 
+        dom.statsToday.textContent = "Cargando...";
+        dom.statsWeek.textContent = "Cargando...";
+        dom.statsMonth.textContent = "Cargando...";
+        dom.statsTopGallery.textContent = "Cargando...";
+        dom.statsTopSource.textContent = "Cargando...";
+        dom.statsTopCountry.textContent = "Cargando...";
+        dom.statsChart.textContent = "Cargando Google Analytics...";
+
+        const analytics = await getAnalyticsStats(state.password);
+
+        dom.statsToday.textContent = formatNumber(analytics.today?.activeUsers || 0);
+        dom.statsWeek.textContent = formatNumber(analytics.week?.activeUsers || 0);
+        dom.statsMonth.textContent = formatNumber(analytics.month?.activeUsers || 0);
+
+        dom.statsTopGallery.textContent = analytics.topGallery?.title
+            ? `${analytics.topGallery.title} · ${formatNumber(analytics.topGallery.views)} visitas`
+            : "Sin datos";
+
+        dom.statsTopSource.textContent = analytics.topSource || "Sin datos";
+        dom.statsTopCountry.textContent = analytics.topCountry || "Sin datos";
+
+        renderMiniChart(analytics.daily || []);
+
+    } catch (error) {
         dom.statsToday.textContent = "—";
         dom.statsWeek.textContent = "—";
         dom.statsMonth.textContent = "—";
-        dom.statsTopGallery.textContent = "Pendiente de Google Analytics";
-        dom.statsTopSource.textContent = "Pendiente de Google Analytics";
-        dom.statsTopCountry.textContent = "Pendiente de Google Analytics";
-        dom.statsChart.textContent = "Google Analytics pendiente de conectar";
-
-    } catch {
-        dom.statsPhotos.textContent = "—";
-        dom.statsCollections.textContent = "—";
-        dom.statsEditors.textContent = "—";
+        dom.statsTopGallery.textContent = "Error cargando Analytics";
+        dom.statsTopSource.textContent = error.message;
+        dom.statsTopCountry.textContent = "—";
+        dom.statsChart.textContent = "No se pudo cargar Google Analytics";
     }
+}
+
+function formatNumber(value) {
+    return Number(value || 0).toLocaleString("es-ES");
+}
+
+function renderMiniChart(daily) {
+    if (!daily.length) {
+        dom.statsChart.textContent = "Sin datos suficientes";
+        return;
+    }
+
+    const values = daily.map(day => Number(day.activeUsers || 0));
+    const max = Math.max(...values, 1);
+
+    const bars = values.map(value => {
+        const level = Math.round((value / max) * 8);
+
+        if (level <= 0) return "▁";
+        if (level === 1) return "▂";
+        if (level === 2) return "▃";
+        if (level === 3) return "▄";
+        if (level === 4) return "▅";
+        if (level === 5) return "▆";
+        if (level === 6) return "▇";
+        return "█";
+    }).join("");
+
+    dom.statsChart.textContent = bars;
 }
 
 async function refreshDeployStatus(manual = false) {
