@@ -19,8 +19,19 @@ dom.loginBtn.addEventListener("click", async () => {
     }
 
     show("dashboard");
+    showStudioTab("publications");
     await refreshCollections();
+    await refreshStudioStats();
     await refreshDeployStatus();
+});
+
+dom.publicationsTabBtn.addEventListener("click", () => {
+    showStudioTab("publications");
+});
+
+dom.statsTabBtn.addEventListener("click", async () => {
+    showStudioTab("stats");
+    await refreshStudioStats();
 });
 
 dom.checkDeployBtn.addEventListener("click", async () => {
@@ -38,11 +49,13 @@ dom.newCollectionBtn.addEventListener("click", () => {
 dom.backBtn.addEventListener("click", () => {
     resetUpload();
     show("dashboard");
+    showStudioTab("publications");
 });
 
 dom.backFromCollectionBtn.addEventListener("click", () => {
     resetCollectionForm();
     show("dashboard");
+    showStudioTab("publications");
 });
 
 dom.filesInput.addEventListener("change", () => {
@@ -173,6 +186,7 @@ dom.publishBtn.addEventListener("click", async () => {
 
         resetUpload();
         await refreshCollections();
+        await refreshStudioStats();
         startDeployPolling();
 
     } catch (error) {
@@ -217,6 +231,7 @@ dom.createCollectionBtn.addEventListener("click", async () => {
 
         resetCollectionForm();
         await refreshCollections();
+        await refreshStudioStats();
         startDeployPolling();
 
     } catch (error) {
@@ -247,12 +262,14 @@ dom.uploadToNewCollectionBtn.addEventListener("click", async () => {
 
 dom.backToDashboardBtn.addEventListener("click", () => {
     show("dashboard");
+    showStudioTab("publications");
 });
 
 dom.managerBack.addEventListener("click", () => {
     state.currentCollection = null;
     selectedPhotos.clear();
     show("dashboard");
+    showStudioTab("publications");
 });
 
 dom.managerOpenGallery.addEventListener("click", () => {
@@ -276,6 +293,7 @@ window.deleteCollection = async (id, name) => {
 
     if (data?.commit) {
         saveDeployCommit(data.commit, `Eliminar colección: ${name}`);
+        await refreshStudioStats();
         startDeployPolling();
     }
 };
@@ -354,6 +372,7 @@ window.setSelectedPhotosType = async (newType) => {
         selectedPhotos.clear();
         await openCollectionManager(state.currentCollection.id);
         await refreshCollections();
+        await refreshStudioStats();
         startDeployPolling();
 
     } catch (error) {
@@ -387,6 +406,7 @@ window.togglePhotoType = async (filename, currentType) => {
 
         await openCollectionManager(state.currentCollection.id);
         await refreshCollections();
+        await refreshStudioStats();
         startDeployPolling();
 
     } catch (error) {
@@ -418,6 +438,7 @@ window.setCollectionCover = async (filename) => {
 
         await refreshCollections();
         await openCollectionManager(state.currentCollection.id);
+        await refreshStudioStats();
         startDeployPolling();
 
     } catch (error) {
@@ -457,6 +478,7 @@ window.deletePhoto = async (filename) => {
         selectedPhotos.delete(filename);
         await openCollectionManager(state.currentCollection.id);
         await refreshCollections();
+        await refreshStudioStats();
         startDeployPolling();
 
     } catch (error) {
@@ -581,6 +603,53 @@ async function openCollectionManager(id) {
     } catch (error) {
         dom.managerMeta.textContent = "No se pudo cargar la colección.";
         dom.managerPhotos.innerHTML = `<p class="status">${error.message}</p>`;
+    }
+}
+
+function showStudioTab(tab) {
+    const isStats = tab === "stats";
+
+    dom.publicationsTab.classList.toggle("hidden", isStats);
+    dom.statsTab.classList.toggle("hidden", !isStats);
+
+    dom.publicationsTabBtn.classList.toggle("active", !isStats);
+    dom.statsTabBtn.classList.toggle("active", isStats);
+}
+
+async function refreshStudioStats() {
+    try {
+        const collections = state.collections || [];
+        let totalPhotos = 0;
+        let editorsPhotos = 0;
+
+        for (const collection of collections) {
+            try {
+                const data = await loadGalleryJson(collection.json);
+                const total = (data.imagenes || []).length;
+                totalPhotos += total;
+
+                if (collection.id === "hall-of-fame") {
+                    editorsPhotos = total;
+                }
+            } catch {}
+        }
+
+        dom.statsPhotos.textContent = totalPhotos;
+        dom.statsCollections.textContent = collections.length;
+        dom.statsEditors.textContent = editorsPhotos;
+
+        dom.statsToday.textContent = "—";
+        dom.statsWeek.textContent = "—";
+        dom.statsMonth.textContent = "—";
+        dom.statsTopGallery.textContent = "Pendiente de Google Analytics";
+        dom.statsTopSource.textContent = "Pendiente de Google Analytics";
+        dom.statsTopCountry.textContent = "Pendiente de Google Analytics";
+        dom.statsChart.textContent = "Google Analytics pendiente de conectar";
+
+    } catch {
+        dom.statsPhotos.textContent = "—";
+        dom.statsCollections.textContent = "—";
+        dom.statsEditors.textContent = "—";
     }
 }
 
