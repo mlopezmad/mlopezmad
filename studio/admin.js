@@ -1,7 +1,7 @@
 import { dom } from "./modules/dom.js";
 import { state } from "./modules/state.js";
 import { show, fileToBase64 } from "./modules/utils.js";
-import { workerRequest, loadGalleryJson, getDeployStatus } from "./modules/api.js";
+import { workerRequest, loadGalleryJson, getDeployStatus, getAnalyticsStats } from "./modules/api.js";
 import { refreshCollections, deleteCollection } from "./modules/collections.js";
 
 let selectedPhotos = new Set();
