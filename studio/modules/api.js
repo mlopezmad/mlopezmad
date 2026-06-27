@@ -58,3 +58,24 @@ export async function getDeployStatus(password) {
 
     return data;
 }
+
+export async function getAnalyticsStats(password) {
+    const response = await fetch(WORKER_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            action: "analytics_stats",
+            password
+        })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.ok) {
+        throw new Error(data.error || "No se pudieron cargar las estadísticas");
+    }
+
+    return data;
+}
