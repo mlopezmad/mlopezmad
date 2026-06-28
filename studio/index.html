@@ -75,6 +75,13 @@ body{
     margin-bottom:14px;
 }
 
+.card h3{
+    font-size:1.4rem;
+    font-weight:400;
+    margin-top:30px;
+    margin-bottom:6px;
+}
+
 .card p{
     color:#777;
     line-height:1.7;
@@ -575,7 +582,7 @@ button:disabled{
 
         <div class="card" id="statsCard">
             <h2>Estadísticas</h2>
-            <p>Resumen de actividad de la web conectado a Google Analytics.</p>
+            <p>Resumen de actividad de la web conectado a Google Analytics y Buttondown.</p>
 
             <div class="stats-grid">
                 <div class="stat-box">
@@ -615,26 +622,58 @@ button:disabled{
             </div>
 
             <div class="stats-list">
-    <div class="stats-row">
-        <strong>Galería más visitada</strong>
-        <span id="statsTopGallery">Pendiente</span>
-    </div>
+                <div class="stats-row">
+                    <strong>Galería más visitada</strong>
+                    <span id="statsTopGallery">Pendiente</span>
+                </div>
 
-    <div class="stats-row">
-        <strong>Fuente principal</strong>
-        <span id="statsTopSource">Pendiente</span>
-    </div>
+                <div class="stats-row">
+                    <strong>Fuente principal</strong>
+                    <span id="statsTopSource">Pendiente</span>
+                </div>
 
-    <div class="stats-row">
-        <strong>País principal</strong>
-        <span id="statsTopCountry">Pendiente</span>
-    </div>
+                <div class="stats-row">
+                    <strong>País principal</strong>
+                    <span id="statsTopCountry">Pendiente</span>
+                </div>
 
-    <div class="stats-row">
-        <strong>Países visitantes</strong>
-        <span id="statsCountries">Pendiente</span>
-    </div>
-</div>
+                <div class="stats-row">
+                    <strong>Países visitantes</strong>
+                    <span id="statsCountries">Pendiente</span>
+                </div>
+            </div>
+
+            <h3>Newsletter</h3>
+            <p>Resumen de suscriptores de Buttondown.</p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span>Suscriptores activos</span>
+                    <strong id="statsSubscribersActive">—</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Pendientes</span>
+                    <strong id="statsSubscribersPending">—</strong>
+                </div>
+
+                <div class="stat-box">
+                    <span>Bajas</span>
+                    <strong id="statsSubscribersUnsubscribed">—</strong>
+                </div>
+            </div>
+
+            <div class="stats-list">
+                <div class="stats-row">
+                    <strong>Total histórico</strong>
+                    <span id="statsSubscribersTotal">Pendiente</span>
+                </div>
+
+                <div class="stats-row">
+                    <strong>Última consulta</strong>
+                    <span id="statsNewsletterUpdated">Pendiente</span>
+                </div>
+            </div>
         </div>
 
     </section>
@@ -729,7 +768,7 @@ button:disabled{
 
 </main>
 
-<script type="module" src="admin.js?v=108"></script>
+<script type="module" src="admin.js?v=109"></script>
 
 </body>
 </html>
