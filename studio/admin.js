@@ -1,7 +1,7 @@
 import { dom } from "./modules/dom.js";
 import { state } from "./modules/state.js";
 import { show, fileToBase64 } from "./modules/utils.js";
-import { workerRequest, loadGalleryJson, getDeployStatus, getAnalyticsStats } from "./modules/api.js";
+import { workerRequest, loadGalleryJson, getDeployStatus, getAnalyticsStats, getNewsletterStats } from "./modules/api.js";
 import { refreshCollections, deleteCollection } from "./modules/collections.js";
 
 let selectedPhotos = new Set();
@@ -694,6 +694,7 @@ async function refreshStudioStats() {
         dom.statsChart.textContent = "Cargando Google Analytics...";
 
         const analytics = await getAnalyticsStats(state.password);
+        const newsletter = await getNewsletterStats(state.password);
 
         dom.statsToday.textContent = formatNumber(analytics.today?.activeUsers || 0);
         dom.statsWeek.textContent = formatNumber(analytics.week?.activeUsers || 0);
@@ -711,6 +712,15 @@ async function refreshStudioStats() {
         .join(" · ")
     : "Sin datos";
 
+        dom.statsSubscribersActive.textContent = formatNumber(newsletter.subscribers?.active || 0);
+        dom.statsSubscribersPending.textContent = formatNumber(newsletter.subscribers?.pending || 0);
+        dom.statsSubscribersUnsubscribed.textContent = formatNumber(newsletter.subscribers?.unsubscribed || 0);
+        dom.statsSubscribersTotal.textContent = formatNumber(newsletter.subscribers?.total || 0);
+
+        dom.statsNewsletterUpdated.textContent = newsletter.generatedAt
+            ? new Date(newsletter.generatedAt).toLocaleString("es-ES")
+            : "Sin datos";
+
         renderMiniChart(analytics.daily || []);
 
     } catch (error) {
@@ -722,6 +732,11 @@ async function refreshStudioStats() {
         dom.statsTopCountry.textContent = "—";
         dom.statsCountries.textContent = "—";
         dom.statsChart.textContent = "No se pudo cargar Google Analytics";
+                dom.statsSubscribersActive.textContent = "—";
+        dom.statsSubscribersPending.textContent = "—";
+        dom.statsSubscribersUnsubscribed.textContent = "—";
+        dom.statsSubscribersTotal.textContent = "—";
+        dom.statsNewsletterUpdated.textContent = "—";
     }
 }
 
