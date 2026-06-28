@@ -1,6 +1,30 @@
 {
   "imagenes": [
     {
+      "archivo": "IMG_6776.jpeg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_6777.jpeg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_6779.jpeg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_6780.jpeg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_6785.jpeg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_6786.jpeg",
+      "tipo": "color"
+    },
+    {
       "archivo": "IMG_6764.jpeg",
       "tipo": "color"
     },
@@ -46,30 +70,6 @@
     },
     {
       "archivo": "IMG_6756.jpeg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6776.jpeg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6777.jpeg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6779.jpeg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6780.jpeg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6785.jpeg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6786.jpeg",
       "tipo": "color"
     }
   ]
