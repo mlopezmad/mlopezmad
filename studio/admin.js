@@ -9,6 +9,8 @@ let uploadTypes = new Map();
 let deployTimer = null;
 
 const DEPLOY_STORAGE_KEY = "mlopezmad-last-deploy";
+const WEB_IMAGE_MAX_SIZE = 1800;
+const WEB_IMAGE_QUALITY = 0.8;
 
 dom.loginBtn.addEventListener("click", async () => {
     state.password = dom.passwordInput.value.trim();
@@ -152,23 +154,42 @@ dom.publishBtn.addEventListener("click", async () => {
 
     try {
         const files = [];
+let originalTotal = 0;
+let webTotal = 0;
 
-        for (let index = 0; index < state.selectedFiles.length; index++) {
-            const file = state.selectedFiles[index];
-            const key = getUploadKey(file, index);
-            const content = await fileToBase64(file);
+for (let index = 0; index < state.selectedFiles.length; index++) {
+    const file = state.selectedFiles[index];
+    const key = getUploadKey(file, index);
 
-            files.push({
-                name: file.name,
-                content,
-                tipo: uploadTypes.get(key) || "bn"
-            });
-        }
+    dom.publishStatus.textContent =
+        `Preparando fotografía ${index + 1} de ${state.selectedFiles.length} para web...`;
+
+    const webFile = await prepareImageForWeb(file);
+
+    originalTotal += file.size;
+    webTotal += webFile.size;
+
+    const content = await fileToBase64(webFile);
+
+    files.push({
+        name: webFile.name,
+        content,
+        tipo: uploadTypes.get(key) || "bn"
+    });
+}
+
+const saving = originalTotal > 0
+    ? Math.round((1 - (webTotal / originalTotal)) * 100)
+    : 0;
+
+dom.publishStatus.textContent =
+    `Optimización completada · Original: ${formatBytes(originalTotal)} · Web: ${formatBytes(webTotal)} · Ahorro: ${saving}%`;
 
         const selectedOption = dom.collectionSelect.options[dom.collectionSelect.selectedIndex];
         state.lastGalleryUrl = selectedOption.dataset.url || "../portfolio.html";
 
-        dom.publishStatus.textContent = "Subiendo fotografías...";
+        dom.publishStatus.textContent =
+    `Subiendo fotografías... (${formatBytes(webTotal)} optimizados para web)`;
 
         const data = await workerRequest({
             action: "upload",
@@ -931,6 +952,69 @@ function normalizeCoverFilename(cover) {
     return parts[parts.length - 1];
 }
 
+async function prepareImageForWeb(file) {
+    if (!file.type.startsWith("image/")) {
+        throw new Error(`Archivo no válido: ${file.name}`);
+    }
+
+    const imageUrl = URL.createObjectURL(file);
+
+    try {
+        const img = await loadImage(imageUrl);
+
+        const originalWidth = img.naturalWidth || img.width;
+        const originalHeight = img.naturalHeight || img.height;
+
+        const scale = Math.min(
+            WEB_IMAGE_MAX_SIZE / originalWidth,
+            WEB_IMAGE_MAX_SIZE / originalHeight,
+            1
+        );
+
+        const targetWidth = Math.round(originalWidth * scale);
+        const targetHeight = Math.round(originalHeight * scale);
+
+        const canvas = document.createElement("canvas");
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+        const blob = await new Promise((resolve, reject) => {
+            canvas.toBlob(
+                result => result ? resolve(result) : reject(new Error("No se pudo comprimir la imagen")),
+                "image/jpeg",
+                WEB_IMAGE_QUALITY
+            );
+        });
+
+        const outputName = file.name.replace(/\.(jpg|jpeg|png)$/i, "") + ".jpg";
+
+        return new File([blob], outputName, {
+            type: "image/jpeg",
+            lastModified: Date.now()
+        });
+
+    } finally {
+        URL.revokeObjectURL(imageUrl);
+    }
+}
+
+function loadImage(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error("No se pudo leer la imagen"));
+
+        img.src = url;
+    });
+}
+function formatBytes(bytes) {
+    const mb = Number(bytes || 0) / 1024 / 1024;
+    return `${mb.toFixed(1)} MB`;
+}
 function resetUpload() {
     dom.filesInput.value = "";
     state.selectedFiles = [];
