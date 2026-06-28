@@ -28,7 +28,7 @@ jobs:
       - name: Detectar fotos nuevas
         id: foto
         run: |
-                    NEW_FILES=$(git diff-tree --no-commit-id --name-only --diff-filter=AM -r ${{ github.sha }} | grep -Ei '^images/.+/.+\.(jpg|jpeg|png)$' | grep -Eiv '^images/portada\.(jpg|jpeg|png)$' || true)
+          NEW_FILES=$(git diff-tree --no-commit-id --name-only --diff-filter=AM -r ${{ github.sha }} | grep -Ei '^images/.+/.+\.(jpg|jpeg|png)$' | grep -Eiv '^images/portada\.(jpg|jpeg|png)$' || true)
           FIRST_FILE=$(echo "$NEW_FILES" | head -n 1)
           COUNT=$(echo "$NEW_FILES" | sed '/^\s*$/d' | wc -l)
 
