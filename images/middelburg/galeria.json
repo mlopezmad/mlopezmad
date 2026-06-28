@@ -1,6 +1,10 @@
 {
   "imagenes": [
     {
+      "archivo": "IMG_6177.jpg",
+      "tipo": "bn"
+    },
+    {
       "archivo": "IMG_6185.JPG",
       "tipo": "bn"
     },
@@ -54,10 +58,6 @@
     },
     {
       "archivo": "middelburg-12.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "IMG_6177.jpg",
       "tipo": "bn"
     }
   ]
