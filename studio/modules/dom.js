@@ -37,6 +37,13 @@ export const dom = {
     statsTopCountry: qs("statsTopCountry"),
     statsCountries: qs("statsCountries"),
 
+    // Buttondown
+    statsSubscribersActive: qs("statsSubscribersActive"),
+    statsSubscribersPending: qs("statsSubscribersPending"),
+    statsSubscribersUnsubscribed: qs("statsSubscribersUnsubscribed"),
+    statsSubscribersTotal: qs("statsSubscribersTotal"),
+    statsNewsletterUpdated: qs("statsNewsletterUpdated"),
+
     newPostBtn: qs("newPostBtn"),
     newCollectionBtn: qs("newCollectionBtn"),
     backBtn: qs("backBtn"),
