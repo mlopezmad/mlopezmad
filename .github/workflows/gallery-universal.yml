@@ -3,7 +3,7 @@ name: Actualizar galerías
 on:
   push:
     paths:
-            - 'images/*/*.jpg'
+      - 'images/*/*.jpg'
       - 'images/*/*.jpeg'
       - 'images/*/*.JPG'
       - 'images/*/*.JPEG'
