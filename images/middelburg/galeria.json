@@ -1,29 +1,64 @@
-{"imagenes":[
-{"archivo":"IMG_6185.JPG","tipo":"bn"}
-,
-{"archivo":"DSCF8060.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-01.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-02.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-03.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-04.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-05.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-06.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-07.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-08.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-09.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-10.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-11.jpg","tipo":"bn"}
-,
-{"archivo":"middelburg-12.jpg","tipo":"bn"}
-]}
+{
+  "imagenes": [
+    {
+      "archivo": "IMG_6185.JPG",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "DSCF8060.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-01.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-02.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-03.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-04.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-05.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-06.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-07.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-08.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-09.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-10.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-11.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "middelburg-12.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_6177.jpg",
+      "tipo": "bn"
+    }
+  ]
+}
