@@ -110,7 +110,7 @@
 
     .galeria{
       max-width:1400px;
-      margin:0 auto 80px;
+      margin:70px auto 80px;
       padding:0 20px;
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
