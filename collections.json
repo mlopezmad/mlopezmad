@@ -7,7 +7,7 @@
       "description": "Una selección personal",
       "path": "images/hall-of-fame",
       "json": "images/hall-of-fame/galeria.json",
-      "url": "hall-of-fame.html",
+      "url": "editors-choice.html",
       "cover": "baile-madrid.jpg",
       "year": "2026"
     },
