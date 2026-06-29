@@ -136,7 +136,7 @@ async function cargarPortfolio(){
         const data = await response.json();
 
         const colecciones = (data.collections || [])
-            .filter(c => c.type === "portfolio");
+    .filter(c => c.type === "portfolio" && c.id !== "hall-of-fame");
 
         if(!colecciones.length){
             contenedor.innerHTML = '<p class="portfolio-empty">No hay colecciones disponibles.</p>';
