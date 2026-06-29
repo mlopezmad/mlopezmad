@@ -10,11 +10,17 @@
 
   document.body.innerHTML = `
     <header>
-      <h1>${config.titulo}</h1>
-      <p>${config.subtitulo || ""}</p>
-    </header>
+  <h1>${config.titulo}</h1>
+  <p>${config.subtitulo || ""}</p>
 
-    <div class="filtros">
+  ${
+    config.intro
+      ? `<div class="intro-text">${config.intro}</div>`
+      : ""
+  }
+</header>
+
+<div class="filtros">
       <button class="activo" data-filtro="todas">Todas</button>
       <button data-filtro="bn">B&N</button>
       <button data-filtro="color">Color</button>
@@ -65,6 +71,23 @@
       margin-top:10px;
     }
 
+.intro-text{
+  max-width:760px;
+  margin:36px auto 0;
+  padding:0 24px;
+  color:var(--muted);
+  font-size:1.08rem;
+  line-height:1.9;
+  text-align:left;
+}
+
+.intro-text p{
+  margin-bottom:22px;
+}
+
+.intro-text p:last-child{
+  margin-bottom:0;
+}
     .filtros{
       text-align:center;
       margin:-25px 0 40px;
