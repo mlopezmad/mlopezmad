@@ -78,7 +78,8 @@
       "path": "images/hands",
       "json": "images/hands/galeria.json",
       "url": "hands.html",
-      "year": "2026"
+      "year": "2026",
+      "cover": "7CR05095.jpg"
     }
   ]
 }
