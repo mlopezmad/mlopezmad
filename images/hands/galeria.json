@@ -1,6 +1,38 @@
 {
   "imagenes": [
     {
+      "archivo": "7CR04922.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "7CR04963.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "7CR05017.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "7CR05024.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "7CR05095.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "7CR05112.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "7CR05207.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "7CR05263.jpg",
+      "tipo": "color"
+    },
+    {
       "archivo": "IMG_0803.jpg",
       "tipo": "color"
     },
@@ -86,38 +118,6 @@
     },
     {
       "archivo": "IMG_0831.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "7CR04922.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "7CR04963.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "7CR05017.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "7CR05024.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "7CR05095.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "7CR05112.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "7CR05207.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "7CR05263.jpg",
       "tipo": "color"
     }
   ]
