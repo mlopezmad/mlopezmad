@@ -218,8 +218,10 @@ dom.publishStatus.textContent =
 
 dom.createCollectionBtn.addEventListener("click", async () => {
     const title = dom.collectionTitle.value.trim();
+    const subtitle = dom.collectionSubtitle.value.trim();
     const type = dom.collectionType.value;
     const description = dom.collectionDescription.value.trim();
+    const intro = dom.collectionIntro.value.trim();
     const year = dom.collectionYear.value.trim() || new Date().getFullYear();
 
     if (!title) {
@@ -235,8 +237,10 @@ dom.createCollectionBtn.addEventListener("click", async () => {
             action: "create_collection",
             password: state.password,
             title,
+            subtitle,
             type,
             description,
+            intro,
             year
         });
 
@@ -1027,7 +1031,9 @@ function resetUpload() {
 
 function resetCollectionForm() {
     dom.collectionTitle.value = "";
+    dom.collectionSubtitle.value = "";
     dom.collectionDescription.value = "";
+    dom.collectionIntro.value = "";
     dom.collectionYear.value = "2026";
     dom.collectionType.value = "portfolio";
     dom.createCollectionStatus.textContent = "";

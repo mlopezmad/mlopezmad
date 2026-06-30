@@ -711,14 +711,19 @@ button:disabled{
         <label for="collectionTitle">Nombre</label>
         <input id="collectionTitle" type="text" placeholder="Ejemplo: Lisboa">
 
+        <label for="collectionSubtitle">Subtítulo</label>
+        <input id="collectionSubtitle" type="text" placeholder="Ejemplo: Fotografía de calle en Lisboa">
+
         <label for="collectionType">Tipo</label>
         <select id="collectionType">
             <option value="portfolio">Portfolio</option>
             <option value="iphone4s">iPhone 4s</option>
         </select>
 
-        <label for="collectionDescription">Descripción</label>
-        <textarea id="collectionDescription" placeholder="Una breve descripción de la colección."></textarea>
+        <input id="collectionDescription" type="hidden" value="">
+
+        <label for="collectionIntro">Texto de entrada</label>
+        <textarea id="collectionIntro" placeholder="Texto que aparecerá al entrar en la galería."></textarea>
 
         <label for="collectionYear">Año</label>
         <input id="collectionYear" type="number" value="2026">
@@ -768,7 +773,7 @@ button:disabled{
 
 </main>
 
-<script type="module" src="admin.js?v=110"></script>
+<script type="module" src="admin.js?v=111"></script>
 
 </body>
 </html>
