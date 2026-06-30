@@ -1,6 +1,38 @@
 {
   "imagenes": [
     {
+      "archivo": "IMG_0803.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0804.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0805.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0806.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0807.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0808.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0809.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0810.jpg",
+      "tipo": "color"
+    },
+    {
       "archivo": "IMG_0811.jpg",
       "tipo": "color"
     },
@@ -17,10 +49,6 @@
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0806.jpg",
-      "tipo": "color"
-    },
-    {
       "archivo": "IMG_0816.jpg",
       "tipo": "color"
     },
@@ -33,23 +61,7 @@
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0807.jpg",
-      "tipo": "color"
-    },
-    {
       "archivo": "IMG_0821.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0808.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0803.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0809.jpg",
       "tipo": "color"
     },
     {
@@ -61,10 +73,6 @@
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0810.jpg",
-      "tipo": "color"
-    },
-    {
       "archivo": "IMG_0827.jpg",
       "tipo": "color"
     },
@@ -73,19 +81,11 @@
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0804.jpg",
-      "tipo": "color"
-    },
-    {
       "archivo": "IMG_0830.jpg",
       "tipo": "color"
     },
     {
       "archivo": "IMG_0831.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0805.jpg",
       "tipo": "color"
     }
   ]
