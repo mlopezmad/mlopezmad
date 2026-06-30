@@ -5,24 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contacto - mlopezmad</title>
 
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
+<link rel="stylesheet" href="style.css">
+<script src="js/theme.js?v=3"></script>
+
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    background:#fafafa;
-    color:#111;
-    font-family:Georgia,serif;
-}
-
 .contenido{
     max-width:760px;
     margin:0 auto;
@@ -34,12 +29,13 @@ h1{
     font-size:3.2rem;
     font-weight:400;
     margin-bottom:28px;
+    color:var(--text);
 }
 
 p{
     font-size:1.1rem;
     line-height:1.8;
-    color:#555;
+    color:var(--muted);
     margin-bottom:45px;
 }
 
@@ -51,7 +47,7 @@ p{
 }
 
 .links a{
-    color:#111;
+    color:var(--text);
     text-decoration:none;
     font-size:1.35rem;
     transition:.3s;
@@ -64,7 +60,7 @@ p{
 .volver{
     display:block;
     margin-top:80px;
-    color:#111;
+    color:var(--text);
     text-decoration:none;
     font-size:1.1rem;
 }
@@ -72,7 +68,7 @@ p{
 footer{
     text-align:center;
     padding:50px 20px;
-    color:#999;
+    color:var(--muted-3);
     font-size:.9rem;
     line-height:1.8;
 }
