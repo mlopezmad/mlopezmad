@@ -67,17 +67,6 @@
       "url": "iphone4s-caceres.html",
       "cover": "IMG_6756.jpeg",
       "year": "2026"
-    },
-    {
-      "id": "hands",
-      "title": "Hands",
-      "type": "portfolio",
-      "description": "Las manos cuentan historias.\n\nA veces hablan de afecto. Otras de trabajo, de espera, de creación o del paso del tiempo.\n\nEsta serie reúne pequeños gestos encontrados en distintas ciudades. Instantes donde las manos dicen mucho más de lo que las palabras podrían explicar.",
-      "path": "images/hands",
-      "json": "images/hands/galeria.json",
-      "url": "hands.html",
-      "year": "2026",
-      "cover": "7CR05095.jpg"
     }
   ]
 }
