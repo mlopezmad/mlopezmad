@@ -5,13 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Editor's Choice - mlopezmad</title>
 
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
+
+<script src="js/theme.js?v=3"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
+:root{
+    --bg:#fafafa;
+    --text:#111;
+    --muted:#777;
+    --muted-2:#666;
+    --muted-3:#999;
+}
+
+html[data-theme="dark"]{
+    --bg:#111;
+    --text:#f4f4f4;
+    --muted:#aaa;
+    --muted-2:#b5b5b5;
+    --muted-3:#888;
+}
+
 body{
-    background:#fafafa;
+    background:var(--bg);
     font-family:Georgia,serif;
-    color:#111;
+    color:var(--text);
 }
 
 header{
@@ -25,7 +47,7 @@ header h1{
 }
 
 header p{
-    color:#777;
+    color:var(--muted);
     margin-top:10px;
 }
 
@@ -33,7 +55,7 @@ header p{
     max-width:680px;
     margin:36px auto 0;
     padding:0 24px;
-    color:#666;
+    color:var(--muted-2);
     font-size:1.08rem;
     line-height:1.9;
     text-align:left;
@@ -73,13 +95,13 @@ img{
     text-align:center;
     margin:50px 0;
     text-decoration:none;
-    color:#111;
+    color:var(--text);
     font-size:1.1rem;
 }
 
 .footer{
     text-align:center;
-    color:#999;
+    color:var(--muted-3);
     font-size:.9rem;
     line-height:1.7;
     padding:40px 20px 60px;
