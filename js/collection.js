@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 ` : ""}
                 <div class="collection-content">
                     <h3>${coleccion.titulo}</h3>
-                    <p>${coleccion.subtitulo || coleccion.descripcion || ""}</p>
+                    <p>${coleccion.subtitle || coleccion.subtitulo || coleccion.description || coleccion.descripcion || ""}</p>
                     <span>${total} ${total === 1 ? "fotografía" : "fotografías"}</span>
                     <strong>Ver colección →</strong>
                 </div>
