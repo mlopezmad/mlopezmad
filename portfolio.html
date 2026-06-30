@@ -161,9 +161,9 @@ async function cargarPortfolio(){
                 }catch(e){}
 
                 const descripcion =
-                    coleccion.title === "Editor's Choice"
-                        ? "Una selección personal"
-                        : (coleccion.description || "");
+            coleccion.title === "Editor's Choice"
+        ? "Una selección personal"
+        : (coleccion.subtitle || coleccion.description || "");
 
                 const contador =
                     total === null
