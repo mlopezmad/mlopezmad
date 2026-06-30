@@ -57,8 +57,10 @@ export const dom = {
     publishStatus: qs("publishStatus"),
 
     collectionTitle: qs("collectionTitle"),
+    collectionSubtitle: qs("collectionSubtitle"),
     collectionType: qs("collectionType"),
     collectionDescription: qs("collectionDescription"),
+    collectionIntro: qs("collectionIntro"),
     collectionYear: qs("collectionYear"),
     createCollectionBtn: qs("createCollectionBtn"),
     createCollectionStatus: qs("createCollectionStatus"),
