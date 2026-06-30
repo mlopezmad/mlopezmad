@@ -78,6 +78,17 @@
       "url": "hands.html",
       "year": "2026",
       "cover": "7CR05095.jpg"
+    },
+    {
+      "id": "iphone4s-prueba",
+      "title": "Prueba",
+      "type": "iphone4s",
+      "parent": "iphone4s",
+      "description": "Prueba iphone 4s",
+      "path": "images/iphone4s/prueba",
+      "json": "images/iphone4s/prueba/galeria.json",
+      "url": "iphone4s-prueba.html",
+      "year": "2026"
     }
   ]
 }
