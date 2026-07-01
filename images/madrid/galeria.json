@@ -1,35 +1,68 @@
-{"imagenes":[
-{"archivo":"R0000202.JPG","tipo":"bn"}
-,
-{"archivo":"1770915244000_R0000122.JPG","tipo":"bn"}
-,
-{"archivo":"1770914248000_R0000095.JPG","tipo":"bn"}
-,
-{"archivo":"1770913237000_R0000079.JPG","tipo":"bn"}
-,
-{"archivo":"1770913123000_R0000072.JPG","tipo":"bn"}
-,
-{"archivo":"DSCF5934.JPG","tipo":"bn"}
-,
-{"archivo":"R0000325.jpeg","tipo":"bn"}
-,
-{"archivo":"R0002468.JPG","tipo":"bn"}
-,
-{"archivo":"prueba-newsletter.jpg","tipo":"bn"}
-,
-{"archivo":"R0004352.jpeg","tipo":"bn"}
-,
-{"archivo":"R0000348.jpeg","tipo":"bn"}
-,
-{"archivo":"R0005076.jpeg","tipo":"bn"}
-,
-{"archivo":"madrid-005.jpg","tipo":"bn"}
-,
-{"archivo":"madrid-001.jpg","tipo":"bn"}
-,
-{"archivo":"madrid-002.jpg","tipo":"bn"}
-,
-{"archivo":"madrid-003.jpg","tipo":"bn"}
-,
-{"archivo":"madrid-004.jpg","tipo":"bn"}
-]}
+{
+  "imagenes": [
+    {
+      "archivo": "1770915244000_R0000122.JPG",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "1770914248000_R0000095.JPG",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "1770913237000_R0000079.JPG",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "1770913123000_R0000072.JPG",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "DSCF5934.JPG",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0000325.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0002468.JPG",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "prueba-newsletter.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0004352.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0000348.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0005076.jpeg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "madrid-005.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "madrid-001.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "madrid-002.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "madrid-003.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "madrid-004.jpg",
+      "tipo": "bn"
+    }
+  ]
+}
