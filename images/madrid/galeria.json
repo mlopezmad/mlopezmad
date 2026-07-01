@@ -1,10 +1,6 @@
 {
   "imagenes": [
     {
-      "archivo": "prueba-newsletter.jpg",
-      "tipo": "bn"
-    },
-    {
       "archivo": "madrid-001.jpg",
       "tipo": "bn"
     }
