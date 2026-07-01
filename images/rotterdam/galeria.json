@@ -1,7 +1,11 @@
 {
   "imagenes": [
     {
-      "archivo": "R0001455.jpeg",
+      "archivo": "R0001455.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0001470.jpg",
       "tipo": "bn"
     },
     {
@@ -9,11 +13,7 @@
       "tipo": "bn"
     },
     {
-      "archivo": "R0001455.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "R0001470.jpg",
+      "archivo": "R0001455.jpeg",
       "tipo": "bn"
     }
   ]
