@@ -335,7 +335,7 @@ font-size:.95rem;
 
 }
 
-/* V2.6 — composición no destructiva de portadas */
+/* V2.6.1 — composición no destructiva de portadas */
 .hero img,
 .portfolio-cover img,
 .collection-cover img{

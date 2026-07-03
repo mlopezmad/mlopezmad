@@ -75,13 +75,21 @@
 <script>
 (function(){
   function applyComposition(img, composition){
-    if(!img || !composition) return;
+    if(!img) return;
+    if(!composition){
+      img.style.objectFit = '';
+      img.style.transform = '';
+      return;
+    }
     var isMobile = window.matchMedia('(max-width: 768px)').matches;
     var value = isMobile ? (composition.mobile || composition.desktop) : (composition.desktop || composition.mobile);
     if(!value) return;
     var x = Number(value.x || 0);
     var y = Number(value.y || 0);
     var scale = Number(value.scale || 1);
+    img.style.objectFit = 'contain';
+    img.style.objectPosition = 'center center';
+    img.style.transformOrigin = 'center center';
     img.style.transform = 'translate(' + x + '%, ' + y + '%) scale(' + scale + ')';
   }
   async function loadHomeCoverComposition(){
