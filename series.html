@@ -2,23 +2,45 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Series - mlopezmad</title>
+<meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="style.css">
+<script src="js/theme.js?v=3"></script>
 </head>
-
 <body>
+<header class="site-header">
+    <a class="site-brand" href="index.html">mlopezmad</a>
+    <nav class="page-nav" aria-label="Navegación">
+        <a href="index.html">Inicio</a>
+        <a href="portfolio.html">Portfolio</a>
+    </nav>
+</header>
 
-<section class="intro">
-    <h1>Series</h1>
-    <p>Proyectos fotográficos</p>
+<section class="page-hero">
+    <div>
+        <p class="eyebrow eyebrow--dark">Proyectos fotográficos</p>
+        <h1>Series</h1>
+        <p>Trabajos personales agrupados por lugar, idea o proceso.</p>
+    </div>
 </section>
 
-<nav class="menu">
-    <a href="middelburg.html">Middelburg</a>
-    <a href="iphone4s.html">iPhone 4s · Transfer Filter Project</a>
-    <a href="index.html">← Volver</a>
-</nav>
+<section class="portfolio-list">
+    <div class="portfolio-grid">
+        <a class="portfolio-item" href="middelburg.html">
+            <div class="portfolio-cover"><img src="images/middelburg/IMG_6185.JPG" alt="Middelburg"></div>
+            <div class="portfolio-content"><div class="portfolio-meta">Serie</div><h2>Middelburg</h2><p>Una serie desde Zelanda.</p></div>
+        </a>
+        <a class="portfolio-item" href="iphone4s.html">
+            <div class="portfolio-cover"><img src="images/iphone4s/hero.jpg" alt="iPhone 4s"></div>
+            <div class="portfolio-content"><div class="portfolio-meta">Proyecto</div><h2>iPhone 4s</h2><p>Transfer Filter Project.</p></div>
+        </a>
+    </div>
+</section>
 
+<footer class="site-footer">
+    <span>© 2026 mlopezmad · Madrid, España</span>
+    <span>Series</span>
+</footer>
 </body>
 </html>

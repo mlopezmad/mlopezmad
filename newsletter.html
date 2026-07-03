@@ -2,59 +2,47 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Newsletter - mlopezmad</title>
 <meta name="description" content="Suscríbete a la newsletter de mlopezmad para recibir nuevas fotografías, series y proyectos personales.">
-
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-
+<meta name="theme-color" content="#f5f3ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#050507" media="(prefers-color-scheme: dark)">
 <link rel="stylesheet" href="style.css">
 <script src="js/theme.js?v=3"></script>
 </head>
-
 <body>
+<header class="site-header">
+    <a class="site-brand" href="index.html">mlopezmad</a>
+    <nav class="page-nav" aria-label="Navegación">
+        <a href="index.html">Inicio</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="sobre-mi.html">Sobre mí</a>
+    </nav>
+</header>
 
-<section class="hero hero-small">
-    <img src="images/portada.jpg" alt="Fotografía de Miguel López">
+<section class="page-hero">
+    <div>
+        <p class="eyebrow eyebrow--dark">Cartas</p>
+        <h1>Newsletter</h1>
+        <p>Sin algoritmos. Sin prisas. Solo fotografía.</p>
+    </div>
 </section>
 
 <section class="intro subscribe-page">
-    <h1>Newsletter</h1>
-
     <p class="subscribe-text">
         De vez en cuando envío un correo cuando termino una serie, descubro un lugar que merece la pena o simplemente encuentro una fotografía que quiero compartir.
-        <br><br>
-        Sin algoritmos. Sin prisas. Solo fotografía.
     </p>
-
-    <form
-        action="https://buttondown.com/api/emails/embed-subscribe/mlopezmad"
-        method="post"
-        class="subscribe-form"
-    >
-        <input
-            type="email"
-            name="email"
-            placeholder="Tu correo electrónico"
-            required
-        >
-
-        <input
-            type="submit"
-            value="Suscribirme"
-        >
+    <form action="https://buttondown.com/api/emails/embed-subscribe/mlopezmad" method="post" class="subscribe-form">
+        <input type="email" name="email" placeholder="Tu correo electrónico" required>
+        <input type="submit" value="Suscribirme">
     </form>
-
-    <p class="subscribe-note">
-        Sin publicidad · Sin spam · Baja con un clic
-    </p>
+    <p class="subscribe-note">Sin publicidad · Sin spam · Baja con un clic</p>
 </section>
 
-<nav class="menu">
-    <a href="index.html">← Volver</a>
-</nav>
-
+<footer class="site-footer">
+    <span>© 2026 mlopezmad · Madrid, España</span>
+    <span>Newsletter</span>
+</footer>
 </body>
 </html>

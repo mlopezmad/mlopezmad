@@ -4,260 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Fotografías - mlopezmad</title>
-
+<meta name="description" content="Archivo fotográfico de mlopezmad: fotografía de calle, viajes y proyectos personales.">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-
+<meta name="theme-color" content="#f5f3ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#050507" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
 <script src="js/theme.js?v=3"></script>
-
-<style>
-
-.portfolio-list{
-    max-width:920px;
-    margin:0 auto 90px;
-    padding:0 28px;
-}
-
-.portfolio-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:26px;
-}
-
-.portfolio-item{
-    display:block;
-    border:1px solid var(--line);
-    background:var(--surface);
-    color:var(--text);
-    text-decoration:none;
-    transition:.25s ease;
-}
-
-.portfolio-item:hover{
-    transform:translateY(-3px);
-}
-
-.portfolio-cover{
-    aspect-ratio:4/3;
-    overflow:hidden;
-    background:var(--surface-soft);
-}
-
-.portfolio-cover img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-
-.portfolio-content{
-    padding:24px;
-}
-
-.portfolio-item h2{
-    font-size:1.75rem;
-    font-weight:400;
-    margin:0;
-    color:var(--text);
-}
-
-.portfolio-item p{
-    margin:10px 0 18px;
-    color:var(--muted-3);
-    font-size:1.02rem;
-    line-height:1.6;
-}
-
-.portfolio-meta{
-    font-size:.95rem;
-    color:var(--muted-3);
-    letter-spacing:.5px;
-}
-
-.portfolio-empty{
-    text-align:center;
-    color:var(--muted-3);
-    margin-top:40px;
-}
-
-.volver{
-    display:block;
-    text-align:center;
-    margin:80px 0;
-    text-decoration:none;
-    color:var(--text);
-    font-size:1.1rem;
-}
-
-@media(max-width:768px){
-
-    .portfolio-list{
-        padding:0 24px;
-    }
-
-    .portfolio-grid{
-        grid-template-columns:1fr;
-        gap:28px;
-    }
-
-    .portfolio-item h2{
-        font-size:1.8rem;
-    }
-
-}
-
-
-.portfolio-cover{position:relative;overflow:hidden;background:#050505;}
-.portfolio-cover img.cover-composed{position:absolute;left:50%;top:50%;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;object-position:center center;display:block;will-change:transform;}
-</style>
 </head>
-
 <body>
 
-<section class="intro">
-    <h1>Fotografías</h1>
-    <p>Archivo fotográfico</p>
+<header class="site-header">
+    <a class="site-brand" href="index.html">mlopezmad</a>
+    <nav class="page-nav" aria-label="Navegación">
+        <a href="index.html">Inicio</a>
+        <a href="series.html">Series</a>
+        <a href="newsletter.html">Newsletter</a>
+    </nav>
+</header>
+
+<section class="page-hero">
+    <div>
+        <p class="eyebrow eyebrow--dark">Archivo fotográfico</p>
+        <h1>Fotografías</h1>
+        <p>Series, proyectos personales y fotografías seleccionadas.</p>
+    </div>
+    <a class="text-link" href="index.html">Volver al inicio <span aria-hidden="true">→</span></a>
 </section>
 
 <section class="portfolio-list" id="portfolioList">
     <p class="portfolio-empty">Cargando fotografías...</p>
 </section>
 
-<a class="volver" href="index.html">← Volver</a>
+<footer class="site-footer">
+    <span>© 2026 mlopezmad · Madrid, España</span>
+    <span>Portfolio</span>
+</footer>
 
-<script>
-
-async function cargarPortfolio(){
-
-    const contenedor = document.getElementById("portfolioList");
-
-    try{
-
-        const response = await fetch("collections.json?t=" + Date.now());
-        const data = await response.json();
-
-        const colecciones = (data.collections || [])
-    .filter(c => c.type === "portfolio" && c.id !== "hall-of-fame");
-
-        if(!colecciones.length){
-            contenedor.innerHTML = '<p class="portfolio-empty">No hay colecciones disponibles.</p>';
-            return;
-        }
-
-        const filas = await Promise.all(
-            colecciones.map(async coleccion => {
-
-                let total = null;
-                let primeraFoto = "";
-
-                try{
-                    const g = await fetch(coleccion.json + "?t=" + Date.now());
-                    const gd = await g.json();
-                    const imagenes = gd.imagenes || [];
-                    total = imagenes.length;
-
-                    if(imagenes[0]){
-                        primeraFoto = imagenes[0].archivo || imagenes[0].file || "";
-                    }
-                }catch(e){}
-
-                const descripcion =
-            coleccion.title === "Editor's Choice"
-        ? "Una selección personal"
-        : (coleccion.subtitle || coleccion.description || "");
-
-                const contador =
-                    total === null
-                    ? "Abrir"
-                    : `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
-
-                const cover = getCoverUrl(coleccion, primeraFoto);
-
-                return crearTarjeta({
-                    url: coleccion.url,
-                    title: coleccion.title,
-                    description: descripcion,
-                    meta: contador + " →",
-                    cover,
-                    composition: coleccion.coverComposition
-                });
-
-            })
-        );
-
-        filas.push(crearTarjeta({
-            url: "iphone4s.html",
-            title: "iPhone 4s",
-            description: "Transfer Filter Project",
-            meta: "Proyecto →",
-            cover: "images/iphone4s/hero.jpg"
-        }));
-
-        contenedor.innerHTML = `<div class="portfolio-grid">${filas.join("")}</div>`;
-
-    }catch(e){
-
-        contenedor.innerHTML = '<p class="portfolio-empty">No se pudo cargar el portfolio.</p>';
-
-    }
-
-}
-
-function getCoverUrl(coleccion, primeraFoto){
-
-    if(coleccion.cover){
-        if(String(coleccion.cover).startsWith("images/")){
-            return coleccion.cover;
-        }
-
-        return coleccion.path + "/" + coleccion.cover;
-    }
-
-    if(primeraFoto){
-        return coleccion.path + "/" + primeraFoto;
-    }
-
-    return "";
-}
-
-function compositionStyle(composition){
-    if(!composition) return "";
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const value = isMobile ? (composition.mobile || composition.desktop) : (composition.desktop || composition.mobile);
-    if(!value) return "";
-    const x = Number(value.x || 0);
-    const y = Number(value.y || 0);
-    const scale = Number(value.scale || 1);
-    return `class="cover-composed" style="transform:translate(-50%, -50%) translate(${x}%, ${y}%) scale(${scale});transform-origin:center center;"`;
-}
-
-function crearTarjeta({ url, title, description, meta, cover, composition }){
-
-    return `
-        <a class="portfolio-item" href="${url}">
-            <div class="portfolio-cover">
-                ${cover ? `<img src="${cover}?t=${Date.now()}" alt="${title}" ${compositionStyle(composition)}>` : ""}
-            </div>
-
-            <div class="portfolio-content">
-                <h2>${title}</h2>
-
-                ${description ? `<p>${description}</p>` : ""}
-
-                <div class="portfolio-meta">
-                    ${meta}
-                </div>
-            </div>
-        </a>
-    `;
-
-}
-
-cargarPortfolio();
-
-</script>
-
+<script src="js/portfolio.js?v=1"></script>
 </body>
 </html>

@@ -2,303 +2,118 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>iPhone 4s · Transfer Filter Project - mlopezmad</title>
-
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)">
-
+<meta name="theme-color" content="#f5f3ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#050507" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
 <link rel="stylesheet" href="style.css">
 <script src="js/theme.js?v=3"></script>
-
 <style>
-.proyecto{
-    max-width:760px;
-    margin:0 auto;
-    padding:0 24px 70px;
-}
-
-.hero{
-    max-width:560px;
-    margin:10px auto 70px;
-    padding:0 24px;
-}
-
-.hero img{
-    width:100%;
-    display:block;
-    border-radius:10px;
-}
-
-.hero figcaption{
-    margin-top:16px;
-    text-align:center;
-    color:var(--muted-3);
-    font-size:.95rem;
-    line-height:1.6;
-    font-style:italic;
-}
-
-.proyecto p{
-    font-size:1.12rem;
-    line-height:1.9;
-    color:var(--muted);
-    margin-bottom:26px;
-}
-
-.proyecto strong{
-    color:var(--text);
-}
-
-.equipo{
-    margin-top:60px;
-    padding-top:35px;
-    border-top:1px solid var(--line-soft);
-}
-
-.equipo h2,
-.colecciones h2{
-    font-size:2rem;
-    font-weight:400;
-    margin-bottom:30px;
-    color:var(--text);
-}
-
-.equipo ul{
-    list-style:none;
-    padding:0;
-}
-
-.equipo li{
-    margin-bottom:12px;
-    color:var(--muted);
-    font-size:1.05rem;
-}
-
-.colecciones{
-    max-width:900px;
-    margin:30px auto 70px;
-    padding:0 24px;
-}
-
-.collection-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:22px;
-}
-
-.collection-card{
-    display:block;
-    color:var(--text);
-    text-decoration:none;
-    border:1px solid var(--line);
-    background:var(--surface);
-    transition:.25s ease;
-}
-
-.collection-card:hover{
-    transform:translateY(-3px);
-}
-
-.collection-cover{
-    aspect-ratio:4/3;
-    overflow:hidden;
-    background:var(--surface-soft);
-}
-
-.collection-cover img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-}
-
-.collection-content{
-    padding:24px;
-}
-
-.collection-content h3{
-    font-size:1.55rem;
-    font-weight:400;
-    margin-bottom:8px;
-    color:var(--text);
-}
-
-.collection-content p{
-    color:var(--muted-2);
-    margin-bottom:16px;
-}
-
-.collection-content span{
-    display:block;
-    color:var(--muted-3);
-    font-size:.95rem;
-    margin-bottom:18px;
-}
-
-.collection-content strong{
-    font-weight:400;
-    text-decoration:underline;
-    color:var(--text);
-}
-
-.collection-empty{
-    color:var(--muted-3);
-    font-size:1rem;
-    line-height:1.7;
-}
-
-.volver{
-    display:block;
-    text-align:center;
-    margin:70px 0;
-    text-decoration:none;
-    color:var(--text);
-    font-size:1.05rem;
-}
-
-@media(max-width:768px){
-    .hero{
-        margin:0 auto 50px;
-    }
-
-    .proyecto p{
-        font-size:1rem;
-    }
-}
+.project-hero{max-width:640px;margin:0 auto 58px;padding:0 24px;}
+.project-hero img{width:100%;display:block;border-radius:30px;box-shadow:var(--shadow-soft);}
+.project-hero figcaption{margin-top:16px;text-align:center;color:var(--muted-3);font-size:.95rem;line-height:1.6;}
+.proyecto{max-width:780px;margin:0 auto;padding:0 26px 70px;}
+.proyecto p{font-size:1.12rem;line-height:1.88;color:var(--muted);margin-bottom:26px;}
+.proyecto strong{color:var(--text);}
+.colecciones{max-width:1050px;margin:30px auto 70px;padding:0 26px;}
+@media(max-width:768px){.project-hero{margin-bottom:44px}.proyecto p{font-size:1.02rem;line-height:1.78}}
 </style>
-
 </head>
-
 <body>
+<header class="site-header">
+    <a class="site-brand" href="index.html">mlopezmad</a>
+    <nav class="page-nav" aria-label="Navegación">
+        <a href="index.html">Inicio</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="series.html">Series</a>
+    </nav>
+</header>
 
-<section class="intro">
-    <h1>iPhone 4s</h1>
-    <p>Transfer Filter Project</p>
+<section class="page-hero">
+    <div>
+        <p class="eyebrow eyebrow--dark">Transfer Filter Project</p>
+        <h1>iPhone 4s</h1>
+        <p>Un teléfono de 2011. Una única cámara. Ninguna excusa.</p>
+    </div>
 </section>
 
-<figure class="hero">
+<figure class="project-hero">
     <img src="images/iphone4s/hero.jpg" alt="iPhone 4s Transfer Filter Project">
     <figcaption>Un teléfono de 2011. Una única cámara. Ninguna excusa.</figcaption>
 </figure>
 
 <section class="proyecto">
-
 <p>Este proyecto nace como un reto personal: comprobar si un teléfono de 2011 sigue siendo una herramienta capaz de disfrutar de la fotografía en pleno 2026.</p>
-
 <p><strong>¿Es posible seguir creando imágenes con personalidad utilizando únicamente un iPhone 4s?</strong></p>
-
 <p>Todas las fotografías están realizadas exclusivamente con la cámara del iPhone 4s y editadas únicamente con la aplicación Fotos de iOS utilizando el filtro <strong>Transfer</strong>, sin aplicaciones de terceros ni procesos adicionales.</p>
-
 <p>Lejos de buscar la máxima calidad técnica, este proyecto pretende demostrar que una imagen sigue dependiendo mucho más de la mirada que de la cámara con la que se toma.</p>
-
 <p><strong>Porque la creatividad nunca ha tenido fecha de caducidad.</strong></p>
 
 <div class="equipo">
 <h2>Equipo utilizado</h2>
 <ul>
-<li>• iPhone 4s (2011)</li>
-<li>• Cámara nativa</li>
-<li>• Aplicación Fotos de iOS</li>
-<li>• Filtro Transfer</li>
-<li>• Sin aplicaciones de terceros</li>
+<li>iPhone 4s (2011)</li>
+<li>Cámara nativa</li>
+<li>Aplicación Fotos de iOS</li>
+<li>Filtro Transfer</li>
+<li>Sin aplicaciones de terceros</li>
 </ul>
 </div>
-
 </section>
 
 <section class="colecciones">
 <h2>Colecciones</h2>
-<div id="colecciones">
-    <p class="collection-empty">Cargando colecciones...</p>
-</div>
+<div id="colecciones"><p class="collection-empty">Cargando colecciones...</p></div>
 </section>
+
+<div class="gallery-back"><a class="volver" href="portfolio.html">← Volver a fotografías</a></div>
+
+<footer class="site-footer"><span>© 2026 mlopezmad · Madrid, España</span><span>iPhone 4s</span></footer>
 
 <script>
 async function cargarColeccionesIphone4s(){
     const contenedor = document.getElementById("colecciones");
-
     try{
-        const response = await fetch("collections.json?t=" + Date.now());
+        const response = await fetch("collections.json?t=" + Date.now(), {cache:'no-store'});
         const data = await response.json();
-
         const colecciones = (data.collections || [])
             .filter(c => c.type === "iphone4s")
             .sort((a, b) => String(a.title || "").localeCompare(String(b.title || ""), "es"));
-
         if(colecciones.length === 0){
             contenedor.innerHTML = '<p class="collection-empty">Todavía no hay colecciones disponibles.</p>';
             return;
         }
-
         const tarjetas = await Promise.all(colecciones.map(async coleccion => {
             let total = null;
-
-            try{
-                const galeriaResponse = await fetch(coleccion.json + "?t=" + Date.now());
-                const galeriaData = await galeriaResponse.json();
-                total = (galeriaData.imagenes || []).length;
-            }catch(error){
-                total = null;
-            }
-
             let cover = "";
-
+            try{
+                const galeriaResponse = await fetch(coleccion.json + "?t=" + Date.now(), {cache:'no-store'});
+                const galeriaData = await galeriaResponse.json();
+                const imagenes = galeriaData.imagenes || [];
+                total = imagenes.length;
+                if(!coleccion.cover && imagenes[0]) cover = coleccion.path + "/" + imagenes[0].archivo;
+            }catch(error){}
             if(coleccion.cover){
-                if(coleccion.cover.startsWith("images/")){
-                    cover = coleccion.cover;
-                }else{
-                    cover = coleccion.path + "/" + coleccion.cover;
-                }
+                cover = coleccion.cover.startsWith("images/") ? coleccion.cover : coleccion.path + "/" + coleccion.cover;
             }
-
-            if(!cover){
-                try{
-                    const galeriaResponse = await fetch(coleccion.json + "?t=" + Date.now());
-                    const galeriaData = await galeriaResponse.json();
-                    const primera = (galeriaData.imagenes || [])[0];
-                    if(primera){
-                        cover = coleccion.path + "/" + primera.archivo;
-                    }
-                }catch(error){}
-            }
-
-            const contador = total === null
-                ? "Abrir colección"
-                : `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
-
+            const contador = total === null ? "Abrir colección" : `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
             return `
                 <a class="collection-card" href="${coleccion.url}">
-                    <div class="collection-cover">
-                        ${cover ? `<img src="${cover}?t=${Date.now()}" alt="${coleccion.title}">` : ""}
-                    </div>
-                    <div class="collection-content">
-                        <h3>${coleccion.title}</h3>
-                        <p>${coleccion.description || ""}</p>
-                        <span>${contador}</span>
-                        <strong>Ver colección →</strong>
-                    </div>
-                </a>
-            `;
+                    <div class="collection-cover">${cover ? `<img src="${cover}?t=${Date.now()}" alt="${coleccion.title}">` : ""}</div>
+                    <div class="collection-content"><h3>${coleccion.title}</h3><p>${coleccion.description || ""}</p><span>${contador}</span><strong>Ver colección →</strong></div>
+                </a>`;
         }));
-
         contenedor.innerHTML = `<div class="collection-grid">${tarjetas.join("")}</div>`;
-
     }catch(error){
         contenedor.innerHTML = '<p class="collection-empty">No se pudieron cargar las colecciones.</p>';
     }
 }
-
 cargarColeccionesIphone4s();
 </script>
-
-<a class="volver" href="portfolio.html">← Volver a fotografías</a>
-
 </body>
 </html>

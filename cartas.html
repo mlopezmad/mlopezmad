@@ -2,52 +2,27 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Cartas - mlopezmad</title>
 <link rel="stylesheet" href="style.css">
+<script src="js/theme.js?v=3"></script>
 </head>
-
 <body>
-
-<section class="hero hero-small">
-    <img src="images/portada.jpg" alt="Fotografía de Miguel López">
+<header class="site-header">
+    <a class="site-brand" href="index.html">mlopezmad</a>
+    <nav class="page-nav" aria-label="Navegación"><a href="index.html">Inicio</a><a href="portfolio.html">Portfolio</a></nav>
+</header>
+<section class="page-hero">
+    <div><p class="eyebrow eyebrow--dark">Cartas</p><h1>Newsletter</h1><p>Sin algoritmos. Sin prisas. Solo fotografía.</p></div>
 </section>
-
 <section class="intro subscribe-page">
-    <h1>Cartas</h1>
-
-    <p class="subscribe-text">
-        De vez en cuando envío un correo cuando termino una serie, descubro un lugar que merece la pena o simplemente encuentro una fotografía que quiero compartir.
-        <br><br>
-        Sin algoritmos. Sin prisas. Solo fotografía.
-    </p>
-
-    <form
-        action="https://buttondown.com/api/emails/embed-subscribe/mlopezmad"
-        method="post"
-        class="subscribe-form"
-    >
-        <input
-            type="email"
-            name="email"
-            placeholder="Tu correo electrónico"
-            required
-        >
-
-        <input
-            type="submit"
-            value="Suscribirme"
-        >
+    <p class="subscribe-text">De vez en cuando envío un correo cuando termino una serie, descubro un lugar que merece la pena o simplemente encuentro una fotografía que quiero compartir.</p>
+    <form action="https://buttondown.com/api/emails/embed-subscribe/mlopezmad" method="post" class="subscribe-form">
+        <input type="email" name="email" placeholder="Tu correo electrónico" required>
+        <input type="submit" value="Suscribirme">
     </form>
-
-    <p class="subscribe-note">
-        Sin publicidad · Sin spam · Baja con un clic
-    </p>
+    <p class="subscribe-note">Sin publicidad · Sin spam · Baja con un clic</p>
 </section>
-
-<nav class="menu">
-    <a href="index.html">← Volver</a>
-</nav>
-
+<footer class="site-footer"><span>© 2026 mlopezmad · Madrid, España</span><span>Cartas</span></footer>
 </body>
 </html>

@@ -5,132 +5,109 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>Miguel Ángel López | Fotografía de calle y viajes</title>
-
 <meta name="description" content="Fotografía de calle, viajes y proyectos personales de Miguel Ángel López. Un recorrido personal entre la fotografía documental, el blanco y negro y la observación cotidiana.">
-
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#050505" media="(max-width: 768px)">
-<meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light) and (min-width: 769px)">
-<meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark) and (min-width: 769px)">
+<meta name="theme-color" content="#050505">
 
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XEC9X9KV1G"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-XEC9X9KV1G');
 </script>
 
-<!-- Open Graph -->
 <meta property="og:title" content="Miguel Ángel López">
 <meta property="og:description" content="Fotografía de calle, viajes y proyectos personales.">
 <meta property="og:image" content="https://mlopezmad.es/images/portada.jpg">
 <meta property="og:url" content="https://mlopezmad.es">
 <meta property="og:type" content="website">
 
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Miguel Ángel López | Fotografía de calle y viajes">
 <meta name="twitter:description" content="Fotografía de calle, viajes y proyectos personales de Miguel Ángel López.">
 <meta name="twitter:image" content="https://mlopezmad.es/images/portada.jpg">
 
-<!-- Iconos -->
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
 <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="home-page">
 
-<section class="hero">
-    <img src="images/portada.jpg" alt="Novia junto a un Mercedes clásico">
+<main>
+<section class="public-hero" aria-label="mlopezmad portfolio">
+    <div class="public-hero__media">
+        <img id="homeCover" src="images/portada.jpg" alt="Fotografía de portada de mlopezmad">
+    </div>
+    <div class="public-hero__shade"></div>
+
+    <header class="site-header site-header--hero">
+        <a class="site-brand" href="index.html" aria-label="mlopezmad inicio">mlopezmad</a>
+        <button class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="mainNav">Menú</button>
+        <nav class="site-nav" id="mainNav" aria-label="Navegación principal">
+            <a href="portfolio.html">Portfolio</a>
+            <a href="series.html">Series</a>
+            <a href="sobre-mi.html">Sobre mí</a>
+            <a href="newsletter.html">Newsletter</a>
+            <a class="nav-pill" href="contacto.html">Contacto</a>
+        </nav>
+    </header>
+
+    <div class="public-hero__content">
+        <p class="eyebrow">Fotografía personal · Madrid</p>
+        <h1>mlopezmad</h1>
+        <p class="public-hero__lead">Fotografía de calle, viajes<br>y proyectos personales.</p>
+        <p class="public-hero__place">Madrid · España</p>
+
+        <div class="hero-actions">
+            <a class="button button--light" href="portfolio.html">Ver portfolio <span aria-hidden="true">→</span></a>
+            <a class="text-link text-link--light" id="latestPublicationLink" href="portfolio.html">Última publicación</a>
+        </div>
+    </div>
+
+    <aside class="hero-stats" aria-label="Resumen del portfolio">
+        <div>
+            <span>Fotos</span>
+            <strong id="statPhotos">—</strong>
+        </div>
+        <div>
+            <span>Series</span>
+            <strong id="statSeries">—</strong>
+        </div>
+        <div>
+            <span>Proyecto actual</span>
+            <strong>iPhone 4s</strong>
+        </div>
+    </aside>
 </section>
 
-<section class="intro">
-    <h1>mlopezmad</h1>
+<section class="home-featured" aria-labelledby="featuredTitle">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow eyebrow--dark">Selección reciente</p>
+            <h2 id="featuredTitle">Una entrada más viva al archivo.</h2>
+        </div>
+        <p>La portada deja de ser solo una puerta de entrada y se convierte en una primera pieza del portfolio.</p>
+        <a class="text-link" href="portfolio.html">Ver todo el portfolio <span aria-hidden="true">→</span></a>
+    </div>
 
-    <p>Fotografía de calle, viajes y proyectos personales</p>
-
-    <p class="location">Madrid · España</p>
-
-    <p class="tagline">
-        La fotografía comenzó como una afición.<br>
-        Me llevó al ámbito profesional y hoy la vivo desde una mirada más personal.
-    </p>
+    <div class="feature-grid" id="featuredGrid" aria-live="polite">
+        <a class="feature-card feature-card--large skeleton-card" href="portfolio.html">
+            <span>Cargando selección</span>
+        </a>
+    </div>
 </section>
+</main>
 
-<nav class="menu">
-    <a href="portfolio.html">Fotografías</a>
-    <a href="editors-choice.html">Editor's Choice</a>
-    <a href="newsletter.html">Newsletter</a>
-    <a href="sobre-mi.html">Sobre mí</a>
-    <a href="contacto.html">Contacto</a>
-</nav>
-
-<script src="app.js"></script>
-<script>
-(function(){
-  function coverSafeValue(img, value){
-    var parent = img && img.parentElement;
-    if(!img || !parent || !img.naturalWidth || !img.naturalHeight) return value || {x:0,y:0,scale:1};
-    var rect = parent.getBoundingClientRect();
-    if(!rect.width || !rect.height) return value || {x:0,y:0,scale:1};
-    var imageRatio = img.naturalWidth / img.naturalHeight;
-    var frameRatio = rect.width / rect.height;
-    var baseW, baseH;
-    if(imageRatio >= frameRatio){ baseW = rect.width; baseH = rect.width / imageRatio; }
-    else { baseH = rect.height; baseW = rect.height * imageRatio; }
-    var minScale = Math.max(rect.width / baseW, rect.height / baseH, 1);
-    var scale = Math.max(Number(value && value.scale || 1), minScale);
-    var maxX = Math.max(0, ((baseW * scale - rect.width) / 2) / baseW * 100);
-    var maxY = Math.max(0, ((baseH * scale - rect.height) / 2) / baseH * 100);
-    var x = Math.min(maxX, Math.max(-maxX, Number(value && value.x || 0)));
-    var y = Math.min(maxY, Math.max(-maxY, Number(value && value.y || 0)));
-    return { x:x, y:y, scale:scale };
-  }
-  function applyComposition(img, composition, home){
-    if(!img) return;
-    var isMobile = window.matchMedia('(max-width: 768px)').matches;
-    if(home){
-      var source = isMobile ? (home.mobileSource || home.phoneSource || home.source || home.desktopSource) : (home.source || home.desktopSource || home.mobileSource || home.phoneSource);
-      if(source && img.getAttribute('src') !== source) img.setAttribute('src', source);
-    }
-    if(!composition){
-      img.classList.remove('cover-composed');
-      img.style.transform = '';
-      return;
-    }
-    var raw = isMobile ? (composition.mobile || composition.desktop) : (composition.desktop || composition.mobile);
-    if(!raw) return;
-    var paint = function(){
-      var value = coverSafeValue(img, raw);
-      img.classList.add('cover-composed');
-      img.style.transformOrigin = 'center center';
-      img.style.transform = 'translate(-50%, -50%) translate(' + value.x + '%, ' + value.y + '%) scale(' + value.scale + ')';
-    };
-    if(!img.complete || !img.naturalWidth) img.onload = paint;
-    else paint();
-  }
-  async function loadHomeCoverComposition(){
-    try{
-      var res = await fetch('collections.json?t=' + Date.now(), { cache:'no-store' });
-      var data = await res.json();
-      var home = data.homeCover || data.home_cover || {};
-      var composition = home.composition || data.homeCoverComposition;
-      applyComposition(document.querySelector('.hero img'), composition, home);
-    }catch(e){}
-  }
-  loadHomeCoverComposition();
-  window.addEventListener('resize', loadHomeCoverComposition);
-})();
-</script>
+<footer class="site-footer">
+    <span>© 2026 mlopezmad · Madrid, España</span>
+    <span>Fotografía de calle, viajes y proyectos personales</span>
+</footer>
 
 <script src="js/theme.js?v=3"></script>
-
+<script src="js/home.js?v=1"></script>
 </body>
 </html>

@@ -2,69 +2,38 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Suscribirse - mlopezmad</title>
 <link rel="stylesheet" href="style.css">
+<script src="js/theme.js?v=3"></script>
 </head>
-
 <body>
-
+<header class="site-header">
+    <a class="site-brand" href="index.html">mlopezmad</a>
+    <nav class="page-nav" aria-label="Navegación"><a href="index.html">Inicio</a></nav>
+</header>
+<section class="page-hero"><div><p class="eyebrow eyebrow--dark">Newsletter</p><h1>Suscribirse</h1><p>Recibe un correo cuando publique nuevas fotografías o proyectos personales.</p></div></section>
 <section class="intro subscribe-page">
-    <h1>Suscribirse</h1>
-
-    <p class="subscribe-text">
-        Recibe un correo cuando publique nuevas fotografías o proyectos personales.
-    </p>
-
-    <form
-        action="https://buttondown.com/api/emails/embed-subscribe/mlopezmad"
-        method="post"
-        class="subscribe-form"
-        target="hidden_iframe"
-        onsubmit="mostrarConfirmacion()"
-    >
-        <input
-            type="email"
-            name="email"
-            placeholder="Tu correo electrónico"
-            required
-        >
-
-        <input
-            type="submit"
-            value="Suscribirse"
-        >
+    <form action="https://buttondown.com/api/emails/embed-subscribe/mlopezmad" method="post" class="subscribe-form" target="hidden_iframe" onsubmit="mostrarConfirmacion()">
+        <input type="email" name="email" placeholder="Tu correo electrónico" required>
+        <input type="submit" value="Suscribirse">
     </form>
-
     <iframe name="hidden_iframe" style="display:none;"></iframe>
-
-    <p class="subscribe-note" id="mensaje-suscripcion">
-        Sin publicidad. Solo nuevas publicaciones.
-    </p>
-
+    <p class="subscribe-note" id="mensaje-suscripcion">Sin publicidad. Solo nuevas publicaciones.</p>
 </section>
-
-<nav class="menu">
-    <a href="index.html">← Volver</a>
-</nav>
-
+<footer class="site-footer"><span>© 2026 mlopezmad · Madrid, España</span><span>Newsletter</span></footer>
 <script>
 function mostrarConfirmacion(){
-
     const mensaje = document.getElementById("mensaje-suscripcion");
     const boton = document.querySelector('.subscribe-form input[type="submit"]');
-
     boton.value = "Enviando...";
     boton.disabled = true;
-
     setTimeout(() => {
         mensaje.textContent = "✓ Solicitud enviada. Revisa tu correo para confirmar la suscripción.";
         mensaje.classList.add("subscribe-success");
         boton.value = "Enviado";
     }, 500);
-
 }
 </script>
-
 </body>
 </html>
