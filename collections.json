@@ -83,19 +83,19 @@
     }
   ],
   "homeCover": {
-    "source": "images/madrid/DSCF5934.jpg",
-    "collectionId": "madrid",
-    "filename": "DSCF5934.jpg",
+    "source": "images/hall-of-fame/rebajas.jpg",
+    "collectionId": "hall-of-fame",
+    "filename": "rebajas.jpg",
     "composition": {
       "desktop": {
+        "x": 10.7,
+        "y": 8.3,
+        "scale": 2.69
+      },
+      "mobile": {
         "x": 0,
         "y": 0,
         "scale": 1
-      },
-      "mobile": {
-        "x": 6.7,
-        "y": -0.5,
-        "scale": 1.4
       }
     }
   }
