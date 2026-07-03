@@ -91,7 +91,8 @@
       "path": "images/titulo",
       "json": "images/titulo/galeria.json",
       "url": "titulo.html",
-      "year": "2026"
+      "year": "2026",
+      "cover": "IMG_0830.jpg"
     }
   ]
 }
