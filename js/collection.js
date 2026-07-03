@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             tarjeta.innerHTML = `
                 ${imagenUrl ? `
                 <div class="collection-cover">
-                    <img src="${imagenUrl}" alt="${coleccion.titulo}">
+                    <img src="${imagenUrl}" alt="${coleccion.titulo}" ${compositionStyle(coleccion.coverComposition)}>
                 </div>
                 ` : ""}
                 <div class="collection-content">
@@ -45,3 +45,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 });
+
+function compositionStyle(composition){
+    if(!composition) return "";
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const value = isMobile ? (composition.mobile || composition.desktop) : (composition.desktop || composition.mobile);
+    if(!value) return "";
+    const x = Number(value.x || 0);
+    const y = Number(value.y || 0);
+    const scale = Number(value.scale || 1);
+    return `style="transform:translate(${x}%, ${y}%) scale(${scale});transform-origin:center center;"`;
+}
