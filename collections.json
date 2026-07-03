@@ -83,19 +83,19 @@
     }
   ],
   "homeCover": {
-    "source": "images/madrid/DSCF5934.jpg",
-    "collectionId": "madrid",
-    "filename": "DSCF5934.jpg",
+    "source": "images/middelburg/DSCF7562.jpg",
+    "collectionId": "middelburg",
+    "filename": "DSCF7562.jpg",
     "composition": {
       "desktop": {
-        "x": 0.2,
-        "y": -27.6,
-        "scale": 3
+        "x": -0.1,
+        "y": -45.3,
+        "scale": 2.5
       },
       "mobile": {
-        "x": 1.4,
-        "y": -40.4,
-        "scale": 1.91
+        "x": -11.2,
+        "y": 0.1,
+        "scale": 2.55
       }
     }
   }
