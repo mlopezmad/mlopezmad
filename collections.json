@@ -80,19 +80,6 @@
       "url": "hands.html",
       "year": "2026",
       "cover": "7CR05095.jpg"
-    },
-    {
-      "id": "titulo",
-      "title": "Titulo 1",
-      "subtitle": "Subtítulo opcional",
-      "type": "portfolio",
-      "description": "Texto portada",
-      "intro": "Texto interior",
-      "path": "images/titulo",
-      "json": "images/titulo/galeria.json",
-      "url": "titulo.html",
-      "year": "2026",
-      "cover": "IMG_0830.jpg"
     }
   ]
 }
