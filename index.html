@@ -77,7 +77,7 @@
   function applyComposition(img, composition){
     if(!img) return;
     if(!composition){
-      img.style.objectFit = '';
+      img.classList.remove('cover-composed');
       img.style.transform = '';
       return;
     }
@@ -87,10 +87,9 @@
     var x = Number(value.x || 0);
     var y = Number(value.y || 0);
     var scale = Number(value.scale || 1);
-    img.style.objectFit = 'cover';
-    img.style.objectPosition = 'center center';
+    img.classList.add('cover-composed');
     img.style.transformOrigin = 'center center';
-    img.style.transform = 'translate(' + x + '%, ' + y + '%) scale(' + scale + ')';
+    img.style.transform = 'translate(-50%, -50%) translate(' + x + '%, ' + y + '%) scale(' + scale + ')';
   }
   async function loadHomeCoverComposition(){
     try{

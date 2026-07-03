@@ -54,5 +54,5 @@ function compositionStyle(composition){
     const x = Number(value.x || 0);
     const y = Number(value.y || 0);
     const scale = Number(value.scale || 1);
-    return `style="object-fit:cover;object-position:center center;transform:translate(${x}%, ${y}%) scale(${scale});transform-origin:center center;"`;
+    return `class="cover-composed" style="transform:translate(-50%, -50%) translate(${x}%, ${y}%) scale(${scale});transform-origin:center center;"`;
 }

@@ -108,6 +108,9 @@
 
 }
 
+
+.portfolio-cover{position:relative;overflow:hidden;background:#050505;}
+.portfolio-cover img.cover-composed{position:absolute;left:50%;top:50%;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain;object-position:center center;display:block;will-change:transform;}
 </style>
 </head>
 
@@ -227,7 +230,7 @@ function compositionStyle(composition){
     const x = Number(value.x || 0);
     const y = Number(value.y || 0);
     const scale = Number(value.scale || 1);
-    return `style="object-fit:cover;object-position:center center;transform:translate(${x}%, ${y}%) scale(${scale});transform-origin:center center;"`;
+    return `class="cover-composed" style="transform:translate(-50%, -50%) translate(${x}%, ${y}%) scale(${scale});transform-origin:center center;"`;
 }
 
 function crearTarjeta({ url, title, description, meta, cover, composition }){
