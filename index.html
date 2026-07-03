@@ -72,6 +72,32 @@
 </nav>
 
 <script src="app.js"></script>
+<script>
+(function(){
+  function applyComposition(img, composition){
+    if(!img || !composition) return;
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
+    var value = isMobile ? (composition.mobile || composition.desktop) : (composition.desktop || composition.mobile);
+    if(!value) return;
+    var x = Number(value.x || 0);
+    var y = Number(value.y || 0);
+    var scale = Number(value.scale || 1);
+    img.style.transform = 'translate(' + x + '%, ' + y + '%) scale(' + scale + ')';
+  }
+  async function loadHomeCoverComposition(){
+    try{
+      var res = await fetch('collections.json?t=' + Date.now(), { cache:'no-store' });
+      var data = await res.json();
+      var home = data.homeCover || data.home_cover || {};
+      var composition = home.composition || data.homeCoverComposition;
+      applyComposition(document.querySelector('.hero img'), composition);
+    }catch(e){}
+  }
+  loadHomeCoverComposition();
+  window.addEventListener('resize', loadHomeCoverComposition);
+})();
+</script>
+
 <script src="js/theme.js?v=3"></script>
 
 </body>
