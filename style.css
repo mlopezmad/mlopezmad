@@ -281,7 +281,8 @@ padding:40px 20px 35px;
 @media(max-width:768px){
 
 .hero{
-height:54vh;
+height:calc(54vh + env(safe-area-inset-top));
+margin-top:calc(-1 * env(safe-area-inset-top));
 }
 
 .hero img{
@@ -365,4 +366,25 @@ font-size:.95rem;
   object-position:center center;
   display:block;
   will-change:transform;
+}
+
+/* V2.7.3 — portada móvil hasta el borde superior */
+@media(max-width:768px){
+  html{
+    background:#050505;
+  }
+  body{
+    background:var(--bg);
+  }
+  .hero{
+    background:#050505;
+    border-bottom:none;
+  }
+  .hero img{
+    display:block;
+  }
+  .intro,
+  .menu{
+    background:var(--bg);
+  }
 }
