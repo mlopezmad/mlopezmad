@@ -15,7 +15,9 @@
       <nav class="page-nav" aria-label="Navegación">
         <a href="portfolio.html">Portfolio</a>
         <a href="series.html">Series</a>
+        <a href="sobre-mi.html">Sobre mí</a>
         <a href="newsletter.html">Newsletter</a>
+        <a href="contacto.html">Contacto</a>
       </nav>
     </header>
 
@@ -40,7 +42,13 @@
 
     <footer class="site-footer">
       <span>© 2026 mlopezmad · Madrid, España</span>
-      <span>${config.titulo}</span>
+      <nav class="footer-nav" aria-label="Navegación secundaria">
+        <a href="portfolio.html">Portfolio</a>
+        <a href="series.html">Series</a>
+        <a href="sobre-mi.html">Sobre mí</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
     </footer>
 
     <div class="lightbox" id="lightbox" aria-hidden="true">

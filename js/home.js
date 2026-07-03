@@ -137,11 +137,12 @@
       if(targetData[1]) html.push(cardTemplate(targetData[1].collection, targetData[1].cover, {label:'Serie'}));
       if(targetData[2]) html.push(cardTemplate(targetData[2].collection, targetData[2].cover, {label:'Última publicación'}));
       html.push(`
-        <a class="feature-card feature-card--text" href="sobre-mi.html">
+        <a class="feature-card feature-card--about" href="sobre-mi.html">
+          <div class="feature-card__image"><img src="images/about/profile.jpg?t=${Date.now()}" alt="Miguel Ángel López"></div>
           <div class="feature-card__content">
             <span class="feature-label">Sobre la mirada</span>
-            <h3>Más intención editorial.</h3>
-            <p>Una web más cercana al nuevo lenguaje visual del ecosistema mlopezmad.</p>
+            <h3>Miguel Ángel López</h3>
+            <p>La fotografía comenzó como una afición. Hoy la vivo desde una mirada más personal.</p>
           </div>
         </a>`);
 
