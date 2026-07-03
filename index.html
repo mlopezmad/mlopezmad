@@ -74,14 +74,18 @@
 <script src="app.js"></script>
 <script>
 (function(){
-  function applyComposition(img, composition){
+  function applyComposition(img, composition, home){
     if(!img) return;
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
+    if(home){
+      var source = isMobile ? (home.mobileSource || home.phoneSource || home.source || home.desktopSource) : (home.source || home.desktopSource || home.mobileSource || home.phoneSource);
+      if(source && img.getAttribute('src') !== source) img.setAttribute('src', source);
+    }
     if(!composition){
       img.classList.remove('cover-composed');
       img.style.transform = '';
       return;
     }
-    var isMobile = window.matchMedia('(max-width: 768px)').matches;
     var value = isMobile ? (composition.mobile || composition.desktop) : (composition.desktop || composition.mobile);
     if(!value) return;
     var x = Number(value.x || 0);
@@ -97,7 +101,7 @@
       var data = await res.json();
       var home = data.homeCover || data.home_cover || {};
       var composition = home.composition || data.homeCoverComposition;
-      applyComposition(document.querySelector('.hero img'), composition);
+      applyComposition(document.querySelector('.hero img'), composition, home);
     }catch(e){}
   }
   loadHomeCoverComposition();
