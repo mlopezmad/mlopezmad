@@ -368,21 +368,35 @@ font-size:.95rem;
   will-change:transform;
 }
 
-/* V2.7.3 — portada móvil hasta el borde superior */
+/* V2.7.4 — móvil: hero hasta la zona superior sin contaminar el fondo inferior */
+html,
+body{
+  min-height:100%;
+}
+
 @media(max-width:768px){
   html{
-    background:#050505;
-  }
-  body{
     background:var(--bg);
   }
+
+  body{
+    background:var(--bg);
+    min-height:100svh;
+    overflow-x:hidden;
+  }
+
   .hero{
     background:#050505;
     border-bottom:none;
+    width:100%;
+    height:calc(58svh + env(safe-area-inset-top));
+    margin-top:calc(-1 * env(safe-area-inset-top));
   }
+
   .hero img{
     display:block;
   }
+
   .intro,
   .menu{
     background:var(--bg);
