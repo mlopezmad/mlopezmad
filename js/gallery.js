@@ -10,14 +10,16 @@
   document.body.classList.add('gallery-page');
 
   document.body.innerHTML = `
-    <header class="site-header">
+    <header class="site-header site-header--page">
       <a class="site-brand" href="index.html">mlopezmad</a>
-      <nav class="page-nav" aria-label="Navegación">
+      <button class="mobile-menu-button mobile-menu-button--page" type="button" aria-expanded="false" aria-controls="mainNav">Menú</button>
+      <nav class="site-nav site-nav--page" id="mainNav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
         <a href="portfolio.html">Portfolio</a>
         <a href="series.html">Series</a>
         <a href="sobre-mi.html">Sobre mí</a>
         <a href="newsletter.html">Newsletter</a>
-        <a href="contacto.html">Contacto</a>
+        <a class="nav-pill" href="contacto.html">Contacto</a>
       </nav>
     </header>
 
@@ -66,7 +68,7 @@
     .gallery-header{
       max-width:1120px;
       margin:0 auto;
-      padding:86px clamp(22px,5vw,56px) 42px;
+      padding:56px clamp(22px,5vw,56px) 36px;
       text-align:left;
     }
     .gallery-header h1{
@@ -86,7 +88,7 @@
     }
     .intro-text{
       max-width:790px;
-      margin:40px 0 0;
+      margin:28px 0 0;
       color:var(--muted);
       font-size:1.08rem;
       line-height:1.85;
@@ -227,10 +229,10 @@
     .lightbox.show-controls .contador,
     .lightbox.show-controls .cerrar{opacity:1;}
     @media(max-width:768px){
-      .gallery-header{padding:64px 22px 34px;}
+      .gallery-header{padding:34px 22px 28px;}
       .gallery-header h1{font-size:clamp(3.6rem,18vw,5.6rem);}
       .gallery-subtitle{font-size:1.2rem;}
-      .intro-text{font-size:1rem;line-height:1.75;}
+      .intro-text{font-size:1rem;line-height:1.72;margin-top:24px;}
       .filtros{padding:0 22px;margin-bottom:24px;}
       .galeria{columns:1;padding:0 14px;column-gap:0;margin-top:26px;}
       .galeria img{border-radius:16px;margin-bottom:16px;}

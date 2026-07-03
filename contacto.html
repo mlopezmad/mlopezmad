@@ -11,20 +11,24 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css">
-<script src="js/theme.js?v=3"></script>
+<link rel="stylesheet" href="style.css?v=22">
+<script src="js/theme.js?v=4"></script>
 </head>
-<body>
-<header class="site-header">
+<body class="contact-page">
+<header class="site-header site-header--page">
     <a class="site-brand" href="index.html">mlopezmad</a>
-    <nav class="page-nav" aria-label="Navegación">
+    <button class="mobile-menu-button mobile-menu-button--page" type="button" aria-expanded="false" aria-controls="mainNav">Menú</button>
+    <nav class="site-nav site-nav--page" id="mainNav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="portfolio.html">Portfolio</a>
+        <a href="series.html">Series</a>
+        <a href="sobre-mi.html">Sobre mí</a>
         <a href="newsletter.html">Newsletter</a>
+        <a class="nav-pill" href="contacto.html">Contacto</a>
     </nav>
 </header>
 
-<section class="page-hero">
+<section class="page-hero page-hero--compact">
     <div>
         <p class="eyebrow eyebrow--dark">Contacto</p>
         <h1>Hablemos.</h1>
@@ -32,13 +36,13 @@
     </div>
 </section>
 
-<div class="contenido" style="text-align:center;">
-    <div class="links">
-        <a href="https://www.instagram.com/mlopezmad/" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.threads.net/@mlopezmad" target="_blank" rel="noopener">Threads</a>
-        <a href="mailto:hola@mlopezmad.es">Email</a>
+<div class="contenido contact-content">
+    <div class="contact-links">
+        <a class="contact-link" href="https://www.instagram.com/mlopezmad/" target="_blank" rel="noopener"><strong>Instagram</strong><span>@mlopezmad</span></a>
+        <a class="contact-link" href="https://www.threads.net/@mlopezmad" target="_blank" rel="noopener"><strong>Threads</strong><span>@mlopezmad</span></a>
+        <a class="contact-link" href="mailto:hola@mlopezmad.es"><strong>Email</strong><span>hola@mlopezmad.es</span></a>
     </div>
-    <a class="volver" href="index.html">← Volver</a>
+    <div class="contact-actions"><a class="volver" href="index.html">← Volver</a></div>
 </div>
 
 <footer class="site-footer">

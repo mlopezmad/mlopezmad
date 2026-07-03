@@ -7,20 +7,24 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f3ef" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#050507" media="(prefers-color-scheme: dark)">
-<link rel="stylesheet" href="style.css">
-<script src="js/theme.js?v=3"></script>
+<link rel="stylesheet" href="style.css?v=22">
+<script src="js/theme.js?v=4"></script>
 </head>
-<body>
-<header class="site-header">
+<body class="about-page">
+<header class="site-header site-header--page">
     <a class="site-brand" href="index.html">mlopezmad</a>
-    <nav class="page-nav" aria-label="Navegación">
+    <button class="mobile-menu-button mobile-menu-button--page" type="button" aria-expanded="false" aria-controls="mainNav">Menú</button>
+    <nav class="site-nav site-nav--page" id="mainNav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="portfolio.html">Portfolio</a>
-        <a href="contacto.html">Contacto</a>
+        <a href="series.html">Series</a>
+        <a href="sobre-mi.html">Sobre mí</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a class="nav-pill" href="contacto.html">Contacto</a>
     </nav>
 </header>
 
-<section class="page-hero">
+<section class="page-hero page-hero--compact">
     <div>
         <p class="eyebrow eyebrow--dark">La mirada</p>
         <h1>Sobre mí</h1>

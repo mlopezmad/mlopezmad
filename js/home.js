@@ -1,18 +1,9 @@
 (function(){
-  const nav = document.getElementById('mainNav');
-  const menuButton = document.querySelector('.mobile-menu-button');
   const coverImg = document.getElementById('homeCover');
   const featuredGrid = document.getElementById('featuredGrid');
   const latestLink = document.getElementById('latestPublicationLink');
   const statPhotos = document.getElementById('statPhotos');
   const statSeries = document.getElementById('statSeries');
-
-  if(menuButton && nav){
-    menuButton.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('is-open');
-      menuButton.setAttribute('aria-expanded', String(isOpen));
-    });
-  }
 
   function coverSafeValue(img, value){
     const parent = img && img.parentElement;
@@ -133,7 +124,7 @@
       }));
 
       const html = [];
-      if(targetData[0]) html.push(cardTemplate(targetData[0].collection, targetData[0].cover, {label:"Editor's Choice", large:true}));
+      if(targetData[0]) html.push(cardTemplate(targetData[0].collection, targetData[0].cover, {label:'Selección del autor', large:true}));
       if(targetData[1]) html.push(cardTemplate(targetData[1].collection, targetData[1].cover, {label:'Serie'}));
       if(targetData[2]) html.push(cardTemplate(targetData[2].collection, targetData[2].cover, {label:'Última publicación'}));
       html.push(`

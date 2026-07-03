@@ -4,15 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Suscribirse - mlopezmad</title>
-<link rel="stylesheet" href="style.css">
-<script src="js/theme.js?v=3"></script>
+<link rel="stylesheet" href="style.css?v=22">
+<script src="js/theme.js?v=4"></script>
 </head>
 <body>
-<header class="site-header">
+<header class="site-header site-header--page">
     <a class="site-brand" href="index.html">mlopezmad</a>
-    <nav class="page-nav" aria-label="Navegación"><a href="index.html">Inicio</a></nav>
+    <button class="mobile-menu-button mobile-menu-button--page" type="button" aria-expanded="false" aria-controls="mainNav">Menú</button>
+    <nav class="site-nav site-nav--page" id="mainNav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="series.html">Series</a>
+        <a href="sobre-mi.html">Sobre mí</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a class="nav-pill" href="contacto.html">Contacto</a>
+    </nav>
 </header>
-<section class="page-hero"><div><p class="eyebrow eyebrow--dark">Newsletter</p><h1>Suscribirse</h1><p>Recibe un correo cuando publique nuevas fotografías o proyectos personales.</p></div></section>
+<section class="page-hero page-hero--compact"><div><p class="eyebrow eyebrow--dark">Newsletter</p><h1>Suscribirse</h1><p>Recibe un correo cuando publique nuevas fotografías o proyectos personales.</p></div></section>
 <section class="intro subscribe-page">
     <form action="https://buttondown.com/api/emails/embed-subscribe/mlopezmad" method="post" class="subscribe-form" target="hidden_iframe" onsubmit="mostrarConfirmacion()">
         <input type="email" name="email" placeholder="Tu correo electrónico" required>

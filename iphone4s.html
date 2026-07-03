@@ -11,8 +11,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css">
-<script src="js/theme.js?v=3"></script>
+<link rel="stylesheet" href="style.css?v=22">
+<script src="js/theme.js?v=4"></script>
 <style>
 .project-hero{max-width:640px;margin:0 auto 58px;padding:0 24px;}
 .project-hero img{width:100%;display:block;border-radius:30px;box-shadow:var(--shadow-soft);}
@@ -25,16 +25,20 @@
 </style>
 </head>
 <body>
-<header class="site-header">
+<header class="site-header site-header--page">
     <a class="site-brand" href="index.html">mlopezmad</a>
-    <nav class="page-nav" aria-label="Navegación">
+    <button class="mobile-menu-button mobile-menu-button--page" type="button" aria-expanded="false" aria-controls="mainNav">Menú</button>
+    <nav class="site-nav site-nav--page" id="mainNav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="portfolio.html">Portfolio</a>
         <a href="series.html">Series</a>
+        <a href="sobre-mi.html">Sobre mí</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a class="nav-pill" href="contacto.html">Contacto</a>
     </nav>
 </header>
 
-<section class="page-hero">
+<section class="page-hero page-hero--compact">
     <div>
         <p class="eyebrow eyebrow--dark">Transfer Filter Project</p>
         <h1>iPhone 4s</h1>

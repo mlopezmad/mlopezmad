@@ -12,21 +12,25 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css">
-<script src="js/theme.js?v=3"></script>
+<link rel="stylesheet" href="style.css?v=22">
+<script src="js/theme.js?v=4"></script>
 </head>
 <body>
 
-<header class="site-header">
+<header class="site-header site-header--page">
     <a class="site-brand" href="index.html">mlopezmad</a>
-    <nav class="page-nav" aria-label="Navegación">
+    <button class="mobile-menu-button mobile-menu-button--page" type="button" aria-expanded="false" aria-controls="mainNav">Menú</button>
+    <nav class="site-nav site-nav--page" id="mainNav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
+        <a href="portfolio.html">Portfolio</a>
         <a href="series.html">Series</a>
+        <a href="sobre-mi.html">Sobre mí</a>
         <a href="newsletter.html">Newsletter</a>
+        <a class="nav-pill" href="contacto.html">Contacto</a>
     </nav>
 </header>
 
-<section class="page-hero">
+<section class="page-hero page-hero--compact">
     <div>
         <p class="eyebrow eyebrow--dark">Archivo fotográfico</p>
         <h1>Fotografías</h1>
@@ -44,6 +48,6 @@
     <span>Portfolio</span>
 </footer>
 
-<script src="js/portfolio.js?v=1"></script>
+<script src="js/portfolio.js?v=2"></script>
 </body>
 </html>
