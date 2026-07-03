@@ -93,9 +93,19 @@
         "scale": 2.69
       },
       "mobile": {
-        "x": 0,
-        "y": 0,
-        "scale": 1
+        "x": 0.2,
+        "y": -0.6,
+        "scale": 1.28
+      }
+    },
+    "mobileSource": "images/madrid/madrid-004.jpg",
+    "mobileCollectionId": "madrid",
+    "mobileFilename": "madrid-004.jpg",
+    "mobileComposition": {
+      "mobile": {
+        "x": 0.2,
+        "y": -0.6,
+        "scale": 1.28
       }
     }
   }
