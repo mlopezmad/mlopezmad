@@ -44,6 +44,7 @@ jobs:
           GALLERY_DIR=$(dirname "$FIRST_FILE")
           COLLECTION=$(basename "$GALLERY_DIR")
           ROOT_FOLDER=$(echo "$FIRST_FILE" | cut -d'/' -f2)
+          FIRST_BASENAME=$(basename "$FIRST_FILE")
 
           if [ "$ROOT_FOLDER" = "iphone4s" ]; then
             PAGE_SLUG="iphone4s-$COLLECTION"
@@ -53,8 +54,9 @@ jobs:
 
           DISPLAY_NAME=$(echo "$COLLECTION" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++){$i=toupper(substr($i,1,1)) substr($i,2)} print}')
 
-          IMAGE_URL="https://raw.githubusercontent.com/mlopezmad/mlopezmad/${{ github.sha }}/$FIRST_FILE"
+          IMAGE_URL="https://mlopezmad.es/$FIRST_FILE"
           GALLERY_URL="https://mlopezmad.es/${PAGE_SLUG}.html"
+          GALLERY_JSON_URL="https://mlopezmad.es/$GALLERY_DIR/galeria.json"
 
           {
             echo "count=$COUNT"
@@ -63,6 +65,8 @@ jobs:
             echo "display_name=$DISPLAY_NAME"
             echo "image_url=$IMAGE_URL"
             echo "gallery_url=$GALLERY_URL"
+            echo "gallery_json_url=$GALLERY_JSON_URL"
+            echo "first_basename=$FIRST_BASENAME"
             echo "new_files<<EOF"
             echo "$NEW_FILES"
             echo "EOF"
@@ -167,13 +171,45 @@ jobs:
         run: |
           git push
 
-      - name: Esperar antes de enviar newsletter
+      - name: Esperar publicación real antes de newsletter
+        id: publicacion
         if: steps.foto.outputs.count != '0'
+        env:
+          IMAGE_URL: ${{ steps.foto.outputs.image_url }}
+          GALLERY_URL: ${{ steps.foto.outputs.gallery_url }}
+          GALLERY_JSON_URL: ${{ steps.foto.outputs.gallery_json_url }}
+          FIRST_BASENAME: ${{ steps.foto.outputs.first_basename }}
         run: |
-          sleep 180
+          echo "Comprobando publicación real antes de enviar newsletter..."
+          echo "Imagen: $IMAGE_URL"
+          echo "Galería: $GALLERY_URL"
+          echo "JSON: $GALLERY_JSON_URL"
+
+          for i in $(seq 1 60); do
+            IMAGE_STATUS=$(curl -L -s -o /dev/null -w "%{http_code}" "$IMAGE_URL?deploy_check=${{ github.sha }}-$i" || true)
+            PAGE_STATUS=$(curl -L -s -o /dev/null -w "%{http_code}" "$GALLERY_URL?deploy_check=${{ github.sha }}-$i" || true)
+            IMAGE_STATUS=${IMAGE_STATUS:-000}
+            PAGE_STATUS=${PAGE_STATUS:-000}
+            JSON_BODY=$(curl -L -s "$GALLERY_JSON_URL?deploy_check=${{ github.sha }}-$i" || true)
+
+            if echo "$JSON_BODY" | grep -Fq "$FIRST_BASENAME" \
+              && [ "$IMAGE_STATUS" -ge 200 ] && [ "$IMAGE_STATUS" -lt 400 ] \
+              && [ "$PAGE_STATUS" -ge 200 ] && [ "$PAGE_STATUS" -lt 400 ]; then
+              echo "published=true" >> $GITHUB_OUTPUT
+              echo "Publicación verificada en mlopezmad.es. Newsletter autorizada."
+              exit 0
+            fi
+
+            echo "Intento $i/60 · imagen=$IMAGE_STATUS · página=$PAGE_STATUS · JSON contiene foto=$(echo "$JSON_BODY" | grep -Fq "$FIRST_BASENAME" && echo yes || echo no)"
+            sleep 15
+          done
+
+          echo "published=false" >> $GITHUB_OUTPUT
+          echo "::error::La fotografía no está visible todavía en mlopezmad.es. Newsletter bloqueada. Revisa Pages y relanza este workflow si procede."
+          exit 1
 
       - name: Enviar newsletter
-        if: steps.foto.outputs.count != '0'
+        if: steps.foto.outputs.count != '0' && steps.publicacion.outputs.published == 'true'
         env:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
           MESSAGE: ${{ steps.foto.outputs.message }}
