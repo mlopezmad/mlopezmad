@@ -93,19 +93,19 @@
         "scale": 2.69
       },
       "mobile": {
-        "x": 0,
-        "y": -11.4,
-        "scale": 1.25
+        "x": 16.9,
+        "y": -37.8,
+        "scale": 1.9
       }
     },
-    "mobileSource": "images/madrid/madrid-001.jpg",
+    "mobileSource": "images/madrid/DSCF5934.jpg",
     "mobileCollectionId": "madrid",
-    "mobileFilename": "madrid-001.jpg",
+    "mobileFilename": "DSCF5934.jpg",
     "mobileComposition": {
       "mobile": {
-        "x": 0,
-        "y": -11.4,
-        "scale": 1.25
+        "x": 16.9,
+        "y": -37.8,
+        "scale": 1.9
       }
     }
   }
