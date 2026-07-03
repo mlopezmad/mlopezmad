@@ -50,6 +50,7 @@ transition:background .25s ease,color .25s ease;
 height:48vh;
 overflow:hidden;
 border-bottom:1px solid var(--line);
+background:#050505;
 }
 
 .hero img{
