@@ -74,6 +74,24 @@
 <script src="app.js"></script>
 <script>
 (function(){
+  function coverSafeValue(img, value){
+    var parent = img && img.parentElement;
+    if(!img || !parent || !img.naturalWidth || !img.naturalHeight) return value || {x:0,y:0,scale:1};
+    var rect = parent.getBoundingClientRect();
+    if(!rect.width || !rect.height) return value || {x:0,y:0,scale:1};
+    var imageRatio = img.naturalWidth / img.naturalHeight;
+    var frameRatio = rect.width / rect.height;
+    var baseW, baseH;
+    if(imageRatio >= frameRatio){ baseW = rect.width; baseH = rect.width / imageRatio; }
+    else { baseH = rect.height; baseW = rect.height * imageRatio; }
+    var minScale = Math.max(rect.width / baseW, rect.height / baseH, 1);
+    var scale = Math.max(Number(value && value.scale || 1), minScale);
+    var maxX = Math.max(0, ((baseW * scale - rect.width) / 2) / baseW * 100);
+    var maxY = Math.max(0, ((baseH * scale - rect.height) / 2) / baseH * 100);
+    var x = Math.min(maxX, Math.max(-maxX, Number(value && value.x || 0)));
+    var y = Math.min(maxY, Math.max(-maxY, Number(value && value.y || 0)));
+    return { x:x, y:y, scale:scale };
+  }
   function applyComposition(img, composition, home){
     if(!img) return;
     var isMobile = window.matchMedia('(max-width: 768px)').matches;
@@ -86,14 +104,16 @@
       img.style.transform = '';
       return;
     }
-    var value = isMobile ? (composition.mobile || composition.desktop) : (composition.desktop || composition.mobile);
-    if(!value) return;
-    var x = Number(value.x || 0);
-    var y = Number(value.y || 0);
-    var scale = Number(value.scale || 1);
-    img.classList.add('cover-composed');
-    img.style.transformOrigin = 'center center';
-    img.style.transform = 'translate(-50%, -50%) translate(' + x + '%, ' + y + '%) scale(' + scale + ')';
+    var raw = isMobile ? (composition.mobile || composition.desktop) : (composition.desktop || composition.mobile);
+    if(!raw) return;
+    var paint = function(){
+      var value = coverSafeValue(img, raw);
+      img.classList.add('cover-composed');
+      img.style.transformOrigin = 'center center';
+      img.style.transform = 'translate(-50%, -50%) translate(' + value.x + '%, ' + value.y + '%) scale(' + value.scale + ')';
+    };
+    if(!img.complete || !img.naturalWidth) img.onload = paint;
+    else paint();
   }
   async function loadHomeCoverComposition(){
     try{
