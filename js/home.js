@@ -1,9 +1,10 @@
 (function(){
   const coverImg = document.getElementById('homeCover');
   const featuredGrid = document.getElementById('featuredGrid');
-  const latestLink = document.getElementById('latestPublicationLink');
   const statPhotos = document.getElementById('statPhotos');
   const statSeries = document.getElementById('statSeries');
+  const statLatestLink = document.getElementById('statLatestLink');
+  const statLatestTitle = document.getElementById('statLatestTitle');
   const cacheBust = String(Date.now());
   let homeData = null;
   let allCollections = [];
@@ -48,10 +49,13 @@
       }else{
         img.classList.remove('cover-composed');
         img.style.transform = '';
+        img.style.transformOrigin = '';
       }
+      img.classList.add('is-ready');
     };
 
     if(source && img.getAttribute('src') !== source){
+      img.classList.remove('is-ready');
       img.onload = paint;
       img.setAttribute('src', source);
     }else if(!img.complete || !img.naturalWidth){
@@ -84,6 +88,35 @@
     }
   }
 
+  function pickDynamicHero(data, collections, counts){
+    const candidates = [];
+    collections.forEach((collection, index) => {
+      if(!['portfolio','iphone4s'].includes(collection.type)) return;
+      const details = counts[index] || {};
+      const source = collectionCover(collection, details.first);
+      if(!source) return;
+      candidates.push({
+        source,
+        collectionId: collection.id,
+        title: collection.title,
+        url: collection.url,
+        composition: collection.coverComposition || null
+      });
+    });
+
+    if(data.homeCover && (data.homeCover.source || data.homeCover.mobileSource)){
+      candidates.push({
+        ...data.homeCover,
+        title: 'Portada',
+        url: 'portfolio.html'
+      });
+    }
+
+    if(!candidates.length) return data.homeCover || {};
+    const index = Math.floor(Math.random() * candidates.length);
+    return candidates[index];
+  }
+
   function cardTemplate(collection, cover, options){
     const label = options.label || 'Serie';
     const large = options.large ? ' feature-card--large' : '';
@@ -103,30 +136,32 @@
     try{
       const response = await fetch(`collections.json?t=${cacheBust}`, {cache:'no-store'});
       const data = await response.json();
-      homeData = data.homeCover || {};
       allCollections = data.collections || [];
+
+      const countMap = await Promise.all(allCollections.map(countPhotos));
+      homeData = pickDynamicHero(data, allCollections, countMap);
       applyComposition(coverImg, homeData);
 
       const portfolio = allCollections.filter(c => c.type === 'portfolio');
       const publicCollections = portfolio.filter(c => c.id !== 'hall-of-fame');
       const latest = publicCollections[publicCollections.length - 1] || portfolio[portfolio.length - 1];
-      if(latestLink && latest && latest.url) latestLink.setAttribute('href', latest.url);
 
-      const counts = await Promise.all(allCollections.map(countPhotos));
-      const total = counts.reduce((sum, item) => sum + (Number.isFinite(item.count) ? item.count : 0), 0);
+      const total = countMap.reduce((sum, item) => sum + (Number.isFinite(item.count) ? item.count : 0), 0);
       if(statPhotos) statPhotos.textContent = total ? `${total}+` : '—';
       if(statSeries) statSeries.textContent = String(publicCollections.length || portfolio.length || '—');
+      if(statLatestLink && latest && latest.url) statLatestLink.setAttribute('href', latest.url);
+      if(statLatestTitle) statLatestTitle.textContent = latest && latest.title ? latest.title : 'Portfolio';
 
       const byId = Object.fromEntries(allCollections.map(c => [c.id, c]));
       const hall = byId['hall-of-fame'] || portfolio[0];
       const madrid = byId['madrid'] || publicCollections[0];
       const hands = byId['hands'] || latest;
 
-      const targets = [hall, madrid, hands].filter(Boolean);
-      const targetData = await Promise.all(targets.map(async c => {
-        const details = await countPhotos(c);
+      const targetById = Object.fromEntries(allCollections.map((c, index) => [c.id, {collection:c, details:countMap[index] || {}}]));
+      const targetData = [hall, madrid, hands].filter(Boolean).map(c => {
+        const details = (targetById[c.id] && targetById[c.id].details) || {};
         return {collection:c, cover:collectionCover(c, details.first)};
-      }));
+      });
 
       const html = [];
       if(targetData[0]) html.push(cardTemplate(targetData[0].collection, targetData[0].cover, {label:'Selección del autor', large:true}));

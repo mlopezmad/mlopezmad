@@ -32,7 +32,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=23">
+<link rel="stylesheet" href="style.css?v=24">
 </head>
 
 <body class="home-page">
@@ -63,7 +63,6 @@
 
         <div class="hero-actions">
             <a class="button button--light" href="portfolio.html">Ver portfolio <span aria-hidden="true">→</span></a>
-            <a class="text-link text-link--light" id="latestPublicationLink" href="portfolio.html">Última publicación</a>
         </div>
     </div>
 
@@ -76,10 +75,10 @@
             <span>Series</span>
             <strong id="statSeries">—</strong>
         </div>
-        <div>
-            <span>Proyecto actual</span>
-            <strong>iPhone 4s</strong>
-        </div>
+        <a id="statLatestLink" class="hero-stat-link" href="portfolio.html">
+            <span>Última publicación</span>
+            <strong id="statLatestTitle">—</strong>
+        </a>
     </aside>
 </section>
 
@@ -112,7 +111,7 @@
     </nav>
 </footer>
 
-<script src="js/theme.js?v=5"></script>
-<script src="js/home.js?v=23"></script>
+<script src="js/theme.js?v=6"></script>
+<script src="js/home.js?v=24"></script>
 </body>
 </html>
