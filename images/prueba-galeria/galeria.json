@@ -1,3 +1,16 @@
 {
-  "imagenes": []
+  "imagenes": [
+    {
+      "archivo": "IMG_0811.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0813.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0809.jpg",
+      "tipo": "color"
+    }
+  ]
 }
