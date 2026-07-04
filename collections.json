@@ -80,6 +80,18 @@
       "url": "hands.html",
       "year": "2026",
       "cover": "7CR05095.jpg"
+    },
+    {
+      "id": "prueba-galeria",
+      "title": "Prueba galería",
+      "subtitle": "Subtítulo de galeria",
+      "type": "portfolio",
+      "description": "",
+      "intro": "Este es el texto interior de la prueba galería.",
+      "path": "images/prueba-galeria",
+      "json": "images/prueba-galeria/galeria.json",
+      "url": "prueba-galeria.html",
+      "year": "2026"
     }
   ],
   "homeCover": {
