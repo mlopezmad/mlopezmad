@@ -80,6 +80,18 @@
       "url": "hands.html",
       "year": "2026",
       "cover": "7CR05095.jpg"
+    },
+    {
+      "id": "prueba-coleccion",
+      "title": "Prueba coleccion",
+      "subtitle": "Subtítulo prueba coleccion",
+      "type": "portfolio",
+      "description": "",
+      "intro": "Este es una colección de prueba para la nueva versión web.",
+      "path": "images/prueba-coleccion",
+      "json": "images/prueba-coleccion/galeria.json",
+      "url": "prueba-coleccion.html",
+      "year": "2026"
     }
   ],
   "homeCover": {
