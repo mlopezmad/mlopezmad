@@ -11,8 +11,8 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=22">
-<script src="js/theme.js?v=4"></script>
+<link rel="stylesheet" href="style.css?v=23">
+<script src="js/theme.js?v=5"></script>
 <style>
 .project-hero{max-width:640px;margin:0 auto 58px;padding:0 24px;}
 .project-hero img{width:100%;display:block;border-radius:30px;box-shadow:var(--shadow-soft);}
@@ -77,7 +77,16 @@
 
 <div class="gallery-back"><a class="volver" href="portfolio.html">← Volver a fotografías</a></div>
 
-<footer class="site-footer"><span>© 2026 mlopezmad · Madrid, España</span><span>iPhone 4s</span></footer>
+<footer class="site-footer">
+    <span>© 2026 mlopezmad · Madrid, España</span>
+    <nav class="footer-nav" aria-label="Navegación secundaria">
+        <a href="portfolio.html">Portfolio</a>
+        <a href="series.html">Series</a>
+        <a href="sobre-mi.html">Sobre mí</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a href="contacto.html">Contacto</a>
+    </nav>
+</footer>
 
 <script>
 async function cargarColeccionesIphone4s(){
@@ -108,7 +117,7 @@ async function cargarColeccionesIphone4s(){
             const contador = total === null ? "Abrir colección" : `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
             return `
                 <a class="collection-card" href="${coleccion.url}">
-                    <div class="collection-cover">${cover ? `<img src="${cover}?t=${Date.now()}" alt="${coleccion.title}">` : ""}</div>
+                    <div class="collection-cover">${cover ? `<img src="${cover}" alt="${coleccion.title}">` : ""}</div>
                     <div class="collection-content"><h3>${coleccion.title}</h3><p>${coleccion.description || ""}</p><span>${contador}</span><strong>Ver colección →</strong></div>
                 </a>`;
         }));

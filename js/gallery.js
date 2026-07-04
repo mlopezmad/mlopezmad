@@ -24,7 +24,7 @@
     </header>
 
     <section class="gallery-header">
-      <p class="eyebrow eyebrow--dark">Serie fotográfica</p>
+      <p class="eyebrow eyebrow--dark">${config.eyebrow || 'Serie fotográfica'}</p>
       <h1>${config.titulo}</h1>
       ${config.subtitulo ? `<p class="gallery-subtitle">${config.subtitulo}</p>` : ""}
       ${config.intro ? `<div class="intro-text">${config.intro}</div>` : ""}
@@ -68,7 +68,7 @@
     .gallery-header{
       max-width:1120px;
       margin:0 auto;
-      padding:56px clamp(22px,5vw,56px) 36px;
+      padding:32px clamp(22px,5vw,56px) 34px;
       text-align:left;
     }
     .gallery-header h1{
@@ -229,12 +229,12 @@
     .lightbox.show-controls .contador,
     .lightbox.show-controls .cerrar{opacity:1;}
     @media(max-width:768px){
-      .gallery-header{padding:34px 22px 28px;}
+      .gallery-header{padding:14px 22px 24px;}
       .gallery-header h1{font-size:clamp(3.6rem,18vw,5.6rem);}
       .gallery-subtitle{font-size:1.2rem;}
       .intro-text{font-size:1rem;line-height:1.72;margin-top:24px;}
-      .filtros{padding:0 22px;margin-bottom:24px;}
-      .galeria{columns:1;padding:0 14px;column-gap:0;margin-top:26px;}
+      .filtros{padding:0 22px;margin-bottom:22px;}
+      .galeria{columns:1;padding:0 14px;column-gap:0;margin-top:20px;}
       .galeria img{border-radius:16px;margin-bottom:16px;}
       .nav-btn{width:46px;height:46px;font-size:2.7rem;}
       .prev{left:10px;}

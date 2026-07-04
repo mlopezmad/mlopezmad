@@ -1,6 +1,7 @@
 (function(){
   const container = document.getElementById('portfolioList');
   if(!container) return;
+  const cacheBust = String(Date.now());
 
   function escapeHtml(text){
     return String(text || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
@@ -26,7 +27,7 @@
 
   async function galleryInfo(collection){
     try{
-      const response = await fetch(`${collection.json}?t=${Date.now()}`, {cache:'no-store'});
+      const response = await fetch(`${collection.json}?t=${cacheBust}`, {cache:'no-store'});
       const data = await response.json();
       const images = data.imagenes || [];
       return {total:images.length, first:images[0] ? (images[0].archivo || images[0].file || '') : ''};
@@ -39,7 +40,7 @@
     return `
       <a class="portfolio-item" href="${url}">
         <div class="portfolio-cover">
-          ${cover ? `<img src="${cover}?t=${Date.now()}" alt="${escapeHtml(title)}" ${compositionStyle(composition)}>` : ''}
+          ${cover ? `<img src="${cover}" alt="${escapeHtml(title)}" loading="lazy" decoding="async" ${compositionStyle(composition)}>` : ''}
         </div>
         <div class="portfolio-content">
           <div class="portfolio-meta">${escapeHtml(meta)}</div>
@@ -51,7 +52,7 @@
 
   async function loadPortfolio(){
     try{
-      const response = await fetch(`collections.json?t=${Date.now()}`, {cache:'no-store'});
+      const response = await fetch(`collections.json?t=${cacheBust}`, {cache:'no-store'});
       const data = await response.json();
       const collections = (data.collections || [])
         .filter(c => c.type === 'portfolio' && c.id !== 'hall-of-fame');

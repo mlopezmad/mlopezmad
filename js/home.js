@@ -4,6 +4,10 @@
   const latestLink = document.getElementById('latestPublicationLink');
   const statPhotos = document.getElementById('statPhotos');
   const statSeries = document.getElementById('statSeries');
+  const cacheBust = String(Date.now());
+  let homeData = null;
+  let allCollections = [];
+  let lastViewportMode = window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop';
 
   function coverSafeValue(img, value){
     const parent = img && img.parentElement;
@@ -71,7 +75,7 @@
 
   async function countPhotos(collection){
     try{
-      const response = await fetch(`${collection.json}?t=${Date.now()}`, {cache:'no-store'});
+      const response = await fetch(`${collection.json}?t=${cacheBust}`, {cache:'no-store'});
       const data = await response.json();
       const images = data.imagenes || [];
       return {count: images.length, first: images[0] ? (images[0].archivo || images[0].file || '') : ''};
@@ -86,7 +90,7 @@
     const text = collection.subtitle || collection.description || 'Fotografía de calle';
     return `
       <a class="feature-card${large}" href="${collection.url}">
-        <div class="feature-card__image">${cover ? `<img src="${cover}?t=${Date.now()}" alt="${escapeHtml(collection.title)}">` : ''}</div>
+        <div class="feature-card__image">${cover ? `<img src="${cover}" alt="${escapeHtml(collection.title)}" loading="lazy" decoding="async">` : ''}</div>
         <div class="feature-card__content">
           <span class="feature-label">${escapeHtml(label)}</span>
           <h3>${escapeHtml(collection.title)}</h3>
@@ -97,22 +101,23 @@
 
   async function loadHome(){
     try{
-      const response = await fetch(`collections.json?t=${Date.now()}`, {cache:'no-store'});
+      const response = await fetch(`collections.json?t=${cacheBust}`, {cache:'no-store'});
       const data = await response.json();
-      applyComposition(coverImg, data.homeCover || {});
+      homeData = data.homeCover || {};
+      allCollections = data.collections || [];
+      applyComposition(coverImg, homeData);
 
-      const all = data.collections || [];
-      const portfolio = all.filter(c => c.type === 'portfolio');
+      const portfolio = allCollections.filter(c => c.type === 'portfolio');
       const publicCollections = portfolio.filter(c => c.id !== 'hall-of-fame');
       const latest = publicCollections[publicCollections.length - 1] || portfolio[portfolio.length - 1];
       if(latestLink && latest && latest.url) latestLink.setAttribute('href', latest.url);
 
-      const counts = await Promise.all(all.map(countPhotos));
+      const counts = await Promise.all(allCollections.map(countPhotos));
       const total = counts.reduce((sum, item) => sum + (Number.isFinite(item.count) ? item.count : 0), 0);
       if(statPhotos) statPhotos.textContent = total ? `${total}+` : '—';
       if(statSeries) statSeries.textContent = String(publicCollections.length || portfolio.length || '—');
 
-      const byId = Object.fromEntries(all.map(c => [c.id, c]));
+      const byId = Object.fromEntries(allCollections.map(c => [c.id, c]));
       const hall = byId['hall-of-fame'] || portfolio[0];
       const madrid = byId['madrid'] || publicCollections[0];
       const hands = byId['hands'] || latest;
@@ -129,11 +134,11 @@
       if(targetData[2]) html.push(cardTemplate(targetData[2].collection, targetData[2].cover, {label:'Última publicación'}));
       html.push(`
         <a class="feature-card feature-card--about" href="sobre-mi.html">
-          <div class="feature-card__image"><img src="images/about/profile.jpg?t=${Date.now()}" alt="Miguel Ángel López"></div>
+          <div class="feature-card__image"><img src="images/about/profile.jpg" alt="Miguel Ángel López" loading="lazy" decoding="async"></div>
           <div class="feature-card__content">
             <span class="feature-label">Sobre la mirada</span>
             <h3>Miguel Ángel López</h3>
-            <p>La fotografía comenzó como una afición. Hoy la vivo desde una mirada más personal.</p>
+            <p>La afición me llevó al ámbito profesional. Hoy la vivo desde una mirada más personal.</p>
           </div>
         </a>`);
 
@@ -152,6 +157,18 @@
     }
   }
 
+  let resizeTimer = null;
+  function handleResize(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const currentMode = window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop';
+      if(homeData) applyComposition(coverImg, homeData);
+      if(currentMode !== lastViewportMode){
+        lastViewportMode = currentMode;
+      }
+    }, 120);
+  }
+
   loadHome();
-  window.addEventListener('resize', () => loadHome());
+  window.addEventListener('resize', handleResize, {passive:true});
 })();
