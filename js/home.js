@@ -173,7 +173,7 @@
           <div class="feature-card__content">
             <span class="feature-label">Sobre la mirada</span>
             <h3>Miguel Ángel López</h3>
-            <p>La afición me llevó al ámbito profesional. Hoy la vivo desde una mirada más personal.</p>
+            <p>La afición me llevó al ámbito profesional. Hoy vuelvo a ella desde una mirada más personal.</p>
           </div>
         </a>`);
 
