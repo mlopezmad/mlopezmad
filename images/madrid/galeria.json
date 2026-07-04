@@ -1,6 +1,74 @@
 {
   "imagenes": [
     {
+      "archivo": "1770918195000_R0000168.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "1770918615000_R0000185.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "DSCF5980.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "DSCF6002.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "DSCF6147.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "DSCF7157.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "DSCF7186.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "DSCF7270.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "DSCF7308.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "DSCF7316.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "DSCF7347.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_2402.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_4229.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_4230.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_4234.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_4242.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_4244.jpg",
+      "tipo": "bn"
+    },
+    {
       "archivo": "1770913123000_R0000072.jpg",
       "tipo": "bn"
     },
@@ -66,74 +134,6 @@
     },
     {
       "archivo": "madrid-006.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "DSCF5980.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "DSCF6002.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "DSCF6147.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_2402.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "DSCF7186.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "DSCF7270.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "DSCF7157.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "DSCF7308.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "DSCF7316.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "DSCF7347.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "1770918195000_R0000168.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "1770918615000_R0000185.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_4229.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "IMG_4230.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "IMG_4234.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "IMG_4242.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "IMG_4244.jpg",
       "tipo": "bn"
     }
   ]
