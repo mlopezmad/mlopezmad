@@ -302,8 +302,10 @@
       const img = document.createElement("img");
       img.src = config.carpeta + item.archivo;
       img.alt = `Fotografía de ${config.titulo}`;
-      const priority = index < 2;
-      img.loading = priority ? 'eager' : 'lazy';
+      const priority = index < 6;
+      // En escritorio, Safari puede parpadear con lazy loading dentro de galerías en columnas.
+      // Las imágenes ya están optimizadas, así que cargarlas de forma estable evita blancos/parpadeos.
+      img.loading = 'eager';
       img.decoding = 'async';
       if('fetchPriority' in img) img.fetchPriority = priority ? 'high' : 'low';
       img.sizes = '(max-width: 768px) calc(100vw - 28px), (max-width: 1100px) 50vw, 33vw';
