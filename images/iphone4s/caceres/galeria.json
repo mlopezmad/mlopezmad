@@ -1,6 +1,10 @@
 {
   "imagenes": [
     {
+      "archivo": "IMG_6798.jpg",
+      "tipo": "color"
+    },
+    {
       "archivo": "IMG_6776.jpeg",
       "tipo": "color"
     },
@@ -70,10 +74,6 @@
     },
     {
       "archivo": "IMG_6756.jpeg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6798.jpg",
       "tipo": "color"
     }
   ]
