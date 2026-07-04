@@ -727,3 +727,59 @@ html[data-theme="dark"] .brand-mark,
   .brand-mark{width:.82em;height:.57em;}
   .home-page .site-header--hero .site-brand{display:none;}
 }
+
+
+/* V3.1 firma de marca en Sobre mí */
+.about-closing{
+  margin-top:56px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:clamp(34px,6vw,76px);
+  align-items:end;
+}
+.about-closing .equipo{margin-top:0;}
+.about-signature{
+  color:var(--text);
+  display:grid;
+  gap:13px;
+  justify-items:center;
+  align-self:end;
+  padding:22px 4px 6px;
+  opacity:.78;
+  text-align:center;
+  min-width:210px;
+}
+.about-signature img{
+  width:68px;
+  height:auto;
+  display:block;
+  object-fit:contain;
+  opacity:.84;
+  transition:filter .2s ease,opacity .2s ease;
+}
+.about-signature__text{display:grid;gap:6px;line-height:1;}
+.about-signature strong{
+  font-size:.96rem;
+  letter-spacing:.15em;
+  font-weight:820;
+}
+.about-signature span{
+  font-size:.62rem;
+  letter-spacing:.46em;
+  font-weight:520;
+  color:var(--muted-2);
+  padding-left:.46em;
+}
+html[data-theme="dark"] .about-signature img{filter:invert(1);opacity:.88;}
+@media(max-width:768px){
+  .about-closing{display:block;margin-top:42px;}
+  .about-signature{
+    margin:34px auto 0;
+    max-width:260px;
+    padding:18px 0 0;
+    opacity:.72;
+  }
+  .about-signature img{width:58px;}
+  .about-signature strong{font-size:.82rem;letter-spacing:.14em;}
+  .about-signature span{font-size:.55rem;letter-spacing:.38em;padding-left:.38em;}
+}
