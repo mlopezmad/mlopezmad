@@ -564,6 +564,17 @@ footer,.footer{text-align:center;padding:50px 20px;color:var(--muted-3);font-siz
     backdrop-filter:blur(42px) saturate(220%);
     -webkit-backdrop-filter:blur(42px) saturate(220%);
   }
+  .site-nav::before{
+    content:"";
+    width:34px;
+    height:23px;
+    margin:3px 14px 8px;
+    background:url("assets/logo-mark.png") center/contain no-repeat;
+    opacity:.16;
+    filter:none;
+  }
+  .site-header--hero .site-nav::before{filter:invert(1);opacity:.24;}
+  html[data-theme="dark"] .site-nav::before{filter:invert(1);opacity:.20;}
   .site-nav.is-open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}
   .site-nav a{padding:12px 14px;border-radius:14px;text-shadow:0 1px 16px rgba(0,0,0,.25);}
   .site-nav a:hover{background:rgba(255,255,255,.08);transform:none;}
@@ -683,4 +694,36 @@ footer,.footer{text-align:center;padding:50px 20px;color:var(--muted-3);font-siz
 @media(max-width:768px){
   .about-page .contenido{padding-bottom:12px;}
   .newsletter-page .subscribe-page{padding-bottom:18px;}
+}
+
+.site-brand{
+  color:inherit;
+  text-decoration:none;
+  font-weight:800;
+  font-size:clamp(1.45rem,2vw,2.05rem);
+  letter-spacing:-.055em;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
+  gap:.42em;
+}
+.site-brand span{display:inline-block;}
+.brand-mark{
+  width:.86em;
+  height:.60em;
+  display:block;
+  object-fit:contain;
+  opacity:.86;
+  flex:0 0 auto;
+  transition:filter .2s ease,opacity .2s ease;
+}
+html[data-theme="dark"] .brand-mark,
+.site-header--hero .brand-mark{filter:invert(1);opacity:.92;}
+
+
+/* V2.9 brand mark refinements sobre base actual */
+@media(max-width:768px){
+  .site-brand{gap:.38em;}
+  .brand-mark{width:.82em;height:.57em;}
+  .home-page .site-header--hero .site-brand{display:none;}
 }

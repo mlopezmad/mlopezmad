@@ -11,7 +11,7 @@
 
   document.body.innerHTML = `
     <header class="site-header site-header--page">
-      <a class="site-brand" href="index.html">mlopezmad</a>
+      <a class="site-brand" href="index.html"><img class="brand-mark" src="assets/logo-mark.png" alt="" aria-hidden="true"><span>mlopezmad</span></a>
       <button class="mobile-menu-button mobile-menu-button--page" type="button" aria-expanded="false" aria-controls="mainNav">Menú</button>
       <nav class="site-nav site-nav--page" id="mainNav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
