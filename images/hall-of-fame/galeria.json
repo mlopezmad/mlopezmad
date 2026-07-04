@@ -1,11 +1,11 @@
 {
   "imagenes": [
     {
-      "archivo": "novia-mercedes.jpg",
+      "archivo": "baile-madrid.jpg",
       "tipo": "bn"
     },
     {
-      "archivo": "rebajas.jpg",
+      "archivo": "novia-mercedes.jpg",
       "tipo": "bn"
     },
     {
@@ -13,11 +13,11 @@
       "tipo": "bn"
     },
     {
-      "archivo": "silueta-calle.jpg",
+      "archivo": "rebajas.jpg",
       "tipo": "bn"
     },
     {
-      "archivo": "baile-madrid.jpg",
+      "archivo": "silueta-calle.jpg",
       "tipo": "bn"
     }
   ]
