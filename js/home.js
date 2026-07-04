@@ -10,6 +10,22 @@
   let allCollections = [];
   let lastViewportMode = window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop';
 
+  function selectedHeroSource(home){
+    if(!home) return '';
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    return isMobile
+      ? (home.mobileSource || home.phoneSource || home.source || home.desktopSource || '')
+      : (home.source || home.desktopSource || home.mobileSource || home.phoneSource || '');
+  }
+
+  function warmImage(src, priority){
+    if(!src) return;
+    const img = new Image();
+    img.decoding = 'async';
+    if('fetchPriority' in img) img.fetchPriority = priority ? 'high' : 'low';
+    img.src = src;
+  }
+
   function coverSafeValue(img, value){
     const parent = img && img.parentElement;
     if(!img || !parent || !img.naturalWidth || !img.naturalHeight) return value || {x:0,y:0,scale:1};
@@ -32,9 +48,7 @@
   function applyComposition(img, home){
     if(!img || !home) return;
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const source = isMobile
-      ? (home.mobileSource || home.phoneSource || home.source || home.desktopSource)
-      : (home.source || home.desktopSource || home.mobileSource || home.phoneSource);
+    const source = selectedHeroSource(home);
 
     const composition = isMobile
       ? ((home.mobileComposition && (home.mobileComposition.mobile || home.mobileComposition.desktop)) || (home.composition && (home.composition.mobile || home.composition.desktop)))
@@ -56,6 +70,9 @@
 
     if(source && img.getAttribute('src') !== source){
       img.classList.remove('is-ready');
+      img.loading = 'eager';
+      img.decoding = 'async';
+      if('fetchPriority' in img) img.fetchPriority = 'high';
       img.onload = paint;
       img.setAttribute('src', source);
     }else if(!img.complete || !img.naturalWidth){
@@ -123,7 +140,7 @@
     const text = collection.subtitle || collection.description || 'Fotografía de calle';
     return `
       <a class="feature-card${large}" href="${collection.url}">
-        <div class="feature-card__image">${cover ? `<img src="${cover}" alt="${escapeHtml(collection.title)}" loading="lazy" decoding="async">` : ''}</div>
+        <div class="feature-card__image">${cover ? `<img src="${cover}" alt="${escapeHtml(collection.title)}" loading="lazy" decoding="async" fetchpriority="low">` : ''}</div>
         <div class="feature-card__content">
           <span class="feature-label">${escapeHtml(label)}</span>
           <h3>${escapeHtml(collection.title)}</h3>
@@ -140,6 +157,7 @@
 
       const countMap = await Promise.all(allCollections.map(countPhotos));
       homeData = pickDynamicHero(data, allCollections, countMap);
+      warmImage(selectedHeroSource(homeData), true);
       applyComposition(coverImg, homeData);
 
       const portfolio = allCollections.filter(c => c.type === 'portfolio');
@@ -169,7 +187,7 @@
       if(targetData[2]) html.push(cardTemplate(targetData[2].collection, targetData[2].cover, {label:'Última publicación'}));
       html.push(`
         <a class="feature-card feature-card--about" href="sobre-mi.html">
-          <div class="feature-card__image"><img src="images/about/profile.jpg" alt="Miguel Ángel López" loading="lazy" decoding="async"></div>
+          <div class="feature-card__image"><img src="images/about/profile.jpg" alt="Miguel Ángel López" loading="lazy" decoding="async" fetchpriority="low"></div>
           <div class="feature-card__content">
             <span class="feature-label">Sobre la mirada</span>
             <h3>Miguel Ángel López</h3>

@@ -302,8 +302,11 @@
       const img = document.createElement("img");
       img.src = config.carpeta + item.archivo;
       img.alt = `Fotografía de ${config.titulo}`;
-      img.loading = 'lazy';
+      const priority = index < 2;
+      img.loading = priority ? 'eager' : 'lazy';
       img.decoding = 'async';
+      if('fetchPriority' in img) img.fetchPriority = priority ? 'high' : 'low';
+      img.sizes = '(max-width: 768px) calc(100vw - 28px), (max-width: 1100px) 50vw, 33vw';
       img.draggable = false;
       img.addEventListener("click", () => abrirLightbox(index));
       galeria.appendChild(img);
@@ -317,12 +320,25 @@
     lightbox.classList.add("active");
     lightbox.setAttribute('aria-hidden','false');
     mostrarControles();
+    precargarVecinas();
   }
 
   function cerrarLightbox(){
     lightbox.classList.remove("active");
     lightbox.classList.remove("show-controls");
     lightbox.setAttribute('aria-hidden','true');
+  }
+
+  function precargarVecinas(){
+    if(!imagenesFiltradas.length) return;
+    [indiceActual - 1, indiceActual + 1].forEach(i => {
+      const index = (i + imagenesFiltradas.length) % imagenesFiltradas.length;
+      const item = imagenesFiltradas[index];
+      if(!item || !item.archivo) return;
+      const preload = new Image();
+      preload.decoding = 'async';
+      preload.src = config.carpeta + item.archivo;
+    });
   }
 
   function cambiarImagen(nuevoIndice, direccion){
@@ -335,6 +351,7 @@
       contador.textContent = `${indiceActual + 1} / ${imagenesFiltradas.length}`;
       lightboxImg.classList.remove("fade-left", "fade-right");
       mostrarControles();
+      precargarVecinas();
     }, 200);
   }
 

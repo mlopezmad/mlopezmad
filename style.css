@@ -783,3 +783,33 @@ html[data-theme="dark"] .about-signature img{filter:invert(1);opacity:.88;}
   .about-signature strong{font-size:.82rem;letter-spacing:.14em;}
   .about-signature span{font-size:.55rem;letter-spacing:.38em;padding-left:.38em;}
 }
+
+
+/* V3.2 performance refinements */
+.public-hero__media img,
+.feature-card__image img,
+.portfolio-cover img,
+.collection-cover img,
+.galeria img{
+  content-visibility:auto;
+}
+.home-featured,
+.portfolio-list,
+.subscribe-page,
+.contenido,
+.site-footer{
+  content-visibility:auto;
+  contain-intrinsic-size:1px 900px;
+}
+.galeria img{
+  min-height:120px;
+}
+@media(max-width:768px){
+  .home-featured,
+  .portfolio-list,
+  .subscribe-page,
+  .contenido,
+  .site-footer{
+    contain-intrinsic-size:1px 760px;
+  }
+}

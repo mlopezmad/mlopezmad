@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             tarjeta.innerHTML = `
                 ${imagenUrl ? `
                 <div class="collection-cover">
-                    <img src="${imagenUrl}" alt="${coleccion.titulo}" ${compositionStyle(coleccion.coverComposition)}>
+                    <img src="${imagenUrl}" alt="${coleccion.titulo}" loading="lazy" decoding="async" fetchpriority="low" ${compositionStyle(coleccion.coverComposition)}>
                 </div>
                 ` : ""}
                 <div class="collection-content">

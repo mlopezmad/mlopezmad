@@ -36,11 +36,11 @@
     }
   }
 
-  function card({url,title,description,meta,cover,composition}){
+  function card({url,title,description,meta,cover,composition,priority}){
     return `
       <a class="portfolio-item" href="${url}">
         <div class="portfolio-cover">
-          ${cover ? `<img src="${cover}" alt="${escapeHtml(title)}" loading="lazy" decoding="async" ${compositionStyle(composition)}>` : ''}
+          ${cover ? `<img src="${cover}" alt="${escapeHtml(title)}" loading="${priority ? 'eager' : 'lazy'}" decoding="async" fetchpriority="${priority ? 'high' : 'low'}" ${compositionStyle(composition)}>` : ''}
         </div>
         <div class="portfolio-content">
           <div class="portfolio-meta">${escapeHtml(meta)}</div>
@@ -62,7 +62,7 @@
         return;
       }
 
-      const cards = await Promise.all(collections.map(async collection => {
+      const cards = await Promise.all(collections.map(async (collection, index) => {
         const info = await galleryInfo(collection);
         const totalText = info.total === null ? 'Abrir' : `${info.total} ${info.total === 1 ? 'fotografía' : 'fotografías'}`;
         const description = collection.subtitle || collection.description || '';
@@ -73,7 +73,8 @@
           description,
           meta:totalText,
           cover,
-          composition:collection.coverComposition
+          composition:collection.coverComposition,
+          priority:index < 2
         });
       }));
 
@@ -82,7 +83,8 @@
         title:"Editor's Choice",
         description:'Una selección personal de fotografías que resumen la mirada.',
         meta:'Selección del autor',
-        cover:'images/hall-of-fame/baile-madrid.jpg'
+        cover:'images/hall-of-fame/baile-madrid.jpg',
+        priority:false
       }));
 
       cards.push(card({
@@ -90,7 +92,8 @@
         title:'iPhone 4s',
         description:'Transfer Filter Project',
         meta:'Proyecto personal',
-        cover:'images/iphone4s/hero.jpg'
+        cover:'images/iphone4s/hero.jpg',
+        priority:false
       }));
 
       container.innerHTML = `<div class="portfolio-grid">${cards.join('')}</div>`;
