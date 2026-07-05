@@ -280,6 +280,23 @@
       box-shadow:0 10px 26px rgba(0,0,0,.08);
     }
     .galeria--indice img:hover{transform:translateY(-2px);}
+    .galeria--empty{
+      display:block !important;
+      columns:auto !important;
+      min-height:220px;
+    }
+    .galeria--empty .portfolio-empty{
+      display:block;
+      width:100%;
+      max-width:100%;
+      margin:78px auto 42px;
+      text-align:center;
+      color:var(--muted-2);
+    }
+    .galeria--indice .portfolio-empty{
+      grid-column:1 / -1;
+      justify-self:center;
+    }
     .gallery-back{text-align:center;margin:18px 0 26px;}
     .lightbox{
       display:none;
@@ -519,6 +536,7 @@
     actualizarEstadoVistas();
     galeria.classList.toggle("galeria--indice", vistaActual === "indice");
     galeria.classList.toggle("galeria--editorial", vistaActual === "editorial");
+    galeria.classList.toggle("galeria--empty", !imagenesFiltradas.length);
 
     if(!imagenesFiltradas.length){
       galeria.innerHTML = '<p class="portfolio-empty">No hay fotografías en este filtro.</p>';
