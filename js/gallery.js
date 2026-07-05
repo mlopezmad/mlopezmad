@@ -6,6 +6,8 @@
     return;
   }
 
+  const STORAGE_VIEW_KEY = "mlopezmad.gallery.view";
+
   document.title = `${config.titulo} - mlopezmad`;
   document.body.classList.add('gallery-page');
 
@@ -30,10 +32,22 @@
       ${config.intro ? `<div class="intro-text">${config.intro}</div>` : ""}
     </section>
 
-    <div class="filtros" role="tablist" aria-label="Filtros de galería">
-      <button class="activo" data-filtro="todas" type="button">Todas</button>
-      <button data-filtro="bn" type="button">B&N</button>
-      <button data-filtro="color" type="button">Color</button>
+    <div class="gallery-tools-wrap" id="galleryToolsWrap">
+      <div class="gallery-tools" id="galleryTools" aria-label="Controles de galería">
+        <div class="filtros" role="tablist" aria-label="Filtros de galería">
+          <button class="activo" data-filtro="todas" type="button">Todas</button>
+          <button data-filtro="bn" type="button">B&N</button>
+          <button data-filtro="color" type="button">Color</button>
+        </div>
+        <div class="view-switch" role="group" aria-label="Vista de galería">
+          <button class="view-button" data-view="editorial" type="button" aria-label="Vista editorial" title="Vista editorial">
+            <span class="view-icon view-icon--editorial" aria-hidden="true"></span>
+          </button>
+          <button class="view-button" data-view="indice" type="button" aria-label="Vista índice" title="Vista índice">
+            <span class="view-icon view-icon--indice" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="galeria" id="galeria"></div>
@@ -96,15 +110,48 @@
     }
     .intro-text p{margin-bottom:22px;}
     .intro-text p:last-child{margin-bottom:0;}
-    .filtros{
+    .gallery-tools-wrap{
       max-width:1120px;
       margin:0 auto 34px;
       padding:0 clamp(22px,5vw,56px);
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+      position:sticky;
+      top:calc(env(safe-area-inset-top) + 12px);
+      z-index:45;
+      pointer-events:none;
     }
-    .filtros button{
+    .gallery-tools{
+      width:max-content;
+      max-width:100%;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:7px;
+      border:1px solid rgba(120,120,120,.20);
+      border-radius:999px;
+      background:linear-gradient(135deg,rgba(255,255,255,.76),rgba(255,255,255,.46));
+      box-shadow:0 18px 46px rgba(0,0,0,.10), inset 0 1px 0 rgba(255,255,255,.55);
+      backdrop-filter:blur(26px) saturate(175%);
+      -webkit-backdrop-filter:blur(26px) saturate(175%);
+      pointer-events:auto;
+      overflow-x:auto;
+      scrollbar-width:none;
+    }
+    .gallery-tools::-webkit-scrollbar{display:none;}
+    html[data-theme="dark"] .gallery-tools{
+      border-color:rgba(255,255,255,.15);
+      background:linear-gradient(135deg,rgba(38,38,42,.66),rgba(18,18,20,.46));
+      box-shadow:0 18px 52px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.10);
+    }
+    .filtros{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex:0 0 auto;
+      margin:0;
+      padding:0;
+    }
+    .filtros button,
+    .view-button{
       border:1px solid var(--line);
       background:var(--surface-glass);
       color:var(--muted);
@@ -117,10 +164,50 @@
       letter-spacing:-.025em;
       backdrop-filter:blur(16px);
       -webkit-backdrop-filter:blur(16px);
-      transition:background .2s ease,color .2s ease,transform .2s ease;
+      transition:background .2s ease,color .2s ease,transform .2s ease,border-color .2s ease;
+      white-space:nowrap;
     }
-    .filtros button:hover{transform:translateY(-1px);color:var(--text);}
-    .filtros button.activo{background:var(--text);color:var(--bg);border-color:var(--text);}
+    .filtros button:hover,
+    .view-button:hover{transform:translateY(-1px);color:var(--text);}
+    .filtros button.activo,
+    .view-button.activo{background:var(--text);color:var(--bg);border-color:var(--text);}
+    .view-switch{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      padding-left:2px;
+      flex:0 0 auto;
+    }
+    .view-button{
+      width:42px;
+      padding:0;
+      display:grid;
+      place-items:center;
+    }
+    .view-icon{display:block;position:relative;width:18px;height:18px;}
+    .view-icon--editorial::before{
+      content:"";
+      position:absolute;
+      inset:2px 4px;
+      border:2px solid currentColor;
+      border-radius:3px;
+    }
+    .view-icon--indice{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:3px;
+    }
+    .view-icon--indice::before,
+    .view-icon--indice::after{
+      content:"";
+      display:block;
+      border-radius:2px;
+      background:currentColor;
+      box-shadow:9px 0 0 currentColor,0 9px 0 currentColor,9px 9px 0 currentColor;
+      width:6px;
+      height:6px;
+    }
+    .view-icon--indice::after{display:none;}
     .galeria{
       max-width:1480px;
       margin:34px auto 70px;
@@ -137,12 +224,29 @@
       border-radius:18px;
       background:var(--surface-soft);
       box-shadow:0 12px 34px rgba(0,0,0,.08);
+      min-height:120px;
       -webkit-touch-callout:none;
       -webkit-user-select:none;
       user-select:none;
       transition:transform .24s ease, box-shadow .24s ease, opacity .24s ease;
     }
     .galeria img:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft);}
+    .galeria--indice{
+      columns:auto;
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:10px;
+      max-width:1320px;
+    }
+    .galeria--indice img{
+      aspect-ratio:1/1;
+      object-fit:cover;
+      margin:0;
+      min-height:0;
+      border-radius:14px;
+      box-shadow:0 10px 26px rgba(0,0,0,.08);
+    }
+    .galeria--indice img:hover{transform:translateY(-2px);}
     .gallery-back{text-align:center;margin:18px 0 26px;}
     .lightbox{
       display:none;
@@ -228,23 +332,41 @@
     .lightbox.show-controls .nav-btn,
     .lightbox.show-controls .contador,
     .lightbox.show-controls .cerrar{opacity:1;}
+    @media(max-width:1100px){
+      .galeria--indice{grid-template-columns:repeat(4,minmax(0,1fr));}
+    }
     @media(max-width:768px){
       .gallery-header{padding:14px 22px 24px;}
       .gallery-header h1{font-size:clamp(3.6rem,18vw,5.6rem);}
       .gallery-subtitle{font-size:1.2rem;}
       .intro-text{font-size:1rem;line-height:1.72;margin-top:24px;}
-      .filtros{padding:0 22px;margin-bottom:22px;}
+      .gallery-tools-wrap{padding:0 14px;margin-bottom:22px;top:calc(env(safe-area-inset-top) + 8px);}
+      .gallery-tools{width:100%;justify-content:space-between;gap:6px;padding:6px;border-radius:999px;}
+      .filtros{gap:6px;}
+      .filtros button{min-height:38px;padding:0 13px;font-size:.9rem;}
+      .view-switch{gap:5px;}
+      .view-button{width:38px;min-height:38px;}
       .galeria{columns:1;padding:0 14px;column-gap:0;margin-top:20px;}
       .galeria img{border-radius:16px;margin-bottom:16px;}
+      .galeria--indice{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:0 8px;margin-top:18px;}
+      .galeria--indice img{border-radius:8px;margin:0;}
       .nav-btn{width:46px;height:46px;font-size:2.7rem;}
       .prev{left:10px;}
       .next{right:10px;}
+    }
+    @media(max-width:374px){
+      .filtros button{padding:0 11px;font-size:.86rem;}
+      .view-button{width:36px;min-height:36px;}
+      .gallery-tools{gap:4px;padding:5px;}
+      .filtros{gap:4px;}
+      .view-switch{gap:4px;}
     }
   `;
   document.head.appendChild(style);
 
   const galeria = document.getElementById("galeria");
   const botonesFiltro = document.querySelectorAll(".filtros button");
+  const botonesVista = document.querySelectorAll(".view-button");
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
   const cerrar = document.getElementById("cerrar");
@@ -255,9 +377,31 @@
   let imagenes = [];
   let imagenesFiltradas = [];
   let indiceActual = 0;
+  let filtroActual = "todas";
+  let vistaActual = normalizarVista(leerVistaGuardada()) || "editorial";
   let touchStartX = 0;
   let touchEndX = 0;
   let controlsTimer;
+
+  function normalizarVista(vista){
+    return vista === "indice" || vista === "editorial" ? vista : null;
+  }
+
+  function leerVistaGuardada(){
+    try{
+      return window.localStorage.getItem(STORAGE_VIEW_KEY);
+    }catch(error){
+      return null;
+    }
+  }
+
+  function guardarVista(vista){
+    try{
+      window.localStorage.setItem(STORAGE_VIEW_KEY, vista);
+    }catch(error){
+      // En navegación privada algunos navegadores pueden bloquear localStorage.
+    }
+  }
 
   function mostrarControles(){
     lightbox.classList.add("show-controls");
@@ -272,15 +416,26 @@
       const respuesta = await fetch(config.json + "?t=" + Date.now(), {cache:'no-store'});
       const datos = await respuesta.json();
       imagenes = datos.imagenes || [];
-      aplicarFiltro("todas");
+      aplicarFiltro("todas", {scrollTop:false});
     }catch(error){
       galeria.innerHTML = '<p class="portfolio-empty">No se pudo cargar la galería.</p>';
     }
   }
 
-  function aplicarFiltro(filtro){
+  function actualizarEstadoVistas(){
+    botonesVista.forEach(btn => {
+      const activo = btn.dataset.view === vistaActual;
+      btn.classList.toggle("activo", activo);
+      btn.setAttribute("aria-pressed", activo ? "true" : "false");
+    });
+  }
+
+  function aplicarFiltro(filtro, opciones = {}){
+    filtroActual = filtro;
     botonesFiltro.forEach(btn => {
-      btn.classList.toggle("activo", btn.dataset.filtro === filtro);
+      const activo = btn.dataset.filtro === filtro;
+      btn.classList.toggle("activo", activo);
+      btn.setAttribute("aria-selected", activo ? "true" : "false");
     });
 
     imagenesFiltradas = filtro === "todas"
@@ -288,10 +443,49 @@
       : imagenes.filter(img => img.tipo === filtro);
 
     pintarGaleria();
+
+    if(opciones.scrollTop){
+      scrollInicioGaleria();
+    }
   }
 
-  function pintarGaleria(){
+  function indiceVisible(){
+    const nodos = Array.from(galeria.querySelectorAll("img[data-gallery-index]"));
+    if(!nodos.length) return 0;
+
+    const referencia = window.innerHeight * 0.42;
+    let mejorNodo = nodos[0];
+    let mejorDistancia = Infinity;
+
+    nodos.forEach(img => {
+      const rect = img.getBoundingClientRect();
+      if(rect.bottom < 0 || rect.top > window.innerHeight) return;
+      const centro = rect.top + rect.height / 2;
+      const distancia = Math.abs(centro - referencia);
+      if(distancia < mejorDistancia){
+        mejorDistancia = distancia;
+        mejorNodo = img;
+      }
+    });
+
+    return Number(mejorNodo.dataset.galleryIndex || 0);
+  }
+
+  function cambiarVista(vista){
+    const nuevaVista = normalizarVista(vista);
+    if(!nuevaVista || nuevaVista === vistaActual) return;
+
+    const ancla = indiceVisible();
+    vistaActual = nuevaVista;
+    guardarVista(vistaActual);
+    pintarGaleria({anchorIndex:ancla, anchorBlock:"center"});
+  }
+
+  function pintarGaleria(opciones = {}){
     galeria.innerHTML = "";
+    actualizarEstadoVistas();
+    galeria.classList.toggle("galeria--indice", vistaActual === "indice");
+    galeria.classList.toggle("galeria--editorial", vistaActual === "editorial");
 
     if(!imagenesFiltradas.length){
       galeria.innerHTML = '<p class="portfolio-empty">No hay fotografías en este filtro.</p>';
@@ -302,16 +496,44 @@
       const img = document.createElement("img");
       img.src = config.carpeta + item.archivo;
       img.alt = `Fotografía de ${config.titulo}`;
-      const priority = index < 6;
-      // En escritorio, Safari puede parpadear con lazy loading dentro de galerías en columnas.
-      // Las imágenes ya están optimizadas, así que cargarlas de forma estable evita blancos/parpadeos.
-      img.loading = 'eager';
+      img.dataset.galleryIndex = String(index);
+      const priority = vistaActual === "indice" ? index < 24 : index < 6;
+
+      // Vista editorial mantiene carga estable para evitar parpadeos en Safari de escritorio.
+      // Vista índice usa miniaturas cuadradas y puede diferir las fotos lejanas sin saltos visuales.
+      img.loading = vistaActual === "indice" && index >= 24 ? "lazy" : "eager";
       img.decoding = 'async';
       if('fetchPriority' in img) img.fetchPriority = priority ? 'high' : 'low';
-      img.sizes = '(max-width: 768px) calc(100vw - 28px), (max-width: 1100px) 50vw, 33vw';
+      img.sizes = vistaActual === "indice"
+        ? '(max-width: 768px) 33vw, (max-width: 1100px) 25vw, 20vw'
+        : '(max-width: 768px) calc(100vw - 28px), (max-width: 1100px) 50vw, 33vw';
       img.draggable = false;
       img.addEventListener("click", () => abrirLightbox(index));
       galeria.appendChild(img);
+    });
+
+    if(Number.isInteger(opciones.anchorIndex)){
+      scrollAFoto(opciones.anchorIndex, opciones.anchorBlock || "nearest", "auto");
+    }
+  }
+
+  function scrollInicioGaleria(){
+    requestAnimationFrame(() => {
+      const tools = document.getElementById("galleryToolsWrap");
+      const offset = (tools ? tools.offsetHeight : 0) + 18;
+      const top = galeria.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({top:Math.max(0, top), behavior:"smooth"});
+    });
+  }
+
+  function scrollAFoto(indice, block = "nearest", behavior = "auto"){
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const objetivo = galeria.querySelector(`img[data-gallery-index="${indice}"]`);
+        if(objetivo){
+          objetivo.scrollIntoView({block, inline:"nearest", behavior});
+        }
+      });
     });
   }
 
@@ -329,6 +551,7 @@
     lightbox.classList.remove("active");
     lightbox.classList.remove("show-controls");
     lightbox.setAttribute('aria-hidden','true');
+    scrollAFoto(indiceActual, vistaActual === "indice" ? "center" : "nearest", "auto");
   }
 
   function precargarVecinas(){
@@ -368,7 +591,11 @@
   }
 
   botonesFiltro.forEach(btn => {
-    btn.addEventListener("click", () => aplicarFiltro(btn.dataset.filtro));
+    btn.addEventListener("click", () => aplicarFiltro(btn.dataset.filtro, {scrollTop:true}));
+  });
+
+  botonesVista.forEach(btn => {
+    btn.addEventListener("click", () => cambiarVista(btn.dataset.view));
   });
 
   cerrar.addEventListener("click", cerrarLightbox);
