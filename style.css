@@ -929,3 +929,14 @@ html[data-theme="dark"] .home-quick-stats .hero-stats a{border-right-color:rgba(
       inset 0 1px 0 rgba(255,255,255,.18);
   }
 }
+
+/* V3.4.2 · Ajuste escritorio cápsula hero
+   En escritorio se ve completa sin invadir la fotografía; móvil permanece igual. */
+@media(min-width:769px){
+  .public-hero{
+    min-height:82svh;
+  }
+  .home-quick-stats{
+    padding-top:clamp(16px,2.6vw,32px);
+  }
+}
