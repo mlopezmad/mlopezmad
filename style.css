@@ -940,3 +940,10 @@ html[data-theme="dark"] .home-quick-stats .hero-stats a{border-right-color:rgba(
     padding-top:clamp(16px,2.6vw,32px);
   }
 }
+
+/* V3.5 · Hero inteligente automático
+   La portada dinámica usa object-position calculado en JS según proporción, calidad y foco visual.
+   No requiere marcar portadas en Studio: desktop y móvil reciben bolsas de candidatas distintas. */
+.public-hero__media img{
+  transition:opacity .45s ease, object-position .35s ease;
+}

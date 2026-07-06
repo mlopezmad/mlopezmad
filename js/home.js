@@ -6,13 +6,23 @@
   const statLatestLink = document.getElementById('statLatestLink');
   const statLatestTitle = document.getElementById('statLatestTitle');
   const cacheBust = String(Date.now());
+  const recentKey = 'mlopezmad.hero.recent.v35';
+  const metaKey = 'mlopezmad.hero.meta.v35';
   let homeData = null;
   let allCollections = [];
   let lastViewportMode = window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop';
 
+  function isMobileViewport(){
+    return window.matchMedia('(max-width: 768px)').matches;
+  }
+
+  function currentMode(){
+    return isMobileViewport() ? 'mobile' : 'desktop';
+  }
+
   function selectedHeroSource(home){
     if(!home) return '';
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const isMobile = isMobileViewport();
     return isMobile
       ? (home.mobileSource || home.phoneSource || home.source || home.desktopSource || '')
       : (home.source || home.desktopSource || home.mobileSource || home.phoneSource || '');
@@ -24,6 +34,10 @@
     img.decoding = 'async';
     if('fetchPriority' in img) img.fetchPriority = priority ? 'high' : 'low';
     img.src = src;
+  }
+
+  function clamp(value, min, max){
+    return Math.min(max, Math.max(min, value));
   }
 
   function coverSafeValue(img, value){
@@ -47,23 +61,29 @@
 
   function applyComposition(img, home){
     if(!img || !home) return;
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const isMobile = isMobileViewport();
     const source = selectedHeroSource(home);
 
     const composition = isMobile
       ? ((home.mobileComposition && (home.mobileComposition.mobile || home.mobileComposition.desktop)) || (home.composition && (home.composition.mobile || home.composition.desktop)))
       : (home.composition && (home.composition.desktop || home.composition.mobile));
 
+    const objectPosition = isMobile
+      ? (home.mobileObjectPosition || home.objectPosition)
+      : (home.desktopObjectPosition || home.objectPosition);
+
     const paint = () => {
       if(composition){
         const value = coverSafeValue(img, composition);
         img.classList.add('cover-composed');
+        img.style.objectPosition = 'center center';
         img.style.transformOrigin = 'center center';
         img.style.transform = `translate(-50%, -50%) translate(${value.x}%, ${value.y}%) scale(${value.scale})`;
       }else{
         img.classList.remove('cover-composed');
         img.style.transform = '';
         img.style.transformOrigin = '';
+        img.style.objectPosition = objectPosition ? `${objectPosition.x}% ${objectPosition.y}%` : 'center center';
       }
       img.classList.add('is-ready');
     };
@@ -107,8 +127,7 @@
 
   function readRecentHeroSources(){
     try{
-      const value = localStorage.getItem('mlopezmad.hero.recent.v34');
-      const parsed = JSON.parse(value || '[]');
+      const parsed = JSON.parse(localStorage.getItem(recentKey) || '[]');
       return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
     }catch(e){
       return [];
@@ -119,20 +138,61 @@
     if(!source) return;
     try{
       const recent = readRecentHeroSources().filter(item => item !== source);
-      const limit = Math.max(6, Math.min(18, Math.floor((total || 1) / 3)));
-      localStorage.setItem('mlopezmad.hero.recent.v34', JSON.stringify([source, ...recent].slice(0, limit)));
+      const limit = Math.max(8, Math.min(28, Math.floor((total || 1) / 3)));
+      localStorage.setItem(recentKey, JSON.stringify([source, ...recent].slice(0, limit)));
     }catch(e){}
   }
 
-  function pickDynamicHero(data, collections, counts){
+  function readHeroMetaCache(){
+    try{
+      const parsed = JSON.parse(localStorage.getItem(metaKey) || '{}');
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    }catch(e){
+      return {};
+    }
+  }
+
+  function writeHeroMetaCache(cache){
+    try{
+      const entries = Object.entries(cache || {}).slice(-260);
+      localStorage.setItem(metaKey, JSON.stringify(Object.fromEntries(entries)));
+    }catch(e){}
+  }
+
+  function shuffle(list){
+    const copy = list.slice();
+    for(let i = copy.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  function heroFrameRatio(){
+    const hero = document.querySelector('.public-hero');
+    const rect = hero && hero.getBoundingClientRect ? hero.getBoundingClientRect() : null;
+    if(rect && rect.width && rect.height) return rect.width / rect.height;
+    return isMobileViewport() ? 0.58 : 2.25;
+  }
+
+  function candidateSource(collection, filename){
+    if(!filename) return '';
+    return String(filename).startsWith('images/') ? filename : `${collection.path}/${filename}`;
+  }
+
+  function buildHeroCandidates(data, collections, counts){
+    const seen = new Set();
     const candidates = [];
+
     collections.forEach((collection, index) => {
       if(!['portfolio','iphone4s'].includes(collection.type)) return;
       const details = counts[index] || {};
       const images = details.images && details.images.length ? details.images : [details.first || collection.cover].filter(Boolean);
       images.forEach((filename) => {
-        const source = String(filename).startsWith('images/') ? filename : `${collection.path}/${filename}`;
-        if(!source) return;
+        const source = candidateSource(collection, filename);
+        if(!source || seen.has(source)) return;
+        if(!/\.(jpe?g|png|webp)$/i.test(source)) return;
+        seen.add(source);
         candidates.push({
           source,
           desktopSource: source,
@@ -147,20 +207,238 @@
     });
 
     if(data.homeCover && (data.homeCover.source || data.homeCover.mobileSource)){
-      candidates.push({
-        ...data.homeCover,
-        title: 'Portada',
-        url: 'portfolio.html'
+      [data.homeCover.source, data.homeCover.mobileSource].filter(Boolean).forEach((source) => {
+        if(seen.has(source)) return;
+        seen.add(source);
+        candidates.push({
+          ...data.homeCover,
+          source,
+          desktopSource: source,
+          mobileSource: source,
+          title: 'Portada',
+          url: 'portfolio.html'
+        });
       });
     }
 
+    return candidates;
+  }
+
+  function imageAnalysis(img){
+    const fallback = {focusX:50, focusY:50, contrast:.45, brightness:.5, detail:.35};
+    try{
+      const size = 34;
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d', {willReadFrequently:true});
+      if(!ctx) return fallback;
+      ctx.drawImage(img, 0, 0, size, size);
+      const data = ctx.getImageData(0, 0, size, size).data;
+      const gray = new Array(size * size);
+      let sum = 0;
+      for(let i = 0; i < size * size; i++){
+        const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
+        const value = (r * .299 + g * .587 + b * .114) / 255;
+        gray[i] = value;
+        sum += value;
+      }
+      const mean = sum / gray.length;
+      let variance = 0;
+      let totalEnergy = 0;
+      let weightedX = 0;
+      let weightedY = 0;
+      for(let y = 1; y < size - 1; y++){
+        for(let x = 1; x < size - 1; x++){
+          const index = y * size + x;
+          variance += Math.pow(gray[index] - mean, 2);
+          const dx = Math.abs(gray[index + 1] - gray[index - 1]);
+          const dy = Math.abs(gray[index + size] - gray[index - size]);
+          const centerBias = .75 + .25 * (1 - Math.min(1, Math.hypot((x / (size - 1)) - .5, (y / (size - 1)) - .5) / .707));
+          const energy = (dx + dy) * centerBias;
+          totalEnergy += energy;
+          weightedX += energy * x;
+          weightedY += energy * y;
+        }
+      }
+      const focusX = totalEnergy ? (weightedX / totalEnergy) / (size - 1) * 100 : 50;
+      const focusY = totalEnergy ? (weightedY / totalEnergy) / (size - 1) * 100 : 50;
+      return {
+        focusX: clamp(focusX, 0, 100),
+        focusY: clamp(focusY, 0, 100),
+        contrast: clamp(Math.sqrt(variance / gray.length) * 3.2, 0, 1),
+        brightness: clamp(mean, 0, 1),
+        detail: clamp(totalEnergy / 28, 0, 1)
+      };
+    }catch(e){
+      return fallback;
+    }
+  }
+
+  function loadHeroMeta(candidate){
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.decoding = 'async';
+      if('fetchPriority' in img) img.fetchPriority = 'low';
+      const done = () => {
+        if(!img.naturalWidth || !img.naturalHeight){
+          resolve(null);
+          return;
+        }
+        const analysis = imageAnalysis(img);
+        resolve({
+          w: img.naturalWidth,
+          h: img.naturalHeight,
+          ratio: img.naturalWidth / img.naturalHeight,
+          focusX: analysis.focusX,
+          focusY: analysis.focusY,
+          contrast: analysis.contrast,
+          brightness: analysis.brightness,
+          detail: analysis.detail,
+          checkedAt: Date.now()
+        });
+      };
+      img.onload = done;
+      img.onerror = () => resolve(null);
+      img.src = candidate.source;
+      if(img.decode){
+        img.decode().then(done).catch(() => {});
+      }
+    });
+  }
+
+  function cropFraction(ratio, frameRatio){
+    if(!ratio || !frameRatio) return 1;
+    return ratio >= frameRatio ? 1 - (frameRatio / ratio) : 1 - (ratio / frameRatio);
+  }
+
+  function scoreHeroMeta(meta, mode, frameRatio){
+    if(!meta || !meta.w || !meta.h || !meta.ratio) return null;
+    const ratio = meta.ratio;
+    const crop = cropFraction(ratio, frameRatio);
+    const isMobile = mode === 'mobile';
+    const maxCrop = isMobile ? .46 : .42;
+
+    if(isMobile){
+      if(ratio > 1.08 || ratio < .44) return null;
+      if(meta.h < 980 && meta.w < 900) return null;
+    }else{
+      if(ratio < 1.18) return null;
+      if(meta.w < 1100) return null;
+    }
+    if(crop > maxCrop) return null;
+
+    const cropScore = 1 - (crop / maxCrop);
+    const resolutionScore = isMobile
+      ? clamp(Math.min(meta.h / 1700, meta.w / 950), 0, 1)
+      : clamp(Math.min(meta.w / 1800, meta.h / 1050), 0, 1);
+    const contrastScore = clamp((meta.contrast || .35) * .9 + (meta.detail || .25) * .25, 0, 1);
+    const brightnessPenalty = (meta.brightness < .18 || meta.brightness > .88) ? .10 : 0;
+    const orientationSweetSpot = isMobile
+      ? (ratio >= .52 && ratio <= .82 ? 1 : .74)
+      : (ratio >= 1.32 && ratio <= 1.85 ? 1 : .78);
+
+    const score =
+      cropScore * 56 +
+      resolutionScore * 20 +
+      contrastScore * 18 +
+      orientationSweetSpot * 10 -
+      brightnessPenalty * 20;
+
+    return Math.max(0, score);
+  }
+
+  function objectPositionFromMeta(meta, mode, frameRatio){
+    const ratio = meta && meta.ratio ? meta.ratio : 1;
+    let x = 50;
+    let y = 50;
+    if(ratio > frameRatio){
+      x = clamp(meta.focusX || 50, mode === 'mobile' ? 26 : 30, mode === 'mobile' ? 74 : 70);
+    }
+    if(ratio < frameRatio){
+      y = clamp(meta.focusY || 50, mode === 'mobile' ? 34 : 36, mode === 'mobile' ? 68 : 64);
+    }
+    return {x: Math.round(x * 10) / 10, y: Math.round(y * 10) / 10};
+  }
+
+  function weightedPick(items){
+    if(!items.length) return null;
+    const weights = items.map((item, index) => Math.max(1, item.score - 18) * (1 + Math.max(0, 7 - index) * .025));
+    const total = weights.reduce((sum, weight) => sum + weight, 0);
+    let marker = Math.random() * total;
+    for(let i = 0; i < items.length; i++){
+      marker -= weights[i];
+      if(marker <= 0) return items[i];
+    }
+    return items[0];
+  }
+
+  async function collectEligibleCandidates(candidates, mode, frameRatio){
+    const metaCache = readHeroMetaCache();
+    const eligible = [];
+    const addIfEligible = (candidate, meta) => {
+      const score = scoreHeroMeta(meta, mode, frameRatio);
+      if(score === null) return false;
+      eligible.push({candidate, meta, score});
+      return true;
+    };
+
+    shuffle(candidates).forEach(candidate => {
+      const meta = metaCache[candidate.source];
+      if(meta) addIfEligible(candidate, meta);
+    });
+
+    const minimum = mode === 'mobile' ? 9 : 7;
+    const maxInspect = mode === 'mobile' ? 24 : 34;
+    let inspected = 0;
+    const uncached = shuffle(candidates.filter(candidate => !metaCache[candidate.source]));
+
+    for(const candidate of uncached){
+      if(inspected >= maxInspect) break;
+      inspected += 1;
+      const meta = await loadHeroMeta(candidate);
+      if(meta){
+        metaCache[candidate.source] = meta;
+        addIfEligible(candidate, meta);
+      }
+      if(eligible.length >= minimum && inspected >= Math.min(10, maxInspect)) break;
+    }
+
+    writeHeroMetaCache(metaCache);
+    return eligible;
+  }
+
+  async function pickDynamicHero(data, collections, counts){
+    const candidates = buildHeroCandidates(data, collections, counts);
     if(!candidates.length) return data.homeCover || {};
+
+    const mode = currentMode();
+    const frameRatio = heroFrameRatio();
+    const eligible = await collectEligibleCandidates(candidates, mode, frameRatio);
+
+    if(!eligible.length){
+      return data.homeCover || candidates[0] || {};
+    }
+
+    eligible.sort((a, b) => b.score - a.score);
     const recent = readRecentHeroSources();
-    let pool = candidates.filter(item => !recent.includes(selectedHeroSource(item)));
-    if(!pool.length) pool = candidates;
-    const picked = pool[Math.floor(Math.random() * pool.length)];
-    rememberHeroSource(selectedHeroSource(picked), candidates.length);
-    return picked;
+    const strongLimit = Math.max(6, Math.ceil(eligible.length * .45));
+    let pool = eligible.slice(0, strongLimit).filter(item => !recent.includes(item.candidate.source));
+    if(!pool.length) pool = eligible.slice(0, strongLimit);
+
+    const picked = weightedPick(pool) || pool[0] || eligible[0];
+    const objectPosition = objectPositionFromMeta(picked.meta, mode, frameRatio);
+    const hero = {
+      ...picked.candidate,
+      composition: null,
+      mobileComposition: null,
+      desktopObjectPosition: mode === 'desktop' ? objectPosition : undefined,
+      mobileObjectPosition: mode === 'mobile' ? objectPosition : undefined,
+      objectPosition
+    };
+
+    rememberHeroSource(picked.candidate.source, eligible.length);
+    return hero;
   }
 
   function cardTemplate(collection, cover, options){
@@ -185,7 +463,7 @@
       allCollections = data.collections || [];
 
       const countMap = await Promise.all(allCollections.map(countPhotos));
-      homeData = pickDynamicHero(data, allCollections, countMap);
+      homeData = await pickDynamicHero(data, allCollections, countMap);
       warmImage(selectedHeroSource(homeData), true);
       applyComposition(coverImg, homeData);
 
@@ -243,12 +521,13 @@
   function handleResize(){
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
-      const currentMode = window.matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop';
+      const mode = currentMode();
       if(homeData) applyComposition(coverImg, homeData);
-      if(currentMode !== lastViewportMode){
-        lastViewportMode = currentMode;
+      if(mode !== lastViewportMode){
+        lastViewportMode = mode;
+        loadHome();
       }
-    }, 120);
+    }, 160);
   }
 
   loadHome();
