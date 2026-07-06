@@ -98,11 +98,30 @@
     try{
       const response = await fetch(`${collection.json}?t=${cacheBust}`, {cache:'no-store'});
       const data = await response.json();
-      const images = data.imagenes || [];
-      return {count: images.length, first: images[0] ? (images[0].archivo || images[0].file || '') : ''};
+      const images = (data.imagenes || []).map(item => item.archivo || item.file || '').filter(Boolean);
+      return {count: images.length, first: images[0] || '', images};
     }catch(e){
-      return {count:null, first:''};
+      return {count:null, first:'', images:[]};
     }
+  }
+
+  function readRecentHeroSources(){
+    try{
+      const value = localStorage.getItem('mlopezmad.hero.recent.v34');
+      const parsed = JSON.parse(value || '[]');
+      return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
+    }catch(e){
+      return [];
+    }
+  }
+
+  function rememberHeroSource(source, total){
+    if(!source) return;
+    try{
+      const recent = readRecentHeroSources().filter(item => item !== source);
+      const limit = Math.max(6, Math.min(18, Math.floor((total || 1) / 3)));
+      localStorage.setItem('mlopezmad.hero.recent.v34', JSON.stringify([source, ...recent].slice(0, limit)));
+    }catch(e){}
   }
 
   function pickDynamicHero(data, collections, counts){
@@ -110,14 +129,20 @@
     collections.forEach((collection, index) => {
       if(!['portfolio','iphone4s'].includes(collection.type)) return;
       const details = counts[index] || {};
-      const source = collectionCover(collection, details.first);
-      if(!source) return;
-      candidates.push({
-        source,
-        collectionId: collection.id,
-        title: collection.title,
-        url: collection.url,
-        composition: collection.coverComposition || null
+      const images = details.images && details.images.length ? details.images : [details.first || collection.cover].filter(Boolean);
+      images.forEach((filename) => {
+        const source = String(filename).startsWith('images/') ? filename : `${collection.path}/${filename}`;
+        if(!source) return;
+        candidates.push({
+          source,
+          desktopSource: source,
+          mobileSource: source,
+          collectionId: collection.id,
+          title: collection.title,
+          url: collection.url,
+          composition: null,
+          mobileComposition: null
+        });
       });
     });
 
@@ -130,8 +155,12 @@
     }
 
     if(!candidates.length) return data.homeCover || {};
-    const index = Math.floor(Math.random() * candidates.length);
-    return candidates[index];
+    const recent = readRecentHeroSources();
+    let pool = candidates.filter(item => !recent.includes(selectedHeroSource(item)));
+    if(!pool.length) pool = candidates;
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    rememberHeroSource(selectedHeroSource(picked), candidates.length);
+    return picked;
   }
 
   function cardTemplate(collection, cover, options){
