@@ -432,6 +432,23 @@
   let touchStartX = 0;
   let touchEndX = 0;
   let controlsTimer;
+  let ultimoIndiceNavegado = 0;
+
+  function indiceSeguro(indice){
+    if(!imagenesFiltradas.length) return 0;
+    return Math.max(0, Math.min(Number(indice) || 0, imagenesFiltradas.length - 1));
+  }
+
+  function archivoEnIndice(indice){
+    const item = imagenesFiltradas[indiceSeguro(indice)];
+    return item && item.archivo ? item.archivo : null;
+  }
+
+  function indicePorArchivo(archivo, fallback = 0){
+    if(!archivo) return indiceSeguro(fallback);
+    const index = imagenesFiltradas.findIndex(item => item && item.archivo === archivo);
+    return index >= 0 ? index : indiceSeguro(fallback);
+  }
 
   function normalizarVista(vista){
     return vista === "indice" || vista === "editorial" ? vista : null;
@@ -501,15 +518,18 @@
 
   function indiceVisible(){
     const nodos = Array.from(galeria.querySelectorAll("img[data-gallery-index]"));
-    if(!nodos.length) return 0;
+    if(!nodos.length) return indiceSeguro(ultimoIndiceNavegado);
 
-    const referencia = window.innerHeight * 0.42;
-    let mejorNodo = nodos[0];
+    const tools = document.getElementById("galleryToolsWrap");
+    const toolsRect = tools ? tools.getBoundingClientRect() : null;
+    const limiteSuperior = Math.max(0, toolsRect ? toolsRect.bottom + 18 : 0);
+    const referencia = limiteSuperior + (window.innerHeight - limiteSuperior) * 0.34;
+    let mejorNodo = null;
     let mejorDistancia = Infinity;
 
     nodos.forEach(img => {
       const rect = img.getBoundingClientRect();
-      if(rect.bottom < 0 || rect.top > window.innerHeight) return;
+      if(rect.bottom < limiteSuperior || rect.top > window.innerHeight) return;
       const centro = rect.top + rect.height / 2;
       const distancia = Math.abs(centro - referencia);
       if(distancia < mejorDistancia){
@@ -518,7 +538,12 @@
       }
     });
 
-    return Number(mejorNodo.dataset.galleryIndex || 0);
+    if(!mejorNodo){
+      mejorNodo = nodos.find(img => img.getBoundingClientRect().bottom >= limiteSuperior) || nodos[0];
+    }
+
+    ultimoIndiceNavegado = indiceSeguro(mejorNodo.dataset.galleryIndex);
+    return ultimoIndiceNavegado;
   }
 
   function cambiarVista(vista){
@@ -526,9 +551,20 @@
     if(!nuevaVista || nuevaVista === vistaActual) return;
 
     const ancla = indiceVisible();
+    const archivoAncla = archivoEnIndice(ancla);
+    const alturaActual = galeria.offsetHeight;
+    if(alturaActual > 0){
+      galeria.style.minHeight = `${alturaActual}px`;
+    }
+
     vistaActual = nuevaVista;
     guardarVista(vistaActual);
-    pintarGaleria({anchorIndex:ancla, anchorBlock:"center"});
+    pintarGaleria({
+      anchorIndex:ancla,
+      anchorFile:archivoAncla,
+      anchorBlock:"center",
+      preserveHeight:true
+    });
   }
 
   function pintarGaleria(opciones = {}){
@@ -563,8 +599,12 @@
       galeria.appendChild(img);
     });
 
-    if(Number.isInteger(opciones.anchorIndex)){
-      scrollAFoto(opciones.anchorIndex, opciones.anchorBlock || "nearest", "auto");
+    if(Number.isInteger(opciones.anchorIndex) || opciones.anchorFile){
+      const indiceDestino = indicePorArchivo(opciones.anchorFile, opciones.anchorIndex || 0);
+      ultimoIndiceNavegado = indiceDestino;
+      scrollAFoto(indiceDestino, opciones.anchorBlock || "nearest", "auto", Boolean(opciones.preserveHeight));
+    }else if(imagenesFiltradas.length){
+      ultimoIndiceNavegado = indiceSeguro(ultimoIndiceNavegado);
     }
   }
 
@@ -577,19 +617,27 @@
     });
   }
 
-  function scrollAFoto(indice, block = "nearest", behavior = "auto"){
+  function scrollAFoto(indice, block = "nearest", behavior = "auto", preserveHeight = false){
+    const indiceDestino = indiceSeguro(indice);
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        const objetivo = galeria.querySelector(`img[data-gallery-index="${indice}"]`);
+        const objetivo = galeria.querySelector(`img[data-gallery-index="${indiceDestino}"]`);
         if(objetivo){
           objetivo.scrollIntoView({block, inline:"nearest", behavior});
+          ultimoIndiceNavegado = indiceDestino;
+        }
+        if(preserveHeight){
+          window.setTimeout(() => {
+            galeria.style.minHeight = "";
+          }, 160);
         }
       });
     });
   }
 
   function abrirLightbox(indice){
-    indiceActual = indice;
+    indiceActual = indiceSeguro(indice);
+    ultimoIndiceNavegado = indiceActual;
     lightboxImg.src = config.carpeta + imagenesFiltradas[indiceActual].archivo;
     contador.textContent = `${indiceActual + 1} / ${imagenesFiltradas.length}`;
     lightbox.classList.add("active");
@@ -622,7 +670,8 @@
     lightboxImg.classList.add(direccion === "next" ? "fade-left" : "fade-right");
 
     setTimeout(() => {
-      indiceActual = nuevoIndice;
+      indiceActual = indiceSeguro(nuevoIndice);
+      ultimoIndiceNavegado = indiceActual;
       lightboxImg.src = config.carpeta + imagenesFiltradas[indiceActual].archivo;
       contador.textContent = `${indiceActual + 1} / ${imagenesFiltradas.length}`;
       lightboxImg.classList.remove("fade-left", "fade-right");
