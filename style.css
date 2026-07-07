@@ -947,3 +947,25 @@ html[data-theme="dark"] .home-quick-stats .hero-stats a{border-right-color:rgba(
 .public-hero__media img{
   transition:opacity .45s ease, object-position .35s ease;
 }
+
+
+/* V3.5.3 · Stats móvil simétricas
+   Mantiene "Última publicación" en escritorio y usa "Última" en móvil para equilibrar la cápsula. */
+@media(max-width:768px){
+  .home-quick-stats .hero-stats{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .home-quick-stats .hero-stats span{white-space:nowrap;}
+  .home-quick-stats .hero-stats div,
+  .home-quick-stats .hero-stats a{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:76px;
+  }
+  .home-quick-stats .hero-stats .stat-label--latest{font-size:0;}
+  .home-quick-stats .hero-stats .stat-label--latest::after{
+    content:attr(data-mobile);
+    font-size:.61rem;
+    letter-spacing:.09em;
+  }
+}
