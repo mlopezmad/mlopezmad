@@ -80,19 +80,6 @@
       "url": "hands.html",
       "year": "2026",
       "cover": "7CR05095.jpg"
-    },
-    {
-      "id": "iphone4s-benidorm",
-      "title": "Benidorm",
-      "subtitle": "iPhone 4S • Transfer Filter Project",
-      "type": "iphone4s",
-      "parent": "iphone4s",
-      "description": "",
-      "intro": "Benidorm aparece aquí como un recuerdo encontrado: luz dura, playa, sombra, color y escenas suspendidas en el calor.\n\nFotografiada con un iPhone 4S, esta serie no busca la precisión ni la postal. Acepta la limitación, el ruido, la falta de nitidez y ese color imperfecto que convierte lo cotidiano en memoria.\n\nUn verano visto desde una cámara antigua.\nUna ciudad reconocible, pero ligeramente fuera de tiempo.",
-      "path": "images/iphone4s/benidorm",
-      "json": "images/iphone4s/benidorm/galeria.json",
-      "url": "iphone4s-benidorm.html",
-      "year": "2026"
     }
   ],
   "homeCover": {
