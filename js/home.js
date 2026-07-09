@@ -256,7 +256,18 @@
       const countMap = await Promise.all(allCollections.map(countPhotos));
       const portfolio = allCollections.filter(c => c.type === 'portfolio');
       const publicCollections = portfolio.filter(c => c.id !== 'hall-of-fame');
-      const latest = publicCollections[publicCollections.length - 1] || portfolio[portfolio.length - 1];
+      const byId = Object.fromEntries(allCollections.map(c => [c.id, c]));
+      const targetById = Object.fromEntries(allCollections.map((c, index) => [c.id, {collection:c, details:countMap[index] || {}}]));
+      const homeFixedIds = new Set(['hall-of-fame', 'madrid']);
+      const hasPhotos = (collection) => {
+        const details = collection && targetById[collection.id] && targetById[collection.id].details;
+        return !details || details.count === null || details.count > 0;
+      };
+      const latest = [...allCollections]
+        .reverse()
+        .find(collection => collection && collection.url && collection.json && !homeFixedIds.has(collection.id) && hasPhotos(collection))
+        || publicCollections[publicCollections.length - 1]
+        || portfolio[portfolio.length - 1];
 
       const total = countMap.reduce((sum, item) => sum + (Number.isFinite(item.count) ? item.count : 0), 0);
       if(statPhotos) statPhotos.textContent = total ? `${total}+` : '—';
@@ -264,20 +275,18 @@
       if(statLatestLink && latest && latest.url) statLatestLink.setAttribute('href', withHomeOrigin(latest.url));
       if(statLatestTitle) statLatestTitle.textContent = latest && latest.title ? latest.title : 'Portfolio';
 
-      const byId = Object.fromEntries(allCollections.map(c => [c.id, c]));
       const hall = byId['hall-of-fame'] || portfolio[0];
       const madrid = byId['madrid'] || publicCollections[0];
-      const hands = byId['hands'] || latest;
+      const dynamicLatest = latest && !homeFixedIds.has(latest.id) ? latest : publicCollections.find(c => c.id !== 'madrid') || latest;
 
-      const targetById = Object.fromEntries(allCollections.map((c, index) => [c.id, {collection:c, details:countMap[index] || {}}]));
-      const targetData = [hall, madrid, hands].filter(Boolean).map(c => {
+      const targetData = [hall, madrid, dynamicLatest].filter(Boolean).map(c => {
         const details = (targetById[c.id] && targetById[c.id].details) || {};
         return {collection:c, cover:collectionCover(c, details.first)};
       });
 
       const html = [];
       if(targetData[0]) html.push(cardTemplate(targetData[0].collection, targetData[0].cover, {label:'Selección del autor', large:true}));
-      if(targetData[1]) html.push(cardTemplate(targetData[1].collection, targetData[1].cover, {label:'Serie'}));
+      if(targetData[1]) html.push(cardTemplate(targetData[1].collection, targetData[1].cover, {label:'Madrid'}));
       if(targetData[2]) html.push(cardTemplate(targetData[2].collection, targetData[2].cover, {label:'Última publicación'}));
       html.push(`
         <a class="feature-card feature-card--about" href="sobre-mi.html">
