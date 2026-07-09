@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Fotografías - mlopezmad</title>
-<meta name="description" content="Archivo fotográfico de mlopezmad: fotografía de calle, viajes y proyectos personales.">
+<title>Portfolio - mlopezmad</title>
+<meta name="description" content="Portfolio de mlopezmad: archivo de series, proyectos personales y fotografías.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f5f3ef" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#050507" media="(prefers-color-scheme: dark)">
@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="shortcut icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=34">
+<link rel="stylesheet" href="style.css?v=360">
 <script src="js/theme.js?v=12"></script>
 </head>
 <body>
@@ -23,7 +23,6 @@
     <nav class="site-nav site-nav--page" id="mainNav" aria-label="Navegación principal">
         <a href="index.html">Inicio</a>
         <a href="portfolio.html">Portfolio</a>
-        <a href="series.html">Series</a>
         <a href="sobre-mi.html">Sobre mí</a>
         <a href="newsletter.html">Newsletter</a>
         <a class="nav-pill" href="contacto.html">Contacto</a>
@@ -33,14 +32,21 @@
 <section class="page-hero page-hero--compact">
     <div>
         <p class="eyebrow eyebrow--dark">Archivo fotográfico</p>
-        <h1>Fotografías</h1>
-        <p>Series, proyectos personales y fotografías seleccionadas.</p>
+        <h1>Portfolio</h1>
+        <p>Archivo de series, proyectos personales y fotografías.</p>
     </div>
     <a class="text-link" href="index.html">Volver al inicio <span aria-hidden="true">→</span></a>
 </section>
 
+<div class="portfolio-view-toolbar" aria-label="Vista del portfolio">
+    <div class="portfolio-view-switch" role="group" aria-label="Cambiar vista del portfolio">
+        <button type="button" data-portfolio-view="editorial" aria-pressed="true">Editorial</button>
+        <button type="button" data-portfolio-view="compacta" aria-pressed="false">Cuadrícula</button>
+    </div>
+</div>
+
 <section class="portfolio-list" id="portfolioList">
-    <p class="portfolio-empty">Cargando fotografías...</p>
+    <p class="portfolio-empty">Cargando portfolio...</p>
 </section>
 
 <div class="gallery-back"><a class="volver" href="index.html">← Volver</a></div>
@@ -49,13 +55,12 @@
     <span>© 2026 mlopezmad · Madrid, España</span>
     <nav class="footer-nav" aria-label="Navegación secundaria">
         <a href="portfolio.html">Portfolio</a>
-        <a href="series.html">Series</a>
         <a href="sobre-mi.html">Sobre mí</a>
         <a href="newsletter.html">Newsletter</a>
         <a href="contacto.html">Contacto</a>
     </nav>
 </footer>
 
-<script src="js/portfolio.js?v=9"></script>
+<script src="js/portfolio.js?v=360"></script>
 </body>
 </html>

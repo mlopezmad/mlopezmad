@@ -1,11 +1,48 @@
 (function(){
   const container = document.getElementById('portfolioList');
   if(!container) return;
+
   const cacheBust = String(Date.now());
+  const STORAGE_VIEW_KEY = 'mlopezmad.portfolio.view.v360';
+  const viewButtons = Array.from(document.querySelectorAll('[data-portfolio-view]'));
 
   function escapeHtml(text){
     return String(text || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
   }
+
+  function getStoredView(){
+    try{
+      const value = localStorage.getItem(STORAGE_VIEW_KEY);
+      return value === 'compacta' ? 'compacta' : 'editorial';
+    }catch(error){
+      return 'editorial';
+    }
+  }
+
+  function setStoredView(view){
+    try{ localStorage.setItem(STORAGE_VIEW_KEY, view); }catch(error){}
+  }
+
+  function applyView(view){
+    const safeView = view === 'compacta' ? 'compacta' : 'editorial';
+    container.classList.toggle('portfolio-list--compact', safeView === 'compacta');
+    container.dataset.view = safeView;
+    viewButtons.forEach(button => {
+      const active = button.dataset.portfolioView === safeView;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  }
+
+  viewButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const view = button.dataset.portfolioView === 'compacta' ? 'compacta' : 'editorial';
+      setStoredView(view);
+      applyView(view);
+    });
+  });
+
+  applyView(getStoredView());
 
   function getCoverUrl(collection, firstPhoto){
     if(collection.cover){
@@ -26,6 +63,7 @@
   }
 
   async function galleryInfo(collection){
+    if(!collection.json) return {total:null, first:''};
     try{
       const response = await fetch(`${collection.json}?t=${cacheBust}`, {cache:'no-store'});
       const data = await response.json();
@@ -79,15 +117,6 @@
       }));
 
       cards.push(card({
-        url:'editors-choice.html',
-        title:"Editor's Choice",
-        description:'Una selección personal de fotografías que resumen la mirada.',
-        meta:'Selección del autor',
-        cover:'images/hall-of-fame/baile-madrid.jpg',
-        priority:false
-      }));
-
-      cards.push(card({
         url:'iphone4s.html',
         title:'iPhone 4s',
         description:'Transfer Filter Project',
@@ -97,6 +126,7 @@
       }));
 
       container.innerHTML = `<div class="portfolio-grid">${cards.join('')}</div>`;
+      applyView(getStoredView());
     }catch(error){
       container.innerHTML = '<p class="portfolio-empty">No se pudo cargar el portfolio.</p>';
     }
