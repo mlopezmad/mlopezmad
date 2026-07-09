@@ -119,6 +119,15 @@
     return String(text || '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
   }
 
+  function withHomeOrigin(url){
+    if(!url) return 'portfolio.html';
+    const hashIndex = url.indexOf('#');
+    const base = hashIndex >= 0 ? url.slice(0, hashIndex) : url;
+    const hash = hashIndex >= 0 ? url.slice(hashIndex) : '';
+    const separator = base.includes('?') ? '&' : '?';
+    return `${base}${separator}from=home${hash}`;
+  }
+
   async function fetchJson(url, options){
     const response = await fetch(url, options || {});
     if(!response.ok) throw new Error(`No se pudo cargar ${url}`);
@@ -219,7 +228,7 @@
     const large = options.large ? ' feature-card--large' : '';
     const text = collection.subtitle || collection.description || 'Fotografía de calle';
     return `
-      <a class="feature-card${large}" href="${collection.url}">
+      <a class="feature-card${large}" href="${withHomeOrigin(collection.url)}">
         <div class="feature-card__image">${cover ? `<img src="${cover}" alt="${escapeHtml(collection.title)}" loading="lazy" decoding="async" fetchpriority="low">` : ''}</div>
         <div class="feature-card__content">
           <span class="feature-label">${escapeHtml(label)}</span>
@@ -252,7 +261,7 @@
       const total = countMap.reduce((sum, item) => sum + (Number.isFinite(item.count) ? item.count : 0), 0);
       if(statPhotos) statPhotos.textContent = total ? `${total}+` : '—';
       if(statSeries) statSeries.textContent = String(publicCollections.length || portfolio.length || '—');
-      if(statLatestLink && latest && latest.url) statLatestLink.setAttribute('href', latest.url);
+      if(statLatestLink && latest && latest.url) statLatestLink.setAttribute('href', withHomeOrigin(latest.url));
       if(statLatestTitle) statLatestTitle.textContent = latest && latest.title ? latest.title : 'Portfolio';
 
       const byId = Object.fromEntries(allCollections.map(c => [c.id, c]));

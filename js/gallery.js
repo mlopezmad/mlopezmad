@@ -8,6 +8,23 @@
 
   const STORAGE_VIEW_KEY = "mlopezmad.gallery.view";
 
+  function resolveBackHref(){
+    const fallback = config.volver || "portfolio.html";
+    try{
+      const params = new URLSearchParams(window.location.search);
+      if(params.get('from') === 'home'){
+        params.delete('from');
+        const cleanQuery = params.toString();
+        const cleanUrl = `${window.location.pathname}${cleanQuery ? `?${cleanQuery}` : ''}${window.location.hash || ''}`;
+        if(window.history && window.history.replaceState) window.history.replaceState(null, document.title, cleanUrl);
+        return "index.html#seleccion-reciente";
+      }
+    }catch(error){}
+    return fallback;
+  }
+
+  const backHref = resolveBackHref();
+
   document.title = `${config.titulo} - mlopezmad`;
   document.body.classList.add('gallery-page');
 
@@ -53,7 +70,7 @@
     <div class="galeria" id="galeria"></div>
 
     <div class="gallery-back">
-      <a class="volver" href="${config.volver || "portfolio.html"}">← Volver</a>
+      <a class="volver" href="${backHref}">← Volver</a>
     </div>
 
     <footer class="site-footer">
