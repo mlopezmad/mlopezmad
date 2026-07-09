@@ -657,13 +657,15 @@ footer,.footer{text-align:center;padding:50px 20px;color:var(--muted-3);font-siz
     text-align:center;
   }
   .footer-nav{
-    width:100%;
-    max-width:390px;
+    width:max-content;
+    max-width:100%;
+    margin:0 auto;
     display:grid;
-    grid-template-columns:repeat(4,minmax(0,1fr));
+    grid-template-columns:repeat(2,max-content);
     justify-content:center;
     align-items:center;
-    gap:0;
+    column-gap:30px;
+    row-gap:8px;
     text-align:center;
   }
   .footer-nav a{
@@ -1048,11 +1050,10 @@ html[data-theme="dark"] .home-quick-stats .hero-stats a{border-right-color:rgba(
   }
 }
 
-/* V3.6.1 · Footer móvil centrado en pantallas muy estrechas */
+/* V3.6.2 · Footer móvil centrado visualmente en dos líneas */
 @media(max-width:380px){
   .footer-nav{
-    max-width:280px;
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:24px;
     row-gap:6px;
   }
 }
