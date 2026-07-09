@@ -114,10 +114,11 @@ async function cargarColeccionesIphone4s(){
                 cover = coleccion.cover.startsWith("images/") ? coleccion.cover : coleccion.path + "/" + coleccion.cover;
             }
             const contador = total === null ? "Abrir colección" : `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
+            const subtitulo = coleccion.subtitle || coleccion.subtitulo || coleccion.description || coleccion.descripcion || "";
             return `
                 <a class="collection-card" href="${coleccion.url}">
                     <div class="collection-cover">${cover ? `<img src="${cover}" alt="${coleccion.title}">` : ""}</div>
-                    <div class="collection-content"><h3>${coleccion.title}</h3><p>${coleccion.description || ""}</p><span>${contador}</span><strong>Ver colección →</strong></div>
+                    <div class="collection-content"><h3>${coleccion.title}</h3>${subtitulo ? `<p>${subtitulo}</p>` : ""}<span>${contador}</span><strong>Ver colección →</strong></div>
                 </a>`;
         }));
         contenedor.innerHTML = `<div class="collection-grid">${tarjetas.join("")}</div>`;
