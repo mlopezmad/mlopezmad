@@ -18,7 +18,30 @@
         );
     }
 
+    function normalizePath(path){
+        if(!path) return "index.html";
+        let clean = path.split('/').pop() || "index.html";
+        return clean.toLowerCase();
+    }
+
+    function markCurrentMenuItems(){
+        const current = normalizePath(window.location.pathname);
+        document.querySelectorAll('.site-nav a').forEach(link => {
+            try{
+                const target = normalizePath(new URL(link.getAttribute('href'), window.location.href).pathname);
+                if(target === current){
+                    link.setAttribute('aria-current', 'page');
+                    link.dataset.currentPage = 'true';
+                }else{
+                    link.removeAttribute('aria-current');
+                    delete link.dataset.currentPage;
+                }
+            }catch(error){}
+        });
+    }
+
     function setupMenus(){
+        markCurrentMenuItems();
         document.querySelectorAll('.mobile-menu-button').forEach(button => {
             const id = button.getAttribute('aria-controls');
             const nav = id ? document.getElementById(id) : button.parentElement?.querySelector('.site-nav');

@@ -612,6 +612,8 @@ footer,.footer{text-align:center;padding:50px 20px;color:var(--muted-3);font-siz
   .site-header--hero .site-nav::before{filter:invert(1);opacity:.24;}
   html[data-theme="dark"] .site-nav::before{filter:invert(1);opacity:.20;}
   .site-nav.is-open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);}
+
+  .site-nav a[data-current-page="true"]{display:none;}
   .site-nav a{padding:12px 14px;border-radius:14px;text-shadow:0 1px 16px rgba(0,0,0,.25);}
   .site-nav a:hover{background:rgba(255,255,255,.08);transform:none;}
   .site-header--page .site-nav a,
