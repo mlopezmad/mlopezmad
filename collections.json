@@ -92,7 +92,20 @@
       "path": "images/iphone4s/benidorm",
       "json": "images/iphone4s/benidorm/galeria.json",
       "url": "iphone4s-benidorm.html",
-      "year": "2026"
+      "year": "2026",
+      "cover": "IMG_0528.jpg",
+      "coverComposition": {
+        "desktop": {
+          "x": 0,
+          "y": 0,
+          "scale": 3
+        },
+        "mobile": {
+          "x": 0,
+          "y": 0,
+          "scale": 3
+        }
+      }
     }
   ],
   "homeCover": {
