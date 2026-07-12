@@ -1,31 +1,7 @@
 {
   "imagenes": [
     {
-      "archivo": "IMG_0667.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0581.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0676.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0652.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0604.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0534.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0592.jpg",
+      "archivo": "IMG_0516.jpg",
       "tipo": "color"
     },
     {
@@ -33,39 +9,35 @@
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0628.jpg",
+      "archivo": "IMG_0528.jpg",
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0624.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0584.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0597.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0595.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0614.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0599.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0516.jpg",
+      "archivo": "IMG_0534.jpg",
       "tipo": "color"
     },
     {
       "archivo": "IMG_0538.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0544.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0547.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0550.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0556.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0560.jpg",
       "tipo": "color"
     },
     {
@@ -77,11 +49,55 @@
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0544.jpg",
+      "archivo": "IMG_0581.jpg",
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0528.jpg",
+      "archivo": "IMG_0584.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0592.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0595.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0597.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0599.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0604.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0614.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0624.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0628.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0652.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0667.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0676.jpg",
       "tipo": "color"
     },
     {
@@ -89,23 +105,7 @@
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0550.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0547.jpg",
-      "tipo": "color"
-    },
-    {
       "archivo": "IMG_0687.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0556.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0560.jpg",
       "tipo": "color"
     }
   ]
