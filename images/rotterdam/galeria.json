@@ -1,43 +1,7 @@
 {
   "imagenes": [
     {
-      "archivo": "R0001470.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "R0001815.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "R0001455.jpeg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "IMG_6195.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_6194.jpg",
-      "tipo": "color"
-    },
-    {
       "archivo": "DSCF7468.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "R0001454.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "R0001458.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "R0001464.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "IMG_4785.jpg",
       "tipo": "color"
     },
     {
@@ -45,8 +9,8 @@
       "tipo": "color"
     },
     {
-      "archivo": "R0001479.jpg",
-      "tipo": "bn"
+      "archivo": "IMG_4785.jpg",
+      "tipo": "color"
     },
     {
       "archivo": "IMG_4807.jpg",
@@ -65,6 +29,30 @@
       "tipo": "color"
     },
     {
+      "archivo": "IMG_6194.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_6195.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "R0001454.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0001458.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0001464.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0001479.jpg",
+      "tipo": "bn"
+    },
+    {
       "archivo": "R0001691.jpg",
       "tipo": "bn"
     },
@@ -73,15 +61,27 @@
       "tipo": "bn"
     },
     {
-      "archivo": "R0001801.jpg",
-      "tipo": "bn"
-    },
-    {
       "archivo": "R0001761.jpg",
       "tipo": "bn"
     },
     {
       "archivo": "R0001762.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0001801.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0001470.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0001815.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "R0001455.jpeg",
       "tipo": "bn"
     }
   ]
