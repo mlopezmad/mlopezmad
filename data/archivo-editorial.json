@@ -5,7 +5,8 @@
     "fecha": "2014-05-22",
     "anio": "2014",
     "titulo": "El ‘cholismo’ como filosofía de vida",
-    "credito": "Miguel López (Cordon Press)",
+    "descripcion": "Artículo publicado por ICON, de El País, sobre el cholismo como filosofía de esfuerzo, constancia y superación.",
+    "credito": "MIGUEL LÓPEZ (CORDON PRESS)",
     "imagen": "images/archivo-editorial/el-pais-icon-cholismo-2014.jpg",
     "url": "https://elpais.com/elpais/2014/05/22/icon/1400776452_706760.html"
   },
@@ -15,7 +16,8 @@
     "fecha": "2014-09-05",
     "anio": "2014",
     "titulo": "Pedro León contra la patronal",
-    "credito": "Miguel López (Cordon Press)",
+    "descripcion": "Artículo publicado por El País sobre el conflicto de Pedro León con la Liga de Fútbol Profesional y los límites salariales.",
+    "credito": "MIGUEL LÓPEZ (CORDON PRESS)",
     "imagen": "images/archivo-editorial/el-pais-pedro-leon-2014.jpg",
     "url": "https://elpais.com/deportes/2014/09/04/actualidad/1409857865_397164.html"
   },
@@ -25,7 +27,8 @@
     "fecha": "2014-08-26",
     "anio": "2014",
     "titulo": "Samo je obrana Dinama iz Zagreba zaustavila Ronalda!",
-    "credito": "Miguel López / Cordon Press / Corbis",
+    "descripcion": "Artículo publicado por Tportal sobre el encuentro entre Dinamo de Zagreb y Real Madrid.",
+    "credito": "MIGUEL LOPEZ/CORDON PRESS/CORBIS",
     "imagen": "images/archivo-editorial/tportal-cristiano-ronaldo-2014.jpg",
     "url": "https://www.tportal.hr/sport/clanak/samo-je-obrana-dinama-iz-zagreba-zaustavila-ronalda-20140826"
   },
@@ -35,7 +38,8 @@
     "fecha": "2014-12-28",
     "anio": "2014",
     "titulo": "Spanien: Bale och Ronaldo svårstoppade",
-    "credito": "Miguel López / Cordon Press",
+    "descripcion": "Artículo publicado por Dagens Nyheter sobre Gareth Bale, Cristiano Ronaldo y el rendimiento ofensivo del Real Madrid.",
+    "credito": "Miguel Lopez/Cordon Press",
     "imagen": "images/archivo-editorial/dagens-nyheter-bale-ronaldo-2014.jpg",
     "url": "https://www.dn.se/sport/spanien-bale-och-ronaldo-svarstoppade/"
   },
@@ -45,7 +49,8 @@
     "fecha": "2015-10-04",
     "anio": "2015",
     "titulo": "Reals heder står på spel i Madridderbyt",
-    "credito": "Miguel López / Cordon Press",
+    "descripcion": "Artículo publicado por Dagens Nyheter sobre el derbi entre Atlético de Madrid y Real Madrid.",
+    "credito": "Miguel Lopez/Cordon Press",
     "imagen": "images/archivo-editorial/dagens-nyheter-derbi-madrid-2015.jpg",
     "url": "https://www.dn.se/sport/reals-heder-star-pa-spel-i-madridderbyt/"
   },
@@ -55,7 +60,8 @@
     "fecha": "2015-10-19",
     "anio": "2015",
     "titulo": "Real Madrid’s Sergio Ramos could play against PSG with painkilling injection",
-    "credito": "Miguel Lopez / Cordon Press / phcimages.com",
+    "descripcion": "Artículo publicado por The Guardian sobre la posible participación de Sergio Ramos ante el PSG pese a una lesión en el hombro.",
+    "credito": "Miguel Lopez/Cordon Press/phcimages.com",
     "imagen": "images/archivo-editorial/the-guardian-sergio-ramos-2015.jpg",
     "url": "https://www.theguardian.com/football/2015/oct/19/real-madrid-sergio-ramos-psg-painkilling-injection"
   },
@@ -65,7 +71,8 @@
     "fecha": "2021-07-03",
     "anio": "2021",
     "titulo": "Svårare att vinna – står inte bakom egna laget",
-    "credito": "Miguel López / Cordon Press Bildbyrån",
+    "descripcion": "Artículo publicado por Expressen sobre Xavi Hernández y la exigencia que rodea a la selección española.",
+    "credito": "MIGUEL LOPEZ / CORDON PRESS BILDBYRÅN",
     "imagen": "images/archivo-editorial/expressen-xavi-2021.jpg",
     "url": "https://www.expressen.se/sport/fotboll/svarare-att-vinna-star-inte-bakom-egna-laget/",
     "nota": "Publicación posterior de una fotografía realizada durante la etapa 2012–2016."
@@ -76,7 +83,8 @@
     "fecha": "2024-09-25",
     "anio": "2024",
     "titulo": "Diaporama : Raphaël Varane, le parcours d’un champion",
-    "credito": "Miguel Lopez / Cordon / Presse Sports",
+    "descripcion": "Especial publicado por L’Équipe que repasa la trayectoria deportiva de Raphaël Varane.",
+    "credito": "Miguel Lopez/CORDON//PRESSE SPORTS",
     "imagen": "images/archivo-editorial/lequipe-varane-2024.jpg",
     "url": "https://www.lequipe.fr/Football/Actualites/Diaporama-raphael-varane-le-parcours-d-un-champion/1509801",
     "nota": "Publicación posterior de una fotografía realizada durante la etapa 2012–2016."

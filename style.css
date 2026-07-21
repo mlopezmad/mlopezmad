@@ -1172,3 +1172,43 @@ html[data-theme="dark"] .home-quick-stats .hero-stats a{border-right-color:rgba(
   .editorial-card__meta{font-size:.64rem;gap:10px;}
   .editorial-card h2{font-size:1.52rem;}
 }
+
+/* V3.6.4 · Archivo editorial V1.2 */
+.editorial-archive__grid{
+  grid-auto-rows:1fr;
+}
+.editorial-card{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+.editorial-card__image{
+  width:100%;
+  aspect-ratio:1206 / 2468;
+  flex:0 0 auto;
+}
+.editorial-card__image img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#fff;
+}
+.editorial-card__body{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+.editorial-card__description{
+  color:var(--muted);
+  font-size:1rem;
+  line-height:1.68;
+  letter-spacing:-.018em;
+  margin:0 0 14px;
+}
+.editorial-card__link{margin-top:auto;align-self:flex-start;}
+@media(max-width:768px){
+  .editorial-archive__grid{grid-auto-rows:auto;}
+  .editorial-card{height:auto;}
+  .editorial-card__description{font-size:.96rem;line-height:1.64;}
+  .editorial-card__link{margin-top:10px;}
+}

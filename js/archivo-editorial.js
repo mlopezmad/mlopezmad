@@ -7,6 +7,7 @@
   })[character]);
 
   const renderItem = (item) => {
+    const description = item.descripcion ? `<p class="editorial-card__description">${escapeHtml(item.descripcion)}</p>` : '';
     const note = item.nota ? `<p class="editorial-card__note">${escapeHtml(item.nota)}</p>` : '';
     return `
       <article class="editorial-card">
@@ -16,6 +17,7 @@
         <div class="editorial-card__body">
           <p class="editorial-card__meta"><span>${escapeHtml(item.medio)}</span><span>${escapeHtml(item.pais)} · ${escapeHtml(item.anio)}</span></p>
           <h2>${escapeHtml(item.titulo)}</h2>
+          ${description}
           <p class="editorial-card__credit">Crédito: ${escapeHtml(item.credito)}</p>
           ${note}
           <a class="editorial-card__link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">Ver publicación original <span aria-hidden="true">↗</span></a>
