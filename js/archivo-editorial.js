@@ -6,77 +6,23 @@
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
   })[character]);
 
-  const renderMedia = (item, itemIndex) => {
-    const images = Array.isArray(item.imagenes) && item.imagenes.length
-      ? item.imagenes
-      : item.imagen
-        ? [{ src: item.imagen, alt: `Captura de la publicación ${item.titulo} en ${item.medio}` }]
-        : [];
-
-    if (!images.length) return '';
-
-    const slides = images.map((image, imageIndex) => {
-      const content = `<img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt || `Documento ${imageIndex + 1} de ${item.titulo}`)}" loading="lazy" decoding="async">`;
-      const inner = item.url
-        ? `<a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="Abrir publicación original en ${escapeHtml(item.medio)}">${content}</a>`
-        : content;
-      return `<div class="editorial-card__slide" data-editorial-slide aria-hidden="${imageIndex === 0 ? 'false' : 'true'}">${inner}</div>`;
-    }).join('');
-
-    const controls = images.length > 1 ? `
-      <div class="editorial-card__media-controls" aria-label="Imágenes de la publicación">
-        <button type="button" data-editorial-prev aria-label="Imagen anterior">←</button>
-        <span data-editorial-counter>1 / ${images.length}</span>
-        <button type="button" data-editorial-next aria-label="Imagen siguiente">→</button>
-      </div>` : '';
-
-    return `<div class="editorial-card__image${images.length > 1 ? ' editorial-card__image--multiple' : ''}" data-editorial-media="${itemIndex}">${slides}${controls}</div>`;
-  };
-
-  const renderItem = (item, index) => {
+  const renderItem = (item) => {
     const description = item.descripcion ? `<p class="editorial-card__description">${escapeHtml(item.descripcion)}</p>` : '';
     const note = item.nota ? `<p class="editorial-card__note">${escapeHtml(item.nota)}</p>` : '';
-    const type = item.tipo ? `<p class="editorial-card__type">${escapeHtml(item.tipo)}</p>` : '';
-    const link = item.url
-      ? `<a class="editorial-card__link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">Ver publicación original <span aria-hidden="true">↗</span></a>`
-      : '';
-
     return `
       <article class="editorial-card">
-        ${renderMedia(item, index)}
+        <a class="editorial-card__image" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" aria-label="Abrir publicación original en ${escapeHtml(item.medio)}">
+          <img src="${escapeHtml(item.imagen)}" alt="Captura de la publicación ${escapeHtml(item.titulo)} en ${escapeHtml(item.medio)}" loading="lazy" decoding="async">
+        </a>
         <div class="editorial-card__body">
           <p class="editorial-card__meta"><span>${escapeHtml(item.medio)}</span><span>${escapeHtml(item.pais)} · ${escapeHtml(item.anio)}</span></p>
-          ${type}
           <h2>${escapeHtml(item.titulo)}</h2>
           ${description}
           <p class="editorial-card__credit">Crédito: ${escapeHtml(item.credito)}</p>
           ${note}
-          ${link}
+          <a class="editorial-card__link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">Ver publicación original <span aria-hidden="true">↗</span></a>
         </div>
       </article>`;
-  };
-
-  const activateCarousels = () => {
-    grid.querySelectorAll('[data-editorial-media]').forEach(media => {
-      const slides = [...media.querySelectorAll('[data-editorial-slide]')];
-      if (slides.length < 2) return;
-      const counter = media.querySelector('[data-editorial-counter]');
-      let current = 0;
-
-      const show = next => {
-        current = (next + slides.length) % slides.length;
-        slides.forEach((slide, index) => {
-          const active = index === current;
-          slide.classList.toggle('is-active', active);
-          slide.setAttribute('aria-hidden', active ? 'false' : 'true');
-        });
-        if (counter) counter.textContent = `${current + 1} / ${slides.length}`;
-      };
-
-      media.querySelector('[data-editorial-prev]')?.addEventListener('click', () => show(current - 1));
-      media.querySelector('[data-editorial-next]')?.addEventListener('click', () => show(current + 1));
-      show(0);
-    });
   };
 
   fetch('data/archivo-editorial.json', { cache: 'no-store' })
@@ -85,9 +31,7 @@
       return response.json();
     })
     .then(items => {
-      const orderedItems = [...items].sort((a, b) => String(a.fecha || '').localeCompare(String(b.fecha || '')));
-      grid.innerHTML = orderedItems.map(renderItem).join('');
-      activateCarousels();
+      grid.innerHTML = items.map(renderItem).join('');
       grid.removeAttribute('aria-busy');
     })
     .catch(() => {
