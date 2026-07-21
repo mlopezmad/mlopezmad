@@ -1,9 +1,43 @@
 [
   {
+    "medio": "Canal+",
+    "pais": "España",
+    "fecha": "2012-12-11",
+    "anio": "2012",
+    "tipo": "Publicidad",
+    "titulo": "Campaña exterior de Canal+",
+    "descripcion": "Fotografía de Radamel Falcao utilizada en una campaña publicitaria exterior de Canal+ instalada en una marquesina de Madrid.",
+    "credito": "No visible en la pieza publicitaria",
+    "imagen": "images/archivo-editorial/canal-plus-marquesina-2012.jpg",
+    "nota": "Documento fotografiado en Madrid el 11 de diciembre de 2012."
+  },
+  {
+    "medio": "MARCA",
+    "pais": "España",
+    "fecha": "2014-04-13",
+    "anio": "2014",
+    "tipo": "Portada",
+    "titulo": "Gareth Bale protagoniza la portada de MARCA",
+    "descripcion": "Fotografía publicada en la portada del diario MARCA del 13 de abril de 2014 y reutilizada en el interior de la misma edición para ilustrar un artículo dedicado a Gareth Bale.",
+    "credito": "No visible en las reproducciones conservadas",
+    "imagenes": [
+      {
+        "src": "images/archivo-editorial/marca-portada-2014.jpg",
+        "alt": "Portada de MARCA del 13 de abril de 2014 con una fotografía de Gareth Bale"
+      },
+      {
+        "src": "images/archivo-editorial/marca-interior-bale-2014.jpg",
+        "alt": "Página interior de MARCA con la fotografía de Gareth Bale"
+      }
+    ],
+    "url": "https://www.marca.com/multimedia/primeras/14/04/0413.html"
+  },
+  {
     "medio": "El País · ICON",
     "pais": "España",
     "fecha": "2014-05-22",
     "anio": "2014",
+    "tipo": "Revista",
     "titulo": "El ‘cholismo’ como filosofía de vida",
     "descripcion": "Artículo publicado por ICON, de El País, sobre el cholismo como filosofía de esfuerzo, constancia y superación.",
     "credito": "MIGUEL LÓPEZ (CORDON PRESS)",
@@ -11,21 +45,11 @@
     "url": "https://elpais.com/elpais/2014/05/22/icon/1400776452_706760.html"
   },
   {
-    "medio": "El País · Deportes",
-    "pais": "España",
-    "fecha": "2014-09-05",
-    "anio": "2014",
-    "titulo": "Pedro León contra la patronal",
-    "descripcion": "Artículo publicado por El País sobre el conflicto de Pedro León con la Liga de Fútbol Profesional y los límites salariales.",
-    "credito": "MIGUEL LÓPEZ (CORDON PRESS)",
-    "imagen": "images/archivo-editorial/el-pais-pedro-leon-2014.jpg",
-    "url": "https://elpais.com/deportes/2014/09/04/actualidad/1409857865_397164.html"
-  },
-  {
     "medio": "Tportal",
     "pais": "Croacia",
     "fecha": "2014-08-26",
     "anio": "2014",
+    "tipo": "Prensa",
     "titulo": "¡Solo la defensa del Dinamo de Zagreb pudo detener a Ronaldo!",
     "descripcion": "Artículo publicado por Tportal sobre el encuentro entre Dinamo de Zagreb y Real Madrid.",
     "credito": "MIGUEL LOPEZ/CORDON PRESS/CORBIS",
@@ -33,10 +57,23 @@
     "url": "https://www.tportal.hr/sport/clanak/samo-je-obrana-dinama-iz-zagreba-zaustavila-ronalda-20140826"
   },
   {
+    "medio": "El País · Deportes",
+    "pais": "España",
+    "fecha": "2014-09-05",
+    "anio": "2014",
+    "tipo": "Prensa",
+    "titulo": "Pedro León contra la patronal",
+    "descripcion": "Artículo publicado por El País sobre el conflicto de Pedro León con la Liga de Fútbol Profesional y los límites salariales.",
+    "credito": "MIGUEL LÓPEZ (CORDON PRESS)",
+    "imagen": "images/archivo-editorial/el-pais-pedro-leon-2014.jpg",
+    "url": "https://elpais.com/deportes/2014/09/04/actualidad/1409857865_397164.html"
+  },
+  {
     "medio": "Dagens Nyheter",
     "pais": "Suecia",
     "fecha": "2014-12-28",
     "anio": "2014",
+    "tipo": "Prensa",
     "titulo": "España: Bale y Ronaldo, difíciles de detener",
     "descripcion": "Artículo publicado por Dagens Nyheter sobre Gareth Bale, Cristiano Ronaldo y el rendimiento ofensivo del Real Madrid.",
     "credito": "Miguel Lopez/Cordon Press",
@@ -48,6 +85,7 @@
     "pais": "Suecia",
     "fecha": "2015-10-04",
     "anio": "2015",
+    "tipo": "Prensa",
     "titulo": "El honor del Real Madrid está en juego en el derbi madrileño",
     "descripcion": "Artículo publicado por Dagens Nyheter sobre el derbi entre Atlético de Madrid y Real Madrid.",
     "credito": "Miguel Lopez/Cordon Press",
@@ -59,6 +97,7 @@
     "pais": "Reino Unido",
     "fecha": "2015-10-19",
     "anio": "2015",
+    "tipo": "Prensa",
     "titulo": "Sergio Ramos podría jugar contra el PSG con una infiltración analgésica",
     "descripcion": "Artículo publicado por The Guardian sobre la posible participación de Sergio Ramos ante el PSG pese a una lesión en el hombro.",
     "credito": "Miguel Lopez/Cordon Press/phcimages.com",
@@ -66,10 +105,35 @@
     "url": "https://www.theguardian.com/football/2015/oct/19/real-madrid-sergio-ramos-psg-painkilling-injection"
   },
   {
+    "medio": "Vogue España",
+    "pais": "España",
+    "fecha": "2016-03-29",
+    "anio": "2016",
+    "tipo": "Revista",
+    "titulo": "Sara Carbonero e Iker Casillas se casan en una ceremonia íntima",
+    "descripcion": "Artículo publicado por Vogue España sobre la boda privada de Sara Carbonero e Iker Casillas.",
+    "credito": "CordonPress",
+    "imagen": "images/archivo-editorial/vogue-casillas-carbonero-2016.jpg",
+    "url": "https://www.vogue.es/moda/news/articulos/sara-carbonero-iker-casillas-se-han-casado-boda-secreta-madrid/25256"
+  },
+  {
+    "medio": "¡HOLA!",
+    "pais": "España",
+    "fecha": "2017-03-21",
+    "anio": "2017",
+    "tipo": "Revista",
+    "titulo": "Iker y Sara celebran su primer aniversario de boda con una visita muy especial",
+    "descripcion": "Artículo publicado por ¡HOLA! con motivo del primer aniversario de boda de Iker Casillas y Sara Carbonero.",
+    "credito": "© Cordon Press",
+    "imagen": "images/archivo-editorial/hola-casillas-carbonero-2017.jpg",
+    "url": "https://www.hola.com/actualidad/2017032192531/sara-carbonero-iker-casillas-aniversario-boda/"
+  },
+  {
     "medio": "Expressen",
     "pais": "Suecia",
     "fecha": "2021-07-03",
     "anio": "2021",
+    "tipo": "Prensa",
     "titulo": "Más difícil ganar: no apoyan a su propio equipo",
     "descripcion": "Artículo publicado por Expressen sobre Xavi Hernández y la exigencia que rodea a la selección española.",
     "credito": "MIGUEL LOPEZ / CORDON PRESS BILDBYRÅN",
@@ -82,6 +146,7 @@
     "pais": "Francia",
     "fecha": "2024-09-25",
     "anio": "2024",
+    "tipo": "Prensa",
     "titulo": "Galería: Raphaël Varane, la trayectoria de un campeón",
     "descripcion": "Especial publicado por L’Équipe que repasa la trayectoria deportiva de Raphaël Varane.",
     "credito": "Miguel Lopez/CORDON//PRESSE SPORTS",
