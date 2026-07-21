@@ -1,36 +1,26 @@
-{
-  "imagenes": [
-    {
-      "archivo": "dagens-nyheter-bale-ronaldo-2014.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "dagens-nyheter-derbi-madrid-2015.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "el-pais-icon-cholismo-2014.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "el-pais-pedro-leon-2014.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "expressen-xavi-2021.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "lequipe-varane-2024.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "the-guardian-sergio-ramos-2015.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "tportal-cristiano-ronaldo-2014.jpg",
-      "tipo": "bn"
-    }
-  ]
-}
+[
+  {
+    "file": "el-pais-icon-cholismo-2014.jpg"
+  },
+  {
+    "file": "el-pais-pedro-leon-2014.jpg"
+  },
+  {
+    "file": "the-guardian-sergio-ramos-2015.jpg"
+  },
+  {
+    "file": "tportal-cristiano-ronaldo-2014.jpg"
+  },
+  {
+    "file": "dagens-nyheter-bale-ronaldo-2014.jpg"
+  },
+  {
+    "file": "dagens-nyheter-derbi-madrid-2015.jpg"
+  },
+  {
+    "file": "lequipe-varane-2024.jpg"
+  },
+  {
+    "file": "expressen-xavi-2021.jpg"
+  }
+]
