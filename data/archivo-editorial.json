@@ -153,5 +153,29 @@
     "imagen": "images/archivo-editorial/lequipe-varane-2024.jpg",
     "url": "https://www.lequipe.fr/Football/Actualites/Diaporama-raphael-varane-le-parcours-d-un-champion/1509801",
     "nota": "Publicación posterior de una fotografía realizada durante la etapa 2012–2016."
+  },
+  {
+    "medio": "El País · Estilo",
+    "pais": "España",
+    "fecha": "2015-08-22",
+    "anio": "2015",
+    "tipo": "Prensa",
+    "titulo": "La importancia de ser Pilar",
+    "descripcion": "Fotografía de Pilar Rubio y Sergio Ramos publicada por El País Estilo para ilustrar el artículo La importancia de ser Pilar, firmado por Boris Izaguirre.",
+    "credito": "MIGUEL LÓPEZ",
+    "imagen": "assets/archivo-editorial/el-pais-importancia-ser-pilar-2015.jpg",
+    "url": "https://elpais.com/elpais/2015/08/21/estilo/1440176482_966735.html"
+  },
+  {
+    "medio": "El País · Deportes",
+    "pais": "España",
+    "fecha": "2016-05-14",
+    "anio": "2016",
+    "tipo": "Fotogalería",
+    "titulo": "Los momentos claves del Barcelona esta temporada",
+    "descripcion": "Fotografía de Neymar celebrando un gol en el Vicente Calderón incluida por El País en la fotogalería Los momentos claves del Barcelona esta temporada, publicada al término de la temporada 2015/2016.",
+    "credito": "MIGUEL LOPEZ",
+    "imagen": "assets/archivo-editorial/el-pais-neymar-vicente-calderon-2016.jpg",
+    "url": "https://elpais.com/elpais/2016/05/12/album/1463072856_892037.html"
   }
 ]

@@ -2,6 +2,35 @@
   const grid = document.querySelector('[data-editorial-grid]');
   if (!grid) return;
 
+  const STORAGE_VIEW_KEY = 'mlopezmad.editorialArchive.view.v366';
+  const viewButtons = [...document.querySelectorAll('[data-editorial-view]')];
+
+  const getStoredView = () => {
+    try { return localStorage.getItem(STORAGE_VIEW_KEY) === 'compacta' ? 'compacta' : 'editorial'; }
+    catch (_) { return 'editorial'; }
+  };
+
+  const applyView = view => {
+    const safeView = view === 'compacta' ? 'compacta' : 'editorial';
+    grid.classList.toggle('editorial-archive__grid--compact', safeView === 'compacta');
+    grid.dataset.view = safeView;
+    viewButtons.forEach(button => {
+      const active = button.dataset.editorialView === safeView;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+  };
+
+  viewButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const view = button.dataset.editorialView === 'compacta' ? 'compacta' : 'editorial';
+      try { localStorage.setItem(STORAGE_VIEW_KEY, view); } catch (_) {}
+      applyView(view);
+    });
+  });
+
+  applyView(getStoredView());
+
   const escapeHtml = (value = '') => String(value).replace(/[&<>'"]/g, character => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
   })[character]);
@@ -88,6 +117,7 @@
       const orderedItems = [...items].sort((a, b) => String(a.fecha || '').localeCompare(String(b.fecha || '')));
       grid.innerHTML = orderedItems.map(renderItem).join('');
       activateCarousels();
+      applyView(getStoredView());
       grid.removeAttribute('aria-busy');
     })
     .catch(() => {
