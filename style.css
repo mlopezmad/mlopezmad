@@ -1414,3 +1414,42 @@ html[data-theme="dark"] .home-quick-stats .hero-stats a{border-right-color:rgba(
   .editorial-archive__grid--compact .editorial-card__media-controls{bottom:7px;gap:4px;padding:3px 5px;font-size:.66rem;}
   .editorial-archive__grid--compact .editorial-card__media-controls button{width:24px;height:24px;}
 }
+
+
+/* V3.6.8 · Refinamiento del Archivo de publicaciones */
+.editorial-archive__hero{
+  max-width:1280px;
+  grid-template-columns:minmax(0,1fr) minmax(280px,420px);
+  align-items:center;
+  gap:clamp(40px,6vw,88px);
+  padding-bottom:clamp(44px,6vw,76px);
+}
+.editorial-archive__hero-copy{min-width:0;}
+.editorial-archive__hero-copy p:last-child{
+  max-width:620px;
+  line-height:1.55;
+}
+.editorial-archive__portrait--hero{
+  width:100%;
+  max-width:420px;
+  justify-self:end;
+}
+.editorial-archive{padding-top:0;}
+@media(max-width:900px){
+  .editorial-archive__hero{
+    grid-template-columns:minmax(0,1fr) minmax(240px,340px);
+    gap:34px;
+  }
+}
+@media(max-width:768px){
+  .editorial-archive__hero{
+    grid-template-columns:1fr;
+    align-items:start;
+    gap:28px;
+    padding-bottom:34px;
+  }
+  .editorial-archive__portrait--hero{
+    max-width:520px;
+    justify-self:start;
+  }
+}
