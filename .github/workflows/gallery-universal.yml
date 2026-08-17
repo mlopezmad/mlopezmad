@@ -209,7 +209,7 @@ jobs:
           exit 1
 
       - name: Enviar newsletter
-        if: steps.foto.outputs.count != '0' && steps.publicacion.outputs.published == 'true' && steps.foto.outputs.collection != 'archivo-editorial'
+        if: steps.foto.outputs.count != '0' && steps.publicacion.outputs.published == 'true'
         env:
           BUTTONDOWN_API_KEY: ${{ secrets.BUTTONDOWN_API_KEY }}
           MESSAGE: ${{ steps.foto.outputs.message }}

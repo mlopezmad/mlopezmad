@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "imagenes": [
     {
@@ -62,3 +63,31 @@
     }
   ]
 }
+=======
+[
+  {
+    "file": "el-pais-icon-cholismo-2014.jpg"
+  },
+  {
+    "file": "el-pais-pedro-leon-2014.jpg"
+  },
+  {
+    "file": "the-guardian-sergio-ramos-2015.jpg"
+  },
+  {
+    "file": "tportal-cristiano-ronaldo-2014.jpg"
+  },
+  {
+    "file": "dagens-nyheter-bale-ronaldo-2014.jpg"
+  },
+  {
+    "file": "dagens-nyheter-derbi-madrid-2015.jpg"
+  },
+  {
+    "file": "lequipe-varane-2024.jpg"
+  },
+  {
+    "file": "expressen-xavi-2021.jpg"
+  }
+]
+>>>>>>> parent of 33cf1a6 (actualizar editorial)
