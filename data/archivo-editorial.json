@@ -1,5 +1,65 @@
 [
   {
+    "medio": "MSN · TheJournal.ie",
+    "pais": "Irlanda",
+    "fecha": "2014-01-09",
+    "anio": "2014",
+    "titulo": "Football transfer rumours of the week: 10 January",
+    "titulo_es": "Rumores de fichajes de la semana: 10 de enero",
+    "credito": "Corbis / Miguel Lopez / Cordon Press",
+    "imagen": "images/archivo-editorial/msn-diego-costa-2014.jpg",
+    "descripcion": "Fotografía de Diego Costa utilizada en una información sobre los rumores del mercado de fichajes y su posible futuro lejos del Atlético de Madrid.",
+    "nota": "Se conserva la captura de la publicación original."
+  },
+  {
+    "medio": "Hamburger Morgenpost",
+    "pais": "Alemania",
+    "fecha": "2014-01-17",
+    "anio": "2014",
+    "titulo": "Böse Verletzung: Getafe-Profi platzt Vene im Hoden",
+    "titulo_es": "Lesión grave: un jugador del Getafe sufre una rotura de vena en el testículo",
+    "credito": "imago / Cordon Press / Miguelez Sports",
+    "imagen": "images/archivo-editorial/hamburger-morgenpost-alexis-2014.jpg",
+    "descripcion": "Información del diario alemán sobre la lesión sufrida por Alexis Ruano durante el Getafe–Barcelona, ilustrada con una fotografía del momento en que era atendido.",
+    "nota": "Se conserva la captura de la publicación original."
+  },
+  {
+    "medio": "T-Online",
+    "pais": "Alemania",
+    "fecha": "2014-02-16",
+    "anio": "2014",
+    "titulo": "Messi erzielt Doppelpack bei Barca-Schützenfest",
+    "titulo_es": "Messi marca un doblete en la goleada del Barça",
+    "credito": "imago / Cordon Press / Miguelez Sports",
+    "imagen": "images/archivo-editorial/t-online-messi-2014.jpg",
+    "descripcion": "Crónica de T-Online sobre una goleada del FC Barcelona, acompañada por una fotografía de Lionel Messi durante el partido.",
+    "nota": "Se conserva la captura de la publicación original."
+  },
+  {
+    "medio": "Fussball.de",
+    "pais": "Alemania",
+    "fecha": "2014",
+    "anio": "2014",
+    "titulo": "Schalke muss Weltfußballer Ronaldo fesseln",
+    "titulo_es": "El Schalke debe frenar al mejor futbolista del mundo, Ronaldo",
+    "credito": "imago / Cordon Press / Miguelez Sports",
+    "imagen": "images/archivo-editorial/fussball-de-cristiano-ronaldo-2014.jpg",
+    "descripcion": "Previa europea centrada en el reto del Schalke de contener a Cristiano Ronaldo en su enfrentamiento con el Real Madrid.",
+    "nota": "Se conserva la captura de la publicación original."
+  },
+  {
+    "medio": "News.at",
+    "pais": "Austria",
+    "fecha": "2014-04-30",
+    "anio": "2014",
+    "titulo": "Neuer Aufwind nach zwei Liga-Pleiten",
+    "titulo_es": "Nuevo impulso tras dos derrotas en Liga",
+    "credito": "GEPA pictures / Cordon Press / Miguel Lopez",
+    "imagen": "images/archivo-editorial/news-at-carlo-ancelotti-2014.jpg",
+    "descripcion": "Artículo sobre la reacción del Real Madrid tras dos derrotas ligueras, ilustrado con una fotografía de Carlo Ancelotti en el banquillo.",
+    "nota": "Se conserva la captura de la publicación original."
+  },
+  {
     "medio": "El País · ICON",
     "pais": "España",
     "fecha": "2014-05-22",
@@ -7,7 +67,20 @@
     "titulo": "El ‘cholismo’ como filosofía de vida",
     "credito": "Miguel López (Cordon Press)",
     "imagen": "images/archivo-editorial/el-pais-icon-cholismo-2014.jpg",
+    "descripcion": "Artículo de ICON sobre la filosofía de trabajo y la figura de Diego Pablo Simeone, ilustrado con una fotografía del entrenador del Atlético de Madrid.",
     "url": "https://elpais.com/elpais/2014/05/22/icon/1400776452_706760.html"
+  },
+  {
+    "medio": "Tportal",
+    "pais": "Croacia",
+    "fecha": "2014-08-26",
+    "anio": "2014",
+    "titulo": "Samo je obrana Dinama iz Zagreba zaustavila Ronalda!",
+    "titulo_es": "Solo la defensa del Dinamo de Zagreb detuvo a Ronaldo",
+    "credito": "Miguel López / Cordon Press / Corbis",
+    "imagen": "images/archivo-editorial/tportal-cristiano-ronaldo-2014.jpg",
+    "descripcion": "Artículo del medio croata sobre los rivales a los que Cristiano Ronaldo había marcado, utilizando una fotografía del delantero con el Real Madrid.",
+    "url": "https://www.tportal.hr/sport/clanak/samo-je-obrana-dinama-iz-zagreba-zaustavila-ronalda-20140826"
   },
   {
     "medio": "El País · Deportes",
@@ -17,17 +90,8 @@
     "titulo": "Pedro León contra la patronal",
     "credito": "Miguel López (Cordon Press)",
     "imagen": "images/archivo-editorial/el-pais-pedro-leon-2014.jpg",
+    "descripcion": "Información sobre el conflicto de Pedro León con la Liga de Fútbol Profesional y las restricciones de inscripción derivadas del control financiero.",
     "url": "https://elpais.com/deportes/2014/09/04/actualidad/1409857865_397164.html"
-  },
-  {
-    "medio": "Tportal",
-    "pais": "Croacia",
-    "fecha": "2014-08-26",
-    "anio": "2014",
-    "titulo": "Samo je obrana Dinama iz Zagreba zaustavila Ronalda!",
-    "credito": "Miguel López / Cordon Press / Corbis",
-    "imagen": "images/archivo-editorial/tportal-cristiano-ronaldo-2014.jpg",
-    "url": "https://www.tportal.hr/sport/clanak/samo-je-obrana-dinama-iz-zagreba-zaustavila-ronalda-20140826"
   },
   {
     "medio": "Dagens Nyheter",
@@ -35,9 +99,34 @@
     "fecha": "2014-12-28",
     "anio": "2014",
     "titulo": "Spanien: Bale och Ronaldo svårstoppade",
+    "titulo_es": "España: Bale y Ronaldo, difíciles de detener",
     "credito": "Miguel López / Cordon Press",
     "imagen": "images/archivo-editorial/dagens-nyheter-bale-ronaldo-2014.jpg",
+    "descripcion": "Artículo de Dagens Nyheter sobre la capacidad ofensiva de Gareth Bale y Cristiano Ronaldo en el Real Madrid.",
     "url": "https://www.dn.se/sport/spanien-bale-och-ronaldo-svarstoppade/"
+  },
+  {
+    "medio": "The Times",
+    "pais": "Reino Unido",
+    "fecha": "2015-05-14",
+    "anio": "2015",
+    "titulo": "Gareth Bale brushes aside concerns over form at Real Madrid",
+    "titulo_es": "Gareth Bale resta importancia a las dudas sobre su estado de forma en el Real Madrid",
+    "credito": "Miguel Lopez / Cordon Press / Corbis",
+    "descripcion": "Artículo de The Times sobre Gareth Bale y las dudas que rodeaban su rendimiento durante su segunda temporada en el Real Madrid.",
+    "url": "https://www.thetimes.com/sport/football/article/gareth-bale-brushes-aside-concerns-over-form-at-real-madrid-p9v0qw7qhqt",
+    "nota": "Publicación verificada; el artículo puede requerir suscripción. La captura original no se conserva en este archivo."
+  },
+  {
+    "medio": "El País · Estilo",
+    "pais": "España",
+    "fecha": "2015-08-22",
+    "anio": "2015",
+    "titulo": "La importancia de ser Pilar",
+    "credito": "Miguel López",
+    "imagen": "images/archivo-editorial/el-pais-pilar-rubio-sergio-ramos-2015.jpg",
+    "descripcion": "Fotografía de Pilar Rubio y Sergio Ramos publicada por El País Estilo en el artículo de Boris Izaguirre sobre la renovación del futbolista con el Real Madrid.",
+    "url": "https://elpais.com/elpais/2015/08/21/estilo/1440176482_966735.html"
   },
   {
     "medio": "Dagens Nyheter",
@@ -45,8 +134,10 @@
     "fecha": "2015-10-04",
     "anio": "2015",
     "titulo": "Reals heder står på spel i Madridderbyt",
+    "titulo_es": "El honor del Real Madrid está en juego en el derbi madrileño",
     "credito": "Miguel López / Cordon Press",
     "imagen": "images/archivo-editorial/dagens-nyheter-derbi-madrid-2015.jpg",
+    "descripcion": "Previa del derbi entre Atlético de Madrid y Real Madrid centrada en la presión sobre el equipo blanco y su entrenador.",
     "url": "https://www.dn.se/sport/reals-heder-star-pa-spel-i-madridderbyt/"
   },
   {
@@ -55,9 +146,22 @@
     "fecha": "2015-10-19",
     "anio": "2015",
     "titulo": "Real Madrid’s Sergio Ramos could play against PSG with painkilling injection",
+    "titulo_es": "Sergio Ramos podría jugar contra el PSG con una infiltración analgésica",
     "credito": "Miguel Lopez / Cordon Press / phcimages.com",
     "imagen": "images/archivo-editorial/the-guardian-sergio-ramos-2015.jpg",
+    "descripcion": "Información sobre la recuperación de la lesión de hombro de Sergio Ramos y su posible regreso frente al PSG en la Champions League.",
     "url": "https://www.theguardian.com/football/2015/oct/19/real-madrid-sergio-ramos-psg-painkilling-injection"
+  },
+  {
+    "medio": "El País · Deportes",
+    "pais": "España",
+    "fecha": "2016-05-14",
+    "anio": "2016",
+    "titulo": "Los momentos claves del Barcelona esta temporada",
+    "credito": "Miguel López",
+    "imagen": "images/archivo-editorial/el-pais-neymar-2016.jpg",
+    "descripcion": "Fotografía de Neymar celebrando un gol en el Vicente Calderón incluida por El País en una selección de los momentos destacados de la temporada 2015/2016 del FC Barcelona.",
+    "url": "https://elpais.com/elpais/2016/05/12/album/1463072856_892037.html"
   },
   {
     "medio": "Expressen",
@@ -65,8 +169,10 @@
     "fecha": "2021-07-03",
     "anio": "2021",
     "titulo": "Svårare att vinna – står inte bakom egna laget",
+    "titulo_es": "Más difícil ganar: no respaldan a su propio equipo",
     "credito": "Miguel López / Cordon Press Bildbyrån",
     "imagen": "images/archivo-editorial/expressen-xavi-2021.jpg",
+    "descripcion": "Artículo sobre Xavi Hernández y su visión de la presión mediática alrededor de la selección española, ilustrado con una fotografía de su etapa como internacional.",
     "url": "https://www.expressen.se/sport/fotboll/svarare-att-vinna-star-inte-bakom-egna-laget/",
     "nota": "Publicación posterior de una fotografía realizada durante la etapa 2012–2016."
   },
@@ -76,8 +182,10 @@
     "fecha": "2024-09-25",
     "anio": "2024",
     "titulo": "Diaporama : Raphaël Varane, le parcours d’un champion",
+    "titulo_es": "Diaporama: Raphaël Varane, la trayectoria de un campeón",
     "credito": "Miguel Lopez / Cordon / Presse Sports",
     "imagen": "images/archivo-editorial/lequipe-varane-2024.jpg",
+    "descripcion": "Retrospectiva de L’Équipe sobre la carrera de Raphaël Varane que reutiliza una fotografía de su etapa en el Real Madrid.",
     "url": "https://www.lequipe.fr/Football/Actualites/Diaporama-raphael-varane-le-parcours-d-un-champion/1509801",
     "nota": "Publicación posterior de una fotografía realizada durante la etapa 2012–2016."
   }
