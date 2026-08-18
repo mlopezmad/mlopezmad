@@ -1,6 +1,34 @@
 {
   "imagenes": [
     {
+      "archivo": "el-pais-neymar-2016.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "el-pais-pilar-rubio-sergio-ramos-2015.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "fussball-de-cristiano-ronaldo-2014.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "hamburger-morgenpost-alexis-2014.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "msn-diego-costa-2014.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "news-at-carlo-ancelotti-2014.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "t-online-messi-2014.jpg",
+      "tipo": "bn"
+    },
+    {
       "archivo": "dagens-nyheter-bale-ronaldo-2014.jpg",
       "tipo": "bn"
     },
@@ -30,6 +58,10 @@
     },
     {
       "archivo": "tportal-cristiano-ronaldo-2014.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "final-champions-san-siro-2016.jpg",
       "tipo": "bn"
     }
   ]
