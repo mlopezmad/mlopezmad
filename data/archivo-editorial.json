@@ -1,5 +1,17 @@
 [
   {
+    "medio": "Fussball.de",
+    "pais": "Alemania",
+    "fecha": "2014",
+    "anio": "2014",
+    "titulo": "Schalke muss Weltfußballer Ronaldo fesseln",
+    "titulo_es": "El Schalke debe frenar al mejor futbolista del mundo, Ronaldo",
+    "credito": "imago / Cordon Press / Miguelez Sports",
+    "imagen": "images/archivo-editorial/fussball-de-cristiano-ronaldo-2014.jpg",
+    "descripcion": "Previa europea centrada en el reto del Schalke de contener a Cristiano Ronaldo en su enfrentamiento con el Real Madrid.",
+    "nota": "Se conserva la captura de la publicación original."
+  },
+  {
     "medio": "MSN · TheJournal.ie",
     "pais": "Irlanda",
     "fecha": "2014-01-09",
@@ -36,16 +48,27 @@
     "nota": "Se conserva la captura de la publicación original."
   },
   {
-    "medio": "Fussball.de",
-    "pais": "Alemania",
-    "fecha": "2014",
+    "medio": "MARCA",
+    "pais": "España",
+    "fecha": "2014-04-13",
     "anio": "2014",
-    "titulo": "Schalke muss Weltfußballer Ronaldo fesseln",
-    "titulo_es": "El Schalke debe frenar al mejor futbolista del mundo, Ronaldo",
-    "credito": "imago / Cordon Press / Miguelez Sports",
-    "imagen": "images/archivo-editorial/fussball-de-cristiano-ronaldo-2014.jpg",
-    "descripcion": "Previa europea centrada en el reto del Schalke de contener a Cristiano Ronaldo en su enfrentamiento con el Real Madrid.",
-    "nota": "Se conserva la captura de la publicación original."
+    "titulo": "Portada: «Un sueño / Una pesadilla»",
+    "credito": "Miguel López / Cordon Press",
+    "imagen": "images/archivo-editorial/marca-portada-bale-2014.jpg",
+    "descripcion": "Portada de MARCA del 13 de abril de 2014. La fotografía de Gareth Bale fue utilizada como una de las imágenes principales de la edición, junto a Lionel Messi y Diego Costa.",
+    "url": "https://www.marca.com/multimedia/primeras/14/04/0413.html",
+    "nota": "Portada de la edición impresa conservada en la hemeroteca de MARCA."
+  },
+  {
+    "medio": "MARCA · Edición impresa",
+    "pais": "España",
+    "fecha": "2014-04-13",
+    "anio": "2014",
+    "titulo": "Gareth Bale en la edición impresa de MARCA",
+    "credito": "Miguel López / Cordon Press",
+    "imagen": "images/archivo-editorial/marca-interior-bale-2014.jpg",
+    "descripcion": "Publicación interior de la misma edición de MARCA, ilustrada con una fotografía de Gareth Bale celebrando un gol con el Real Madrid.",
+    "nota": "Se conserva una fotografía de la página impresa original."
   },
   {
     "medio": "News.at",
@@ -104,18 +127,6 @@
     "imagen": "images/archivo-editorial/dagens-nyheter-bale-ronaldo-2014.jpg",
     "descripcion": "Artículo de Dagens Nyheter sobre la capacidad ofensiva de Gareth Bale y Cristiano Ronaldo en el Real Madrid.",
     "url": "https://www.dn.se/sport/spanien-bale-och-ronaldo-svarstoppade/"
-  },
-  {
-    "medio": "The Times",
-    "pais": "Reino Unido",
-    "fecha": "2015-05-14",
-    "anio": "2015",
-    "titulo": "Gareth Bale brushes aside concerns over form at Real Madrid",
-    "titulo_es": "Gareth Bale resta importancia a las dudas sobre su estado de forma en el Real Madrid",
-    "credito": "Miguel Lopez / Cordon Press / Corbis",
-    "descripcion": "Artículo de The Times sobre Gareth Bale y las dudas que rodeaban su rendimiento durante su segunda temporada en el Real Madrid.",
-    "url": "https://www.thetimes.com/sport/football/article/gareth-bale-brushes-aside-concerns-over-form-at-real-madrid-p9v0qw7qhqt",
-    "nota": "Publicación verificada; el artículo puede requerir suscripción. La captura original no se conserva en este archivo."
   },
   {
     "medio": "El País · Estilo",
