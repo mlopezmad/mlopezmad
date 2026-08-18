@@ -1,5 +1,40 @@
 [
   {
+    "medio": "MARCA",
+    "pais": "España",
+    "fecha": "2014-04-13",
+    "anio": "2014",
+    "titulo": "Portada: «Un sueño / Una pesadilla»",
+    "credito": "Miguel López / Cordon Press",
+    "imagen": "images/archivo-editorial/marca-portada-bale-2014.jpg",
+    "descripcion": "Portada de MARCA del 13 de abril de 2014. La fotografía de Gareth Bale fue utilizada como una de las imágenes principales de la edición, junto a Lionel Messi y Diego Costa.",
+    "url": "https://www.marca.com/multimedia/primeras/14/04/0413.html",
+    "nota": "Portada de la edición impresa conservada en la hemeroteca de MARCA."
+  },
+  {
+    "medio": "MARCA · Edición impresa",
+    "pais": "España",
+    "fecha": "2014-04-13",
+    "anio": "2014",
+    "titulo": "Gareth Bale en la edición impresa de MARCA",
+    "credito": "Miguel López / Cordon Press",
+    "imagen": "images/archivo-editorial/marca-interior-bale-2014.jpg",
+    "descripcion": "Publicación interior de la misma edición de MARCA, ilustrada con una fotografía de Gareth Bale celebrando un gol con el Real Madrid.",
+    "nota": "Se conserva una fotografía de la página impresa original."
+  },
+  {
+    "medio": "Canal+",
+    "pais": "España",
+    "fecha": "2012",
+    "anio": "2012",
+    "titulo": "Campaña publicitaria · Champions League",
+    "titulo_es": "Campaña publicitaria de Canal+ para la Champions League",
+    "credito": "Miguel López / Cordon Press",
+    "imagen": "images/archivo-editorial/canal-plus-champions-marquesina-2012.jpg",
+    "descripcion": "Campaña publicitaria de Canal+ exhibida en marquesinas y soportes urbanos. La creatividad promocionaba la oferta de Canal+ y la Champions League utilizando fotografía deportiva.",
+    "nota": "Se conserva una fotografía de la campaña instalada en una marquesina. Fecha situada en 2012 a partir de la propia creatividad y de la campaña comercial de Canal+."
+  },
+  {
     "medio": "Fussball.de",
     "pais": "Alemania",
     "fecha": "2014",
@@ -46,29 +81,6 @@
     "imagen": "images/archivo-editorial/t-online-messi-2014.jpg",
     "descripcion": "Crónica de T-Online sobre una goleada del FC Barcelona, acompañada por una fotografía de Lionel Messi durante el partido.",
     "nota": "Se conserva la captura de la publicación original."
-  },
-  {
-    "medio": "MARCA",
-    "pais": "España",
-    "fecha": "2014-04-13",
-    "anio": "2014",
-    "titulo": "Portada: «Un sueño / Una pesadilla»",
-    "credito": "Miguel López / Cordon Press",
-    "imagen": "images/archivo-editorial/marca-portada-bale-2014.jpg",
-    "descripcion": "Portada de MARCA del 13 de abril de 2014. La fotografía de Gareth Bale fue utilizada como una de las imágenes principales de la edición, junto a Lionel Messi y Diego Costa.",
-    "url": "https://www.marca.com/multimedia/primeras/14/04/0413.html",
-    "nota": "Portada de la edición impresa conservada en la hemeroteca de MARCA."
-  },
-  {
-    "medio": "MARCA · Edición impresa",
-    "pais": "España",
-    "fecha": "2014-04-13",
-    "anio": "2014",
-    "titulo": "Gareth Bale en la edición impresa de MARCA",
-    "credito": "Miguel López / Cordon Press",
-    "imagen": "images/archivo-editorial/marca-interior-bale-2014.jpg",
-    "descripcion": "Publicación interior de la misma edición de MARCA, ilustrada con una fotografía de Gareth Bale celebrando un gol con el Real Madrid.",
-    "nota": "Se conserva una fotografía de la página impresa original."
   },
   {
     "medio": "News.at",
