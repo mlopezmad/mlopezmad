@@ -1,6 +1,10 @@
 {
   "imagenes": [
     {
+      "archivo": "canal-plus-champions-marquesina-2012.jpg",
+      "tipo": "bn"
+    },
+    {
       "archivo": "el-pais-neymar-2016.jpg",
       "tipo": "bn"
     },
@@ -62,6 +66,14 @@
     },
     {
       "archivo": "final-champions-san-siro-2016.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "marca-interior-bale-2014.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "marca-portada-bale-2014.jpg",
       "tipo": "bn"
     }
   ]
