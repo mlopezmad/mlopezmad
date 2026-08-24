@@ -106,6 +106,19 @@
           "scale": 3
         }
       }
+    },
+    {
+      "id": "iphone4s-madrid",
+      "title": "Madrid",
+      "subtitle": "iPhone 4S • Transfer Filter Project",
+      "type": "iphone4s",
+      "parent": "iphone4s",
+      "description": "",
+      "intro": "Madrid aparece entre edificios, sombras y cielos de verano. Una ciudad reconocible, recorrida con una cámara que también pertenece a otro tiempo.\n\nFotografiada con un iPhone 4S y editada únicamente con el filtro Transfer, esta serie acepta el color imperfecto, el contraste y las limitaciones del dispositivo como parte de su lenguaje.\n\nLugares de siempre vistos con una mirada distinta.\nEl Madrid de hoy convertido en un recuerdo antiguo.",
+      "path": "images/iphone4s/madrid",
+      "json": "images/iphone4s/madrid/galeria.json",
+      "url": "iphone4s-madrid.html",
+      "year": "2026"
     }
   ],
   "homeCover": {
