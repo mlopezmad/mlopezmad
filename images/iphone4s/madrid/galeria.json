@@ -1,43 +1,7 @@
 {
   "imagenes": [
     {
-      "archivo": "IMG_0958.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0962.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0973.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0976.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0967.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0952.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0992.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0982.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0957.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0980.jpg",
+      "archivo": "IMG_0947.jpg",
       "tipo": "color"
     },
     {
@@ -45,7 +9,23 @@
       "tipo": "color"
     },
     {
+      "archivo": "IMG_0952.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0957.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0958.jpg",
+      "tipo": "color"
+    },
+    {
       "archivo": "IMG_0959.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0962.jpg",
       "tipo": "color"
     },
     {
@@ -53,7 +33,15 @@
       "tipo": "color"
     },
     {
+      "archivo": "IMG_0967.jpg",
+      "tipo": "color"
+    },
+    {
       "archivo": "IMG_0972.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0973.jpg",
       "tipo": "color"
     },
     {
@@ -61,11 +49,7 @@
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0981.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_0990.jpg",
+      "archivo": "IMG_0976.jpg",
       "tipo": "color"
     },
     {
@@ -73,11 +57,27 @@
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0993.jpg",
+      "archivo": "IMG_0980.jpg",
       "tipo": "color"
     },
     {
-      "archivo": "IMG_0947.jpg",
+      "archivo": "IMG_0981.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0982.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0990.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0992.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0993.jpg",
       "tipo": "color"
     }
   ]
