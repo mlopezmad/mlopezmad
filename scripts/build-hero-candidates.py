@@ -228,7 +228,7 @@ def build() -> Dict[str, Any]:
     raw: List[Dict[str, Any]] = []
 
     for collection in collections:
-        if collection.get("type") not in {"portfolio", "iphone4s"}:
+        if collection.get("type") not in {"portfolio", "iphone4s", "iphone-original"}:
             continue
         for filename in gallery_filenames(collection):
             source = public_source(collection, filename)

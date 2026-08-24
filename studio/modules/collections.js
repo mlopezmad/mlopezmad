@@ -14,8 +14,12 @@ export async function loadCollections() {
     const data = await loadCollectionsData();
 
     state.collections = (data.collections || []).map(collection => {
-        const title = collection.type === "iphone4s"
-            ? `iPhone 4s · ${collection.title}`
+        const projectNames = {
+            iphone4s: "iPhone 4s",
+            "iphone-original": "iPhone original"
+        };
+        const title = projectNames[collection.type]
+            ? `${projectNames[collection.type]} · ${collection.title}`
             : collection.title;
 
         return {

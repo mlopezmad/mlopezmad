@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>iPhone original · The First iPhone Project - mlopezmad</title>
+<meta name="description" content="Un proyecto fotográfico realizado con la cámara de 2 megapíxeles del primer iPhone, presentado en 2007.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5f3ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#050507" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css?v=364">
+<script src="js/theme.js?v=364"></script>
+<style>
+.project-hero{max-width:640px;margin:0 auto 58px;padding:0 24px;}
+.project-hero img{width:100%;display:block;border-radius:30px;box-shadow:var(--shadow-soft);}
+.proyecto{max-width:780px;margin:0 auto;padding:0 26px 70px;}
+.proyecto p{font-size:1.12rem;line-height:1.88;color:var(--muted);margin-bottom:26px;}
+.proyecto strong{color:var(--text);}
+.project-closing{font-size:clamp(1.35rem,3vw,2rem)!important;line-height:1.45!important;letter-spacing:-.04em;color:var(--text)!important;margin-top:42px;}
+.colecciones{max-width:1050px;margin:30px auto 70px;padding:0 26px;}
+@media(max-width:768px){.project-hero{margin-bottom:44px}.proyecto p{font-size:1.02rem;line-height:1.78}}
+</style>
+</head>
+<body>
+<header class="site-header site-header--page">
+    <a class="site-brand" href="index.html"><img class="brand-mark" src="assets/logo-mark.png" alt="" aria-hidden="true"><span>mlopezmad</span></a>
+    <button class="mobile-menu-button mobile-menu-button--page" type="button" aria-expanded="false" aria-controls="mainNav">Menú</button>
+    <nav class="site-nav site-nav--page" id="mainNav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="sobre-mi.html">Sobre mí</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a class="nav-pill" href="contacto.html">Contacto</a>
+    </nav>
+</header>
+
+<section class="page-hero page-hero--compact">
+    <div>
+        <p class="eyebrow eyebrow--dark">2007 · The First iPhone Project</p>
+        <h1>iPhone original</h1>
+        <p>El primer iPhone. Una cámara de 2 megapíxeles. Apuntar y disparar.</p>
+    </div>
+</section>
+
+<figure class="project-hero">
+    <img src="images/iphone-original/hero.jpg" alt="El iPhone original frente al Apple Store de Madrid">
+</figure>
+
+<section class="proyecto">
+<p>Este proyecto nace después de fotografiar con un iPhone 4S y de una pregunta inevitable: <strong>¿cómo sería hacerlo con el primer iPhone?</strong></p>
+<p>Presentado en 2007, aquel dispositivo cambió para siempre nuestra relación con el teléfono y, con el tiempo, también nuestra manera de hacer fotografías. Sin embargo, su cámara estaba muy lejos de lo que hoy entendemos por una cámara móvil.</p>
+<p>Un único sensor de 2 megapíxeles. Sin cámara frontal, flash, vídeo ni enfoque automático. Tampoco permitía elegir el punto de enfoque, corregir la exposición o editar la imagen después de tomarla. La cámara decidía prácticamente todo. Solo quedaba encuadrar y disparar.</p>
+<p>Fotografiar así resulta extrañamente complejo. Las cámaras actuales corrigen el movimiento, recuperan luces y sombras, combinan varias exposiciones y procesan cada imagen antes incluso de que aparezca en la pantalla. Con el primer iPhone no existe esa red de seguridad.</p>
+<p>Cada fotografía conserva sus limitaciones: poca resolución, escaso rango dinámico, dificultad con la luz y un nivel de detalle que hoy parece mínimo. No son defectos que este proyecto trate de esconder, sino las condiciones desde las que debe construirse la imagen.</p>
+<p>Volver al primer iPhone es regresar a una cámara elemental. Una cámara que no ofrece controles ni soluciones y que obliga a prestar atención a lo único que todavía depende de quien fotografía: dónde colocarse, cuándo disparar y qué merece ser visto.</p>
+<p class="project-closing"><strong>La cámara lo decide casi todo.<br>La mirada, todavía no.</strong></p>
+
+<div class="equipo">
+<h2>Equipo utilizado</h2>
+<ul>
+<li>iPhone original (2007)</li>
+<li>Cámara trasera de 2 megapíxeles</li>
+<li>Enfoque fijo</li>
+<li>Exposición automática</li>
+<li>Sin flash ni vídeo</li>
+<li>Sin edición ni ajustes posteriores</li>
+</ul>
+</div>
+</section>
+
+<section class="colecciones">
+<h2>Colecciones</h2>
+<div id="colecciones"><p class="collection-empty">Cargando colecciones...</p></div>
+</section>
+
+<div class="gallery-back"><a class="volver" href="portfolio.html">← Volver</a></div>
+
+<footer class="site-footer">
+    <span>© 2026 mlopezmad · Madrid, España</span>
+    <nav class="footer-nav" aria-label="Navegación secundaria">
+        <a href="portfolio.html">Portfolio</a>
+        <a href="sobre-mi.html">Sobre mí</a>
+        <a href="newsletter.html">Newsletter</a>
+        <a href="contacto.html">Contacto</a>
+    </nav>
+</footer>
+
+<script>
+async function cargarColeccionesIphoneOriginal(){
+    const contenedor = document.getElementById("colecciones");
+    try{
+        const response = await fetch("collections.json?t=" + Date.now(), {cache:'no-store'});
+        const data = await response.json();
+        const colecciones = (data.collections || [])
+            .filter(c => c.type === "iphone-original")
+            .sort((a, b) => String(a.title || "").localeCompare(String(b.title || ""), "es"));
+        if(colecciones.length === 0){
+            contenedor.innerHTML = '<p class="collection-empty">Todavía no hay colecciones disponibles.</p>';
+            return;
+        }
+        const tarjetas = await Promise.all(colecciones.map(async coleccion => {
+            let total = null;
+            let cover = "";
+            try{
+                const galeriaResponse = await fetch(coleccion.json + "?t=" + Date.now(), {cache:'no-store'});
+                const galeriaData = await galeriaResponse.json();
+                const imagenes = galeriaData.imagenes || [];
+                total = imagenes.length;
+                if(!coleccion.cover && imagenes[0]) cover = coleccion.path + "/" + imagenes[0].archivo;
+            }catch(error){}
+            if(coleccion.cover){
+                cover = coleccion.cover.startsWith("images/") ? coleccion.cover : coleccion.path + "/" + coleccion.cover;
+            }
+            const contador = total === null ? "Abrir colección" : `${total} ${total === 1 ? "fotografía" : "fotografías"}`;
+            const subtitulo = coleccion.subtitle || coleccion.subtitulo || coleccion.description || coleccion.descripcion || "";
+            return `
+                <a class="collection-card" href="${coleccion.url}">
+                    <div class="collection-cover">${cover ? `<img src="${cover}" alt="${coleccion.title}">` : ""}</div>
+                    <div class="collection-content"><h3>${coleccion.title}</h3>${subtitulo ? `<p>${subtitulo}</p>` : ""}<span>${contador}</span><strong>Ver colección →</strong></div>
+                </a>`;
+        }));
+        contenedor.innerHTML = `<div class="collection-grid">${tarjetas.join("")}</div>`;
+    }catch(error){
+        contenedor.innerHTML = '<p class="collection-empty">No se pudieron cargar las colecciones.</p>';
+    }
+}
+cargarColeccionesIphoneOriginal();
+</script>
+</body>
+</html>

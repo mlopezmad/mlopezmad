@@ -286,16 +286,23 @@ async function finalizeUpload(body, env) {
 }
 async function createCollection(body, env) {
   const title = String(body.title || "").trim();
+  const subtitle = String(body.subtitle || "").trim();
   const description = String(body.description || "").trim();
+  const intro = String(body.intro || "").trim();
   const type = String(body.type || "portfolio").trim();
   const year = String(body.year || new Date().getFullYear()).trim();
 
   if (!title) return json({ error: "Falta el nombre de la colección" }, 400);
 
   const slug = slugify(title);
-  const id = type === "iphone4s" ? `iphone4s-${slug}` : slug;
-  const path = type === "iphone4s" ? `images/iphone4s/${slug}` : `images/${slug}`;
-  const url = type === "iphone4s" ? `iphone4s-${slug}.html` : `${slug}.html`;
+  const project = type === "iphone4s"
+    ? { prefix: "iphone4s", folder: "iphone4s", parent: "iphone4s" }
+    : type === "iphone-original"
+      ? { prefix: "iphone-original", folder: "iphone-original", parent: "iphone-original" }
+      : null;
+  const id = project ? `${project.prefix}-${slug}` : slug;
+  const path = project ? `images/${project.folder}/${slug}` : `images/${slug}`;
+  const url = project ? `${project.prefix}-${slug}.html` : `${slug}.html`;
   const jsonPath = `${path}/galeria.json`;
 
   const ghHeaders = githubHeaders(env);
@@ -310,16 +317,18 @@ async function createCollection(body, env) {
   collectionsData.collections.push({
     id,
     title,
+    subtitle,
     type,
-    ...(type === "iphone4s" ? { parent: "iphone4s" } : {}),
+    ...(project ? { parent: project.parent } : {}),
     description,
+    intro,
     path,
     json: jsonPath,
     url,
     year
   });
 
-  const html = buildGalleryHtml({ title, description, path, jsonPath, type });
+  const html = buildGalleryHtml({ title, subtitle, description, intro, path, jsonPath, type });
 
   const treeItems = [
     {
@@ -1090,8 +1099,12 @@ function arrayBufferToBase64Url(buffer) {
     .replace(/=+$/g, "");
 }
 
-function buildGalleryHtml({ title, description, path, jsonPath, type }) {
-  const back = type === "iphone4s" ? "iphone4s.html" : "portfolio.html";
+function buildGalleryHtml({ title, subtitle, description, intro, path, jsonPath, type }) {
+  const back = type === "iphone4s"
+    ? "iphone4s.html"
+    : type === "iphone-original"
+      ? "iphone-original.html"
+      : "portfolio.html";
 
   return `<!DOCTYPE html>
 <html lang="es">
@@ -1114,7 +1127,9 @@ function buildGalleryHtml({ title, description, path, jsonPath, type }) {
 <script>
 window.GALLERY_CONFIG = {
   titulo: "${escapeJs(title)}",
-  subtitulo: "${escapeJs(description || "Fotografía")}",
+  subtitulo: "${escapeJs(subtitle || description || "Fotografía")}",
+  descripcion: "${escapeJs(description)}",
+  intro: "${escapeJs(intro)}",
   carpeta: "${path}/",
   json: "${jsonPath}",
   volver: "${back}"

@@ -48,6 +48,8 @@ jobs:
 
           if [ "$ROOT_FOLDER" = "iphone4s" ]; then
             PAGE_SLUG="iphone4s-$COLLECTION"
+          elif [ "$ROOT_FOLDER" = "iphone-original" ]; then
+            PAGE_SLUG="iphone-original-$COLLECTION"
           else
             PAGE_SLUG="$COLLECTION"
           fi
