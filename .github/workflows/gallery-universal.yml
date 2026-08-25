@@ -32,6 +32,7 @@ jobs:
           | grep -Ei '^images/.+/.+\.(jpg|jpeg|png)$' \
           | grep -Eiv '^images/portada\.(jpg|jpeg|png)$' \
           | grep -Eiv '^images/about/' \
+          | grep -Eiv '/hero\.(jpg|jpeg|png)$' \
           || true)
           FIRST_FILE=$(echo "$NEW_FILES" | head -n 1)
           COUNT=$(echo "$NEW_FILES" | sed '/^\s*$/d' | wc -l)
