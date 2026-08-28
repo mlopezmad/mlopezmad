@@ -1,3 +1,76 @@
 {
-  "imagenes": []
+  "imagenes": [
+    {
+      "archivo": "IMG_0026.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0031.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0030.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0018.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0016.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0033.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0046.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0027.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0019.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0039.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0048.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0029.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0044.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0047.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0040.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0053.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0049.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_0015.jpg",
+      "tipo": "color"
+    }
+  ]
 }
