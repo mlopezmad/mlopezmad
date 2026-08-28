@@ -119,6 +119,19 @@
       "json": "images/iphone4s/madrid/galeria.json",
       "url": "iphone4s-madrid.html",
       "year": "2026"
+    },
+    {
+      "id": "iphone-original-madrid",
+      "title": "Madrid",
+      "subtitle": "The First iPhone Project",
+      "type": "iphone-original",
+      "parent": "iphone-original",
+      "description": "",
+      "intro": "Un recorrido por Madrid con la cámara del primer iPhone. Dos megapíxeles, enfoque fijo y ninguna posibilidad de ajustar la luz o corregir la imagen antes de disparar. Gran Vía, Sol, Plaza Mayor y Plaza de España aparecen menos perfectas y más imprevisibles: luces quemadas, sombras cerradas, movimiento y color. Estas fotografías no intentan ocultar las limitaciones del dispositivo; son precisamente esas limitaciones las que construyen la serie.",
+      "path": "images/iphone-original/madrid",
+      "json": "images/iphone-original/madrid/galeria.json",
+      "url": "iphone-original-madrid.html",
+      "year": "2026"
     }
   ],
   "homeCover": {
