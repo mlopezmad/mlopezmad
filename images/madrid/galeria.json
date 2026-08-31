@@ -143,6 +143,18 @@
     {
       "archivo": "madrid-006.jpg",
       "tipo": "bn"
+    },
+    {
+      "archivo": "IMG_4368.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_4370.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_4369.jpg",
+      "tipo": "color"
     }
   ]
 }
