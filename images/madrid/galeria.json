@@ -1,6 +1,26 @@
 {
   "imagenes": [
     {
+      "archivo": "IMG_1469.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "IMG_2066.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "_DSC0232.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "_DSC0249.jpg",
+      "tipo": "color"
+    },
+    {
+      "archivo": "_DSC0742.jpg",
+      "tipo": "color"
+    },
+    {
       "archivo": "1770918195000_R0000168.jpg",
       "tipo": "bn"
     },
@@ -135,26 +155,6 @@
     {
       "archivo": "madrid-006.jpg",
       "tipo": "bn"
-    },
-    {
-      "archivo": "_DSC0232.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "_DSC0249.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_1469.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "_DSC0742.jpg",
-      "tipo": "color"
-    },
-    {
-      "archivo": "IMG_2066.jpg",
-      "tipo": "color"
     }
   ]
 }
