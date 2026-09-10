@@ -1,6 +1,18 @@
 {
   "imagenes": [
     {
+      "archivo": "learning-az-basketball-cover.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "learning-az-basketball-credits.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "learning-az-basketball-page-9.jpg",
+      "tipo": "bn"
+    },
+    {
       "archivo": "canal-plus-champions-marquesina-2012.jpg",
       "tipo": "bn"
     },
@@ -74,6 +86,10 @@
     },
     {
       "archivo": "marca-portada-bale-2014.jpg",
+      "tipo": "bn"
+    },
+    {
+      "archivo": "lequipe-simeone-griezmann-2016.jpg",
       "tipo": "bn"
     }
   ]
