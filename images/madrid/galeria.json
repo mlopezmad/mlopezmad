@@ -1,6 +1,10 @@
 {
   "imagenes": [
     {
+      "archivo": "IMG_6559.jpg",
+      "tipo": "bn"
+    },
+    {
       "archivo": "IMG_5438.jpg",
       "tipo": "bn"
     },
@@ -358,10 +362,6 @@
     },
     {
       "archivo": "madrid-006.jpg",
-      "tipo": "bn"
-    },
-    {
-      "archivo": "IMG_6559.jpg",
       "tipo": "bn"
     }
   ]
